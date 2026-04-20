@@ -89,7 +89,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/editar/${user.id}`;
+    const url = `https://localhost:7085/api/Usuarios/editar/${user.idUser}`;
 
     return firstValueFrom(this.http.post<Users>(url, user, httpOptions));
   }

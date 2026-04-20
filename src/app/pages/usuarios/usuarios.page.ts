@@ -86,12 +86,12 @@ export class UsuariosPage implements OnInit {
     console.log(formData);
 
     const newUser: Users = {
-      id: 0,
+      idUser: 0,
       nombre: formData.Nombre,
       apellidos: formData.Apellidos,
       email: formData.Email,
       telefono: formData.Telefono,
-      idrol: 2,
+      idRol: 2,
     }
 
     try {
@@ -110,7 +110,7 @@ export class UsuariosPage implements OnInit {
 
   editarUsuario(idUser: number) {
     this.editandoUsuario = true;
-    const userSelected = this.usuarios.find(u => u.id === idUser);
+    const userSelected = this.usuarios.find(u => u.idUser === idUser);
     if (userSelected) {
       this.usuarioToEdit = userSelected;
     }

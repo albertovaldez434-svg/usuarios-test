@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { usersGuardGuard } from './users-guard-guard';
 
 const routes: Routes = [
   {
@@ -8,7 +9,8 @@ const routes: Routes = [
   },
   {
     path: 'usuarios',
-    loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule)
+    loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule),
+    canActivate: [usersGuardGuard]
   },
   {
     path: '',
