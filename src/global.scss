@@ -1,0 +1,103 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+// ion-icon {
+//     font-size: 24px;
+// }
+
+// ion-button {
+//   --background: #93e9be;
+//   --background-hover: #9ce0be;
+//   --background-activated: #88f4be;
+//   --background-focused: #88f4be;
+
+//   --color: blue;
+
+//   --border-radius: 0;
+//   --border-color: #000;
+//   --border-style: solid;
+//   --border-width: 1px;
+
+//   --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+//   --ripple-color: deeppink;
+
+//   --padding-top: 10px;
+//   --padding-bottom: 10px;
+// }
+
+ion-modal {
+    --border-top-left-radius: 25px;
+    --border-top-right-radius: 25px;
+}
+
+form {
+    gap: 10px;
+}
+
+.inp-box {
+    width: 100%;
+    height: 45px;
+    font-size: 15px;
+    border-radius: 15px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.btn-primary {
+    width: 100%;
+    height: 45px;
+    font-size: 15px;
+    border-radius: 25px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    color: black;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

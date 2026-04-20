@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="parent-container">
+    <div [formGroup]="loginForm" class="form-container">
+      <div class="header-wrapper">
+        <h1>Bienvenido</h1>
+        <p>Ingresa tus datos para acceder a tu cuenta.</p>
+      </div>
+
+      <div class="inputs-container" [formGroup]="loginForm">
+        <ion-item lines="none" class="input-item">
+          <ion-input placeholder="Usuario" formControlName="Usuario" type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="input-item">
+          <ion-input placeholder="Contraseña" formControlName="Password" type="password"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="buttons-container">
+        <ion-button expand="block" fill="solid" (click)="loginFunction()">
+          <ion-icon name="log-in-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Ingresar
+        </ion-button>
+        <ion-button expand="block" fill="solid" (click)="registerFunction()">
+          <ion-icon name="person-add-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Registrarse
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,10 @@
+<ion-app>
+
+  @if (!isLogged) {
+    <ion-router-outlet></ion-router-outlet>
+  } @else if (isLogged) {
+    <app-menu></app-menu>
+    <ion-router-outlet></ion-router-outlet>
+  }
+
+</ion-app>

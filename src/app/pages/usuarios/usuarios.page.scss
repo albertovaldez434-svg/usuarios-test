@@ -1,0 +1,97 @@
+.table-responsive {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: scroll;
+    //border-radius: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+thead {
+    background-color: transparent;
+}
+
+.signUpfrm {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.signUpfrm ion-item {
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+.button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-y: scroll;
+        max-height: 65vh;
+        padding: 10px;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+    }
+
+    table {
+        border: 0;
+    }
+
+    thead {
+        display: none;
+        /* hide headers */
+    }
+
+    tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        //background: white;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        //color: #666;
+    }
+
+    .signUpfrm {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .signUpfrm ion-item {
+        margin-bottom: 10px;
+    }
+
+    .button-container {
+        margin-top: 15px;
+    }
+}
