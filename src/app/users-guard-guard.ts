@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { UsuariosService } from './services/usuarios';
-import { map, take } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 export const usersGuardGuard: CanActivateFn = (route, state) => {
@@ -11,8 +11,10 @@ export const usersGuardGuard: CanActivateFn = (route, state) => {
   const jwtHelper = new JwtHelperService;
 
   return authService.LoginData$.pipe(
+    filter(loginData => loginData !== null),
     take(1),
     map(loginData => {
+      console.log('Guard hit for:', state.url);
       console.log('Login data in guard:', loginData); // Agrega este log para verificar el valor de loginData
 
       const token = loginData?.access_token;

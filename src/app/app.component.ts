@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuariosService } from './services/usuarios';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,8 @@ export class AppComponent {
 
   constructor(
     private userService: UsuariosService,
-    private route: Router
+    private route: Router,
+    private activeRoute: ActivatedRoute
   ) {
     this.checkUserdata();
   }
@@ -22,7 +23,9 @@ export class AppComponent {
     this.userService.LoginData$.subscribe(data => {
       if (data) {
         this.isLogged = true;
-        this.route.navigate(['/usuarios']);
+        // const returnUrl = this.activeRoute.snapshot.queryParamMap.get('returnUrl')';
+        // this.route.navigateByUrl(returnUrl);
+
         // console.log('si hay datos guardados');
       } else {
         this.isLogged = false;
