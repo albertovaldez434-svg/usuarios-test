@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, delay, firstValueFrom, lastValueFrom } from 'rxjs';
 import { AuthUser, Users } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
@@ -60,15 +60,16 @@ export class UsuariosService {
   }
 
   Login(request: Login) {
-    // const httpOptions = {
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // }
+    const httpOptions = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
 
     const url = `https://localhost:7085/api/Usuarios/Login`;
 
-    return this.http.post<AuthUser>(url, request);
+    // return this.http.post<AuthUser>(url, request, httpOptions).pipe(delay(5000));
+    return this.http.post<AuthUser>(url, request, httpOptions);
   }
 
   signUpNewUser(newUser: Users) {

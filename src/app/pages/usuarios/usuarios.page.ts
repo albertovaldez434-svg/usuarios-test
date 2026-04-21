@@ -64,19 +64,17 @@ export class UsuariosPage implements OnInit {
 
 
   obtenerUsuarios = () => {
-    this.usersService.getUsers().pipe(
-      tap((usuarios) => {
+    this.usersService.getUsers().subscribe({
+      next: (usuarios) => {
         console.log(usuarios);
+        this.usuarios = usuarios;
         this.usersService.setUser(this.usuarios);
-      })).subscribe({
-        next: (usuarios) => {
-          this.usuarios = usuarios;
-        },
-        error: (error) => {
-          console.log(error);
-          this.openModalFunc('No se pudo cargar la informacion de usuarios');
-        }
-      });
+      },
+      error: (error) => {
+        console.log(error);
+        this.openModalFunc('No se pudo cargar la informacion de usuarios');
+      }
+    });
   }
 
   signupFunc() {
@@ -110,6 +108,20 @@ export class UsuariosPage implements OnInit {
         return of([]);
       })
     );
+
+    this.usersService.signUpNewUser(newUser).subscribe({
+      next: (response) => {
+        this.modalSignUp.dismiss();
+        this.usuarios.push(response);
+        this.usersService.setUser(this.usuarios);
+        this.openModalFunc('Usuario registrado exitosamente');
+        this.signupForm.reset();
+      }, error: (error) => {
+        console.log(error);
+        this.openModalFunc('Error al registrar el usuario');
+        return of([]);
+      }
+    });
 
   }
 

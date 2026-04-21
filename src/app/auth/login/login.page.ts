@@ -62,17 +62,20 @@ export class LoginPage implements OnInit {
       Password: Password
     };
 
-    this.UserService.Login(loginRrquest).pipe(
-      tap((userInfo) => {
+    this.UserService.Login(loginRrquest).subscribe({
+      next: (userInfo) => {
+        console.log('iniciando subscribe');
         this.UserService.setLogin(userInfo);
         this.openModalFunc('Sesion iniciada');
         this.route.navigate(['/usuarios']);
-      }), catchError(error => {
+        console.log('finalizando');
+      },
+      error: (error) => {
         console.error('Login error:', error);
         this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
-        return of([]);
-      })
-    );
+        //return of([]);
+      }
+    });
 
   }
 
