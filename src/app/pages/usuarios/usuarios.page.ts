@@ -105,7 +105,6 @@ export class UsuariosPage implements OnInit {
       console.log(error);
       this.openModalFunc('Error al registrar el usuario');
     }
-    this.modalSignUp.dismiss();
   }
 
   editarUsuario(idUser: number) {

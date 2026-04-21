@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
-import { Users } from '../models/users';
+import { AuthUser, Users } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
 
@@ -13,9 +13,10 @@ export class UsuariosService {
     private http: HttpClient
   ) {
     // Load login data from localStorage on service initialization
-    const storedLogin = localStorage.getItem('loginData');
-    if (storedLogin) {
-      this.LoginData.next(JSON.parse(storedLogin));
+    const dataLogin = localStorage.getItem('loginData');
+    if (dataLogin) {
+      const storedLogin: AuthUser = JSON.parse(dataLogin);
+      this.LoginData.next(storedLogin);
     }
   }
 
@@ -23,7 +24,7 @@ export class UsuariosService {
   private user = new BehaviorSubject<Users[] | null>(null);
   user$ = this.user.asObservable();
 
-  private LoginData = new BehaviorSubject<Users | null>(null);
+  private LoginData = new BehaviorSubject<AuthUser | null>(null);
   LoginData$ = this.LoginData.asObservable();
 
   //methods
@@ -31,9 +32,9 @@ export class UsuariosService {
     this.user.next(usrData);
   }
 
-  setLogin(usrData: Users) {
-    this.LoginData.next(usrData);
-    localStorage.setItem('loginData', JSON.stringify(usrData));
+  setLogin(loginData: AuthUser) {
+    this.LoginData.next(loginData);
+    localStorage.setItem('loginData', JSON.stringify(loginData));
   }
 
   clearUser = async () => {
@@ -49,11 +50,11 @@ export class UsuariosService {
   getUsers = async () => {
     const httpOptions = {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/getusuarios`;
+    const url = `https://localhost:7085/api/Usuarios`;
 
     return lastValueFrom(this.http.get<Users[]>(url, httpOptions));
   }
@@ -67,7 +68,7 @@ export class UsuariosService {
 
     const url = `https://localhost:7085/api/Usuarios/Login`;
 
-    return firstValueFrom(this.http.post<Users>(url, request, httpOptions));
+    return firstValueFrom(this.http.post<AuthUser>(url, request, httpOptions));
   }
 
   async signUpNewUser(newUser: Users) {
@@ -77,7 +78,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/registrar`;
+    const url = `https://localhost:7085/api/Usuarios`;
 
     return firstValueFrom(this.http.post<Users>(url, newUser, httpOptions));
   }
@@ -89,9 +90,9 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/editar/${user.idUser}`;
+    const url = `https://localhost:7085/api/Usuarios/${user.idUser}`;
 
-    return firstValueFrom(this.http.post<Users>(url, user, httpOptions));
+    return firstValueFrom(this.http.put<Users>(url, user, httpOptions));
   }
 
   async deleteUsuario(idUser: number) {
@@ -101,7 +102,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/eliminar/${idUser}`;
+    const url = `https://localhost:7085/api/Usuarios/${idUser}`;
 
     return firstValueFrom(this.http.delete(url, httpOptions));
   }

@@ -8,3 +8,10 @@ export interface Users {
     nombreUsuario?: string;
     password?: string;
 }
+
+export interface AuthUser {
+    access_token: string;
+    token_type: string;
+    idUser: number;
+    nombreUsuario: string;
+}

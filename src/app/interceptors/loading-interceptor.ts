@@ -11,6 +11,8 @@ export class LoadingInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('LoadingInterceptor: intercepting request');
+
     if (req.headers.get('skip-loader')) {
       return next.handle(req); // do nothing special
 
