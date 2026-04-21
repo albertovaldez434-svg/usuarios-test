@@ -47,7 +47,7 @@ export class UsuariosService {
   }
 
   //apis
-  getUsers = async () => {
+  getUsers() {
     const httpOptions = {
       headers: {
         'Content-Type': 'application/json',
@@ -56,22 +56,22 @@ export class UsuariosService {
 
     const url = `https://localhost:7085/api/Usuarios`;
 
-    return lastValueFrom(this.http.get<Users[]>(url, httpOptions));
+    return this.http.get<Users[]>(url, httpOptions);
   }
 
-  async Login(request: Login) {
-    const httpOptions = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
+  Login(request: Login) {
+    // const httpOptions = {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }
 
     const url = `https://localhost:7085/api/Usuarios/Login`;
 
-    return firstValueFrom(this.http.post<AuthUser>(url, request, httpOptions));
+    return this.http.post<AuthUser>(url, request);
   }
 
-  async signUpNewUser(newUser: Users) {
+  signUpNewUser(newUser: Users) {
     const httpOptions = {
       headers: {
         'Content-Type': 'application/json'
@@ -80,10 +80,10 @@ export class UsuariosService {
 
     const url = `https://localhost:7085/api/Usuarios`;
 
-    return firstValueFrom(this.http.post<Users>(url, newUser, httpOptions));
+    return this.http.post<Users>(url, newUser, httpOptions);
   }
 
-  async editUser(user: Users) {
+  editUser(user: Users) {
     const httpOptions = {
       headers: {
         'Content-Type': 'application/json'
@@ -92,10 +92,10 @@ export class UsuariosService {
 
     const url = `https://localhost:7085/api/Usuarios/${user.idUser}`;
 
-    return firstValueFrom(this.http.put<Users>(url, user, httpOptions));
+    return this.http.put<Users>(url, user, httpOptions);
   }
 
-  async deleteUsuario(idUser: number) {
+  deleteUsuario(idUser: number) {
     const httpOptions = {
       headers: {
         'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ export class UsuariosService {
 
     const url = `https://localhost:7085/api/Usuarios/${idUser}`;
 
-    return firstValueFrom(this.http.delete(url, httpOptions));
+    return this.http.delete(url, httpOptions);
   }
 
 }

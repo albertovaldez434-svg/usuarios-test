@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonModal, ModalController } from '@ionic/angular';
+import { catchError, of, tap } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
@@ -62,18 +63,20 @@ export class UsuariosPage implements OnInit {
   }
 
 
-  obtenerUsuarios = async () => {
-    try {
-      const usuarios = await this.usersService.getUsers();
-      console.log(usuarios);
-
-      if (usuarios.length > 0) {
-        this.usuarios = usuarios;
+  obtenerUsuarios = () => {
+    this.usersService.getUsers().pipe(
+      tap((usuarios) => {
+        console.log(usuarios);
         this.usersService.setUser(this.usuarios);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      })).subscribe({
+        next: (usuarios) => {
+          this.usuarios = usuarios;
+        },
+        error: (error) => {
+          console.log(error);
+          this.openModalFunc('No se pudo cargar la informacion de usuarios');
+        }
+      });
   }
 
   signupFunc() {
@@ -94,17 +97,20 @@ export class UsuariosPage implements OnInit {
       idRol: 2,
     }
 
-    try {
-      const response = await this.usersService.signUpNewUser(newUser);
-      this.modalSignUp.dismiss();
-      this.usuarios.push(response);
-      this.usersService.setUser(this.usuarios);
-      this.openModalFunc('Usuario registrado exitosamente');
-      this.signupForm.reset();
-    } catch (error) {
-      console.log(error);
-      this.openModalFunc('Error al registrar el usuario');
-    }
+    this.usersService.signUpNewUser(newUser).pipe(
+      tap((response) => {
+        this.modalSignUp.dismiss();
+        this.usuarios.push(response);
+        this.usersService.setUser(this.usuarios);
+        this.openModalFunc('Usuario registrado exitosamente');
+        this.signupForm.reset();
+      }), catchError(error => {
+        console.log(error);
+        this.openModalFunc('Error al registrar el usuario');
+        return of([]);
+      })
+    );
+
   }
 
   editarUsuario(idUser: number) {
@@ -122,7 +128,7 @@ export class UsuariosPage implements OnInit {
     this.modalSignUp.present();
   }
 
-  async guardarCambiosUsuario() {
+  guardarCambiosUsuario() {
     const formData = this.signupForm.value;
     if (this.usuarioToEdit) {
       this.usuarioToEdit.nombre = formData.Nombre;
@@ -131,15 +137,18 @@ export class UsuariosPage implements OnInit {
       this.usuarioToEdit.telefono = formData.Telefono;
     }
 
-    try {
-      const editedUser = await this.usersService.editUser(this.usuarioToEdit);
-      console.log(editedUser);
-      this.modalSignUp.dismiss();
-      this.editandoUsuario = false
-    } catch (error) {
-      console.log(error);
-      this.openModalFunc('Error al editar el usuario');
-    }
+    this.usersService.editUser(this.usuarioToEdit).subscribe({
+      next: (respone) => {
+        console.log(respone);
+        this.modalSignUp.dismiss();
+        this.editandoUsuario = false
+      },
+      error: (error) => {
+        console.log(error);
+        this.openModalFunc('Error al editar el usuario');
+      }
+    });
+
   }
 
   cerrarSesion() {

@@ -5,6 +5,7 @@ import { UsuariosService } from 'src/app/services/usuarios';
 import { Login } from 'src/app/models/login';
 import { ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -41,13 +42,13 @@ export class LoginPage implements OnInit {
       componentProps: {
         mensaje: mensaje
       }
-      
+
     });
 
     (await modal).present();
   }
 
-  async loginFunction() {
+  loginFunction() {
     const userName = this.loginForm.value.Usuario;
     const Password = this.loginForm.value.Password;
 
@@ -61,17 +62,18 @@ export class LoginPage implements OnInit {
       Password: Password
     };
 
-    try {
-      const userInfo = await this.UserService.Login(loginRrquest);
-      if (userInfo != null) {
+    this.UserService.Login(loginRrquest).pipe(
+      tap((userInfo) => {
         this.UserService.setLogin(userInfo);
         this.openModalFunc('Sesion iniciada');
         this.route.navigate(['/usuarios']);
-      }
-    } catch (error) {
-      this.openModalFunc('Ha ocurrido un error al iniciar sesión, por favor intente nuevamente');
-      console.log(error);
-    }
+      }), catchError(error => {
+        console.error('Login error:', error);
+        this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
+        return of([]);
+      })
+    );
+
   }
 
   registerFunction() {
