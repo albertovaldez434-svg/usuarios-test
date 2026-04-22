@@ -22,7 +22,12 @@ export class ProfilePage implements OnInit {
   constructor(
     private userService: UsuariosService,
     private actionSheetCtrl: ActionSheetController,
-  ) { }
+  ) { 
+    const imgData = localStorage.getItem('myImage');
+    if (imgData) {
+      this.imgSrc = JSON.parse(imgData);
+    }
+  }
 
   ngOnInit() {
     // console.log('inicia pagina');
@@ -117,6 +122,7 @@ export class ProfilePage implements OnInit {
         const element = result.results[0];
         const rawData = `data:image/${element.metadata?.format};base64,${element.thumbnail}`;
         this.imgSrc = await this.compressBase64(rawData);
+        localStorage.setItem('myImage', this.imgSrc);
       }
 
       // console.log('Format:', result.metadata?.format);

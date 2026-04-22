@@ -14,24 +14,33 @@ export const usersGuardGuard: CanActivateFn = (route, state) => {
     filter(loginData => loginData !== null),
     take(1),
     map(loginData => {
-      console.log('Guard hit for:', state.url);
-      console.log('Login data in guard:', loginData); // Agrega este log para verificar el valor de loginData
+      // console.log('Guard hit for:', state.url);
+      // console.log('Login data in guard:', loginData); // Agrega este log para verificar el valor de loginData
+      const requiredRole = route.data['idRol'];
 
       const token = loginData?.access_token;
 
-      if (token && !jwtHelper.isTokenExpired(token)) {
+      if (!token || jwtHelper.isTokenExpired(token)) {
+        console.log('token expired or missing');
+        localStorage.removeItem('loginData');
+
+        return router.createUrlTree(
+          ['/login'],
+          { queryParams: { returnUrl: state.url } }
+        );
+      }
+
+      if (!requiredRole) {
         return true;
       }
 
-      console.log('token in login data expired'); // Agrega este log para verificar el valor de loginData
-      localStorage.removeItem('loginData');
+      const hasAccess = loginData?.idRol === requiredRole;
 
-      return router.createUrlTree(
-        ['/login'], // Redirigir al usuario a la página de inicio de sesión 
-        { queryParams: { returnUrl: state.url } } // Opcional: pasar la URL de retorno para redirigir después del inicio de sesión
-      );
+      if (hasAccess) {
+        return true;
+      }
 
-    })
-  );
+      return router.createUrlTree(['/profile']);
+    }));
 
 };

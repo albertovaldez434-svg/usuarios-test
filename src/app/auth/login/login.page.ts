@@ -67,7 +67,7 @@ export class LoginPage implements OnInit {
         console.log('iniciando subscribe');
         this.UserService.setLogin(userInfo);
         this.openModalFunc('Sesion iniciada');
-        this.route.navigate(['/usuarios']);
+        this.route.navigate(['/profile']);
         console.log('finalizando');
       },
       error: (error) => {
@@ -80,7 +80,8 @@ export class LoginPage implements OnInit {
   }
 
   registerFunction() {
-    this.openModalFunc('Función de registro aún no implementada');
+    // this.openModalFunc('Función de registro aún no implementada');
+    this.route.navigate(['/registro']);
     return;
   }
 

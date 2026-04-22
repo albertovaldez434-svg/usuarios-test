@@ -12,6 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IonModalComponent } from './components/ion-modal/ion-modal.component';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
       swipeBackEnabled: false
     }), 
     AppRoutingModule, 
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    RegisterFormComponent
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

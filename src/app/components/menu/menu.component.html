@@ -6,7 +6,7 @@
   </ion-header>
   <ion-content class="ion-padding">
     @for (page of pages; track $index) {
-    <ion-item [routerLink]="page.url">
+    <ion-item [routerLink]="page.url" (click)="close()">
       <ion-label>{{page.title}}</ion-label>
     </ion-item>
     }

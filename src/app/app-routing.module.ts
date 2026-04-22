@@ -4,13 +4,19 @@ import { usersGuardGuard } from './users-guard-guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'usuarios',
     loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule),
-    canActivate: [usersGuardGuard]
+    canActivate: [usersGuardGuard],
+    data: { idRol: 1 }
   },
   {
     path: 'profile',
@@ -18,11 +24,9 @@ const routes: Routes = [
     canActivate: [usersGuardGuard]
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    path: 'registro',
+    loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroPageModule)
   },
-
 
 
 ];

@@ -13,5 +13,6 @@ export interface AuthUser {
     access_token: string;
     token_type: string;
     idUser: number;
+    idRol: number;
     nombreUsuario: string;
 }

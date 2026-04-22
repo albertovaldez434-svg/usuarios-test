@@ -18,6 +18,13 @@ export class UsuariosService {
       const storedLogin: AuthUser = JSON.parse(dataLogin);
       this.LoginData.next(storedLogin);
     }
+
+    //cargar usuarios
+    const users = localStorage.getItem('users');
+    if (users) {
+      const storedUsers: Users[] = JSON.parse(users);
+      this.user.next(storedUsers);
+    }
   }
 
   //subjects
@@ -30,6 +37,7 @@ export class UsuariosService {
   //methods
   setUser = async (usrData: Users[]) => {
     this.user.next(usrData);
+    localStorage.setItem('users', JSON.stringify(usrData));
   }
 
   setLogin(loginData: AuthUser) {
