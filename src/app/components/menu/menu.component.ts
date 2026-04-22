@@ -8,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
   active = 'yes';
+  pages = [
+    { title: 'Home', url: '/home' },
+    { title: 'Usuarios', url: '/usuarios' },
+    { title: 'Perfil', url: '/profile' }
+  ];
   constructor() { }
 
   ngOnInit() { }
