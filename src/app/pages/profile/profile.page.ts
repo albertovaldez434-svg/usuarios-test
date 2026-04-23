@@ -25,7 +25,7 @@ export class ProfilePage implements OnInit {
   ) { 
     const imgData = localStorage.getItem('myImage');
     if (imgData) {
-      this.imgSrc = JSON.parse(imgData);
+      this.imgSrc = imgData;
     }
   }
 

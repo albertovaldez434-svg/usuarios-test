@@ -1,5 +1,7 @@
 {
   "name": "Usuarios_Ionic",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

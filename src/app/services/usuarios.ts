@@ -3,6 +3,7 @@ import { BehaviorSubject, delay, firstValueFrom, lastValueFrom } from 'rxjs';
 import { AuthUser, Users } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -62,7 +63,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios`;
+    const url = `${environment.URL_API}/api/Usuarios`;
 
     return this.http.get<Users[]>(url, httpOptions);
   }
@@ -74,7 +75,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/Login`;
+    const url = `${environment.URL_API}/api/Usuarios/Login`;
 
     // return this.http.post<AuthUser>(url, request, httpOptions).pipe(delay(5000));
     return this.http.post<AuthUser>(url, request, httpOptions);
@@ -87,7 +88,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios`;
+    const url = `${environment.URL_API}/api/Usuarios`;
 
     return this.http.post<Users>(url, newUser, httpOptions);
   }
@@ -99,7 +100,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/${user.idUser}`;
+    const url = `${environment.URL_API}/api/Usuarios/${user.idUser}`;
 
     return this.http.put<Users>(url, user, httpOptions);
   }
@@ -111,7 +112,7 @@ export class UsuariosService {
       }
     }
 
-    const url = `https://localhost:7085/api/Usuarios/${idUser}`;
+    const url = `${environment.URL_API}/api/Usuarios/${idUser}`;
 
     return this.http.delete(url, httpOptions);
   }
