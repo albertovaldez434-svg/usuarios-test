@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  URL_API: 'https://localhost:7085',
-  url_api2: 'https://10.0.2.2:7085',
+  URL_API: 'https://wstestjson-api-813112132995.us-central1.run.app',
+  // url_api2: 'https://10.0.2.2:7085',
   firebaseConfig: {
     apiKey: "AIzaSyDwSfVJzL_fZyjAuPJmtu6z5ACx0U1Ksx8",
     authDomain: "ionic-usuarios.firebaseapp.com",
