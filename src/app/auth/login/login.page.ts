@@ -6,6 +6,7 @@ import { Login } from 'src/app/models/login';
 import { ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { catchError, of, tap } from 'rxjs';
+import { Localstorage } from 'src/app/services/localstorage';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginPage implements OnInit {
   constructor(
     private builder: FormBuilder,
     private UserService: UsuariosService,
+    private secureStorage: Localstorage,
     private route: Router,
     private modalCtrl: ModalController
   ) {
@@ -66,6 +68,7 @@ export class LoginPage implements OnInit {
       next: (userInfo) => {
         console.log('iniciando subscribe');
         this.UserService.setLogin(userInfo);
+        this.secureStorage.setItem('authUser', userInfo);
         this.openModalFunc('Sesion iniciada');
         this.route.navigate(['/profile']);
         console.log('finalizando');

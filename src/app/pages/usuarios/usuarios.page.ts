@@ -5,6 +5,7 @@ import { IonModal, ModalController } from '@ionic/angular';
 import { catchError, of, tap } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
+import { Localstorage } from 'src/app/services/localstorage';
 import { UsuariosService } from 'src/app/services/usuarios';
 
 @Component({
@@ -23,6 +24,7 @@ export class UsuariosPage implements OnInit {
 
   constructor(
     private usersService: UsuariosService,
+    private secureStorage: Localstorage,
     private route: Router,
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder
@@ -69,6 +71,7 @@ export class UsuariosPage implements OnInit {
         console.log(usuarios);
         this.usuarios = usuarios;
         this.usersService.setUser(this.usuarios);
+        this.secureStorage.setItem('users', this.usuarios);
       },
       error: (error) => {
         console.log(error);

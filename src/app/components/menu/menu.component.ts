@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { UsuariosService } from '../../services/usuarios';
 
 @Component({
   selector: 'app-menu',
@@ -15,13 +16,18 @@ export class MenuComponent implements OnInit {
   ];
   
   constructor(
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private usuarioService: UsuariosService
   ) { }
 
   ngOnInit() { }
 
   close() {
     this.menuCtrl.close();
+  }
+
+  logout() {
+    this.usuarioService.closeSesion();
   }
 
 }

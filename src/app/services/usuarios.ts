@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, firstValueFrom, lastValueFrom } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { AuthUser, Users } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
+import { Localstorage } from './localstorage';
 
 @Injectable({
   providedIn: 'root',
@@ -11,21 +12,10 @@ import { environment } from 'src/environments/environment';
 export class UsuariosService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private secureStorage: Localstorage
   ) {
-    // Load login data from localStorage on service initialization
-    const dataLogin = localStorage.getItem('loginData');
-    if (dataLogin) {
-      const storedLogin: AuthUser = JSON.parse(dataLogin);
-      this.LoginData.next(storedLogin);
-    }
-
-    //cargar usuarios
-    const users = localStorage.getItem('users');
-    if (users) {
-      const storedUsers: Users[] = JSON.parse(users);
-      this.user.next(storedUsers);
-    }
+    this.loadStoredData();
   }
 
   //subjects
@@ -41,6 +31,22 @@ export class UsuariosService {
     localStorage.setItem('users', JSON.stringify(usrData));
   }
 
+  async loadStoredData() {
+    // Load login data from localStorage on service initialization
+    const dataLogin = await this.secureStorage.getItem<any>('authUser');
+    if (dataLogin) {
+      const storedLogin: AuthUser = JSON.parse(dataLogin);
+      this.LoginData.next(storedLogin);
+    }
+
+    //cargar usuarios
+    const users = await this.secureStorage.getItem<any>('users');
+    if (users) {
+      const storedUsers: Users[] = JSON.parse(users);
+      this.user.next(storedUsers);
+    }
+  }
+
   setLogin(loginData: AuthUser) {
     this.LoginData.next(loginData);
     localStorage.setItem('loginData', JSON.stringify(loginData));
@@ -48,11 +54,22 @@ export class UsuariosService {
 
   clearUser = async () => {
     this.user.next(null);
+    localStorage.removeItem('users');
   }
 
   clearLogin() {
     this.LoginData.next(null);
     localStorage.removeItem('loginData');
+  }
+
+  closeSesion(): void {
+    this.clearLogin();
+    this.clearUser();
+    localStorage.removeItem('myImage');
+  }
+
+  getLoginData(): AuthUser | null {
+    return this.LoginData.getValue();
   }
 
   //apis
