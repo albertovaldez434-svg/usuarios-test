@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div class="page-container">
+    <div #srcollContainer cdkDropListGroup class="listContainer">
+
+      <div cdkDropList #todoList class="myDropList" [cdkDropListData]="todoArr" (cdkDropListDropped)="drop($event)"
+        (cdkDropListEntered)="onListEntered($event)">
+        <ion-card-header>
+          <ion-card-title class="ion-text-center">Por Hacer</ion-card-title>
+        </ion-card-header>
+        @for (todoTask of todoArr; track $index) {
+        <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
+          {{todoTask}}
+        </div>
+        }
+      </div>
+
+      <div cdkDropList #doingList class="myDropList" [cdkDropListData]="doingArr" (cdkDropListDropped)="drop($event)"
+        (cdkDropListEntered)="onListEntered($event)">
+        <ion-card-header>
+          <ion-card-title class="ion-text-center">En Curso</ion-card-title>
+        </ion-card-header>
+        @for (doingTask of doingArr; track $index) {
+        <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
+          {{doingTask}}
+        </div>
+        }
+      </div>
+
+
+      <div cdkDropList #doneList class="myDropList" [cdkDropListData]="doneArr" (cdkDropListDropped)="drop($event)"
+        (cdkDropListEntered)="onListEntered($event)">
+        <ion-card-header>
+          <ion-card-title class="ion-text-center">Terminado</ion-card-title>
+        </ion-card-header>
+        @for (doneTask of doneArr; track $index) {
+        <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
+          {{doneTask}}
+        </div>
+        }
+      </div>
+
+    </div>
+  </div>
+</ion-content>

@@ -11,6 +11,7 @@ import { UsuariosService } from '../../services/usuarios';
 export class MenuComponent implements OnInit {
 
   pages = [
+    { title: 'Dashboard', url: '/dashboard' },
     { title: 'Usuarios', url: '/usuarios' },
     { title: 'Perfil', url: '/profile' }
   ];
@@ -28,6 +29,7 @@ export class MenuComponent implements OnInit {
 
   logout() {
     this.usuarioService.closeSesion();
+    localStorage.clear();
   }
 
 }

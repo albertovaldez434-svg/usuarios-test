@@ -28,28 +28,23 @@ export class UsuariosService {
   //methods
   setUser = async (usrData: Users[]) => {
     this.user.next(usrData);
-    localStorage.setItem('users', JSON.stringify(usrData));
+    this.secureStorage.setItem('users', usrData);
+    //localStorage.setItem('users', JSON.stringify(usrData));
   }
 
   async loadStoredData() {
-    // Load login data from localStorage on service initialization
-    const dataLogin = await this.secureStorage.getItem<any>('authUser');
-    if (dataLogin) {
-      const storedLogin: AuthUser = JSON.parse(dataLogin);
-      this.LoginData.next(storedLogin);
-    }
-
     //cargar usuarios
-    const users = await this.secureStorage.getItem<any>('users');
+    const users = await this.secureStorage.getItem<Users[]>('users');
     if (users) {
-      const storedUsers: Users[] = JSON.parse(users);
+      const storedUsers = users;
       this.user.next(storedUsers);
     }
   }
 
   setLogin(loginData: AuthUser) {
     this.LoginData.next(loginData);
-    localStorage.setItem('loginData', JSON.stringify(loginData));
+    this.secureStorage.setItem('authUser', loginData);
+    //localStorage.setItem('loginData', JSON.stringify(loginData));
   }
 
   clearUser = async () => {
@@ -65,7 +60,6 @@ export class UsuariosService {
   closeSesion(): void {
     this.clearLogin();
     this.clearUser();
-    localStorage.removeItem('myImage');
   }
 
   getLoginData(): AuthUser | null {

@@ -1,3 +1,18 @@
+@import '../../../theme/variables.scss';
+
+.page-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 $spacing-md;
+}
+
+@media (max-width: calc($breakpoint-tablet - 1px)) {
+  .page-container {
+    padding: 0 $spacing-sm;
+  }
+}
+
 .profile-picture-section {
   padding: 1.5rem 0;
 }
@@ -12,25 +27,25 @@
 .profile-picture-placeholder {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: $border-radius-full;
   background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: $shadow-md;
 
   ion-icon {
     font-size: 80px;
-    color: white;
+    color: $color-text-primary;
   }
 }
 
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: $border-radius-full;
   object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: $shadow-md;
   border: 3px solid var(--ion-color-primary);
 }
 
@@ -48,7 +63,7 @@
 
   ion-label {
     h2 {
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       margin-bottom: 0.25rem;
     }
 

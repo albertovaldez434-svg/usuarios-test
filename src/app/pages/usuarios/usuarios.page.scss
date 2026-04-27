@@ -1,97 +1,164 @@
+@import '../../../theme/variables.scss';
+
+.page-container {
+  max-width: 1200px;
+  margin: $spacing-xl auto;
+  width: 100%;
+  padding: $spacing-lg $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  min-height: 80vh;
+}
+
+@media (max-width: calc($breakpoint-tablet - 1px)) {
+  .page-container {
+    padding: $spacing-sm;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
 .table-responsive {
-    width: 100%;
-    overflow: hidden;
-    overflow-x: scroll;
-    //border-radius: 15px;
+  width: 100%;
+  overflow-x: auto;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  margin-top: $spacing-lg;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: $border-radius-md;
+  overflow: hidden;
 }
 
 th,
 td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+  padding: $spacing-md $spacing-lg;
+  border-bottom: 1px solid $color-border-light;
+  text-align: left;
+  font-size: $font-size-base;
+}
+
+th {
+  background: $color-primary;
+  color: $color-text-primary;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid $color-primary-shade;
+}
+
+tr:last-child td {
+  border-bottom: none;
 }
 
 thead {
-    background-color: transparent;
+  background: $color-primary;
 }
 
 .signUpfrm {
-    padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
+  padding: $spacing-xl;
+  max-width: 500px;
+  margin: $spacing-lg auto;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
 }
 
 .signUpfrm ion-item {
-    margin-bottom: 15px;
-    border-radius: 15px;
+  margin-bottom: $spacing-md;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
 }
 
 .button-container {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: $spacing-xl;
+  text-align: center;
 }
 
-@media (max-width: 768px) {
-    .table-responsive {
-        overflow-y: scroll;
-        max-height: 65vh;
-        padding: 10px;
-        border-top: 1px solid white;
-        border-bottom: 1px solid white;
-    }
+@media (max-width: calc($breakpoint-tablet - 1px)) {
+  .table-responsive {
+    overflow-y: auto;
+    max-height: 65vh;
+    padding: $spacing-xs;
+    border-radius: $border-radius-base;
+    box-shadow: $shadow-sm;
+    border: 1px solid $color-border-light;
+  }
 
-    table {
-        border: 0;
-    }
+  table {
+    border: 0;
+    border-radius: $border-radius-base;
+    box-shadow: none;
+  }
 
-    thead {
-        display: none;
-        /* hide headers */
-    }
+  thead {
+    display: none;
+  }
 
-    tr {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        //background: white;
-    }
+  tr {
+    display: block;
+    margin-bottom: $border-radius-sm;
+    border: 1px solid $color-border-light;
+    border-radius: $border-radius-sm;
+    padding: $spacing-xs;
+    box-shadow: $shadow-sm;
+  }
 
-    td {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 10px;
-        border: none;
-        border-bottom: 1px solid #eee;
-    }
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    border: none;
+    border-bottom: 1px solid $color-border-light;
+    font-size: $font-size-sm;
+  }
 
-    td:last-child {
-        border-bottom: none;
-    }
+  td:last-child {
+    border-bottom: none;
+  }
 
-    td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        //color: #666;
-    }
+  td::before {
+    content: attr(data-label);
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    margin-right: $spacing-sm;
+  }
 
-    .signUpfrm {
-        padding: 15px;
-        max-width: 100%;
-    }
+  .signUpfrm {
+    padding: $spacing-md;
+    max-width: 100%;
+    box-shadow: $shadow-sm;
+    border-radius: $border-radius-base;
+  }
 
-    .signUpfrm ion-item {
-        margin-bottom: 10px;
-    }
+  .signUpfrm ion-item {
+    margin-bottom: $spacing-xs;
+    box-shadow: none;
+  }
 
-    .button-container {
-        margin-top: 15px;
-    }
+  .button-container {
+    margin-top: $spacing-md;
+  }
+}
+
+// Extra: Add hover and focus for table rows and buttons
+tr:hover {
+  background: $color-primary-tint;
+  transition: background 0.2s;
+}
+
+ion-button {
+  border-radius: $button-border-radius;
+  box-shadow: $shadow-sm;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.5px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+ion-button:hover, ion-button:focus {
+  background: $color-primary-shade;
+  color: $color-text-primary;
+  box-shadow: $shadow-md;
 }

@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from './services/usuarios';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { Localstorage } from './services/localstorage';
+import { AuthUser } from './models/users';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,30 +11,48 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isLogged: boolean = false;
 
   constructor(
     private userService: UsuariosService,
     private route: Router,
-    private activeRoute: ActivatedRoute
+    private secureStorage: Localstorage
   ) {
     this.checkUserdata();
   }
 
-  checkUserdata() {
-    this.userService.LoginData$.subscribe(data => {
-      if (data) {
-        this.isLogged = true;
-        // const returnUrl = this.activeRoute.snapshot.queryParamMap.get('returnUrl')';
-        // this.route.navigateByUrl(returnUrl);
+  ngOnInit() {
+    this.route.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      localStorage.setItem('lastVisitedPage', event.urlAfterRedirects);
+    });
 
-        // console.log('si hay datos guardados');
+    this.restoreLastPage();
+  }
+
+  async checkUserdata() {
+    if (!this.isLogged) {
+      const dataLogin = await this.secureStorage.getItem<AuthUser>('authUser');
+      if (dataLogin) {
+        const storedLogin = dataLogin;
+        this.userService.setLogin(storedLogin);
+        this.isLogged = true;
+        this.route.navigate(['/profile']);
       } else {
         this.isLogged = false;
         this.route.navigate(['/login']);
-        // console.log('no hay datos guardados');
-      };
-    });
+      }
+    }
   }
+
+  restoreLastPage() {
+    const lastPage = localStorage.getItem('lastVisitedPage');
+    if (lastPage && window.location.pathname === '/') {
+      this.route.navigateByUrl(lastPage);
+    }
+  }
+
+
 }

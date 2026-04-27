@@ -1,3 +1,5 @@
+@import '../../../theme/variables.scss';
+
 :host {
   display: block;
 }
@@ -8,8 +10,8 @@
 }
 
 .register-container {
-  min-height: 100vh;
-  padding: 28px 16px;
+  min-height: $viewport-min-height;
+  padding: $spacing-2xl $spacing-md;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,29 +19,29 @@
 }
 
 .form-container {
-  width: min(100%, 420px);
-  max-width: 520px;
-  padding: 30px 24px;
-  border-radius: 24px;
-  background: rgb(59 58 58 / 98%);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  width: min(100%, $container-sm);
+  max-width: $container-max-width;
+  padding: $spacing-3xl $spacing-xl;
+  border-radius: $border-radius-lg;
+  background: $color-bg-dark-transparent;
+  box-shadow: $shadow-lg;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: $spacing-lg;
 }
 
 ion-item {
-  --border-radius: 14px;
+  --border-radius: #{$border-radius-base};
 }
 
 ion-button {
-  min-height: 48px;
-  --border-radius: 14px;
+  min-height: $button-height;
+  --border-radius: #{$button-border-radius};
 }
 
-@media (min-width: 1024px) {
+@media (min-width: $breakpoint-desktop) {
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
 
 }

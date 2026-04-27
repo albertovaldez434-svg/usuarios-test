@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MenuComponent } from './components/menu/menu.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IonModalComponent } from './components/ion-modal/ion-modal.component';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
@@ -31,7 +30,6 @@ initializeApp(environment.firebaseConfig);
       swipeBackEnabled: false
     }), 
     AppRoutingModule, 
-    NgbModule,
     ReactiveFormsModule,
     RegisterFormComponent
   ],
@@ -42,6 +40,6 @@ initializeApp(environment.firebaseConfig);
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

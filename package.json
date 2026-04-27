@@ -30,9 +30,7 @@
     "@capacitor/keyboard": "8.0.2",
     "@capacitor/status-bar": "8.0.2",
     "@ionic/angular": "^8.0.0",
-    "@ng-bootstrap/ng-bootstrap": "^19.0.1",
-    "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.6",
+
     "firebase": "^12.12.1",
     "ionicons": "^7.0.0",
     "jwt-decode": "^4.0.0",
