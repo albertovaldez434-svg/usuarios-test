@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { UserTasks } from 'src/app/models/task';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,16 +12,54 @@ export class DashboardPage implements OnInit {
   @ViewChild('srcollContainer', { static: true })
   scrollContainer!: ElementRef<HTMLElement>;
 
-  todoArr: string[] = ["Task 1", "Task 2", "Task 3", "Task 4", "Task 5"];
-  doingArr: string[] = [];
-  doneArr: string[] = [];
+  todoArr: UserTasks[] = [];
+  doingArr: UserTasks[] = [];
+  doneArr: UserTasks[] = [];
 
   private edgeThreshold = 120;
   private maxScrollSpeed = 40;
 
-  ngOnInit() {}
+  constructor(
 
-  drop(event: CdkDragDrop<string[]>) {
+  ) {
+    const task1: UserTasks = {
+      id: 1,
+      title: 'Mi Tarea 1',
+      description: 'Esta es la descripcion de mi tarea',
+      status: 1
+    };
+    const task2: UserTasks = {
+      id: 2,
+      title: 'Mi Tarea 2',
+      description: 'Especifica la descripcion de mi tarea',
+      status: 1
+    };
+    const task3: UserTasks = {
+      id: 3,
+      title: 'Mi Tarea 3',
+      description: 'Espero que esta tarea tenga una descripcion',
+      status: 1
+    };
+    const task4: UserTasks = {
+      id: 4,
+      title: 'Mi Tarea 4',
+      description: 'Descripcion de mi tarea 4',
+      status: 1
+    };
+    const task5: UserTasks = {
+      id: 5,
+      title: 'Mi Tarea 5',
+      description: 'Descripcion de mi tarea 5, pepe pecas',
+      status: 1
+    };
+
+    this.todoArr.push(task1, task2, task3, task4, task5);
+  }
+
+  ngOnInit() { }
+
+  drop(event: CdkDragDrop<UserTasks[]>) {
+    document.body.classList.remove('grabbing');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -34,6 +73,7 @@ export class DashboardPage implements OnInit {
   }
 
   onDragMoved(event: CdkDragMove) {
+    document.body.classList.add('grabbing');
     const container = this.scrollContainer.nativeElement;
     const rect = container.getBoundingClientRect();
     const pointerX = event.pointerPosition.x;

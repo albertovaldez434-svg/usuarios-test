@@ -21,8 +21,27 @@
         </ion-card-header>
         @for (todoTask of todoArr; track $index) {
         <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
-          {{todoTask}}
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{todoTask.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ todoTask.description}}
+            </ion-card-content>
+          </ion-card>
         </div>
+
+        <!-- Placeholder -->
+        <ng-template cdkDragPlaceholder>
+          <div class="drag-placeholder"></div>
+        </ng-template>
+
+        <!-- Preview (ghost mientras arrastras) -->
+        <ng-template cdkDragPreview>
+          <div class="drag-preview">
+            {{todoTask}}
+          </div>
+        </ng-template>
         }
       </div>
 
@@ -37,7 +56,6 @@
         </div>
         }
       </div>
-
 
       <div cdkDropList #doneList class="myDropList" [cdkDropListData]="doneArr" (cdkDropListDropped)="drop($event)"
         (cdkDropListEntered)="onListEntered($event)">

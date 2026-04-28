@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
 
   restoreLastPage() {
     const lastPage = localStorage.getItem('lastVisitedPage');
-    if (lastPage && window.location.pathname === '/') {
+    if (lastPage && this.route.url === '/') {
       this.route.navigateByUrl(lastPage);
     }
   }
