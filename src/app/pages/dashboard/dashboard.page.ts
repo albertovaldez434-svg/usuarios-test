@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserTasks } from 'src/app/models/task';
+import { UsuariosService } from 'src/app/services/usuarios';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,43 +21,29 @@ export class DashboardPage implements OnInit {
   private maxScrollSpeed = 40;
 
   constructor(
-
+    private usuarioService: UsuariosService
   ) {
-    const task1: UserTasks = {
-      id: 1,
-      title: 'Mi Tarea 1',
-      description: 'Esta es la descripcion de mi tarea',
-      status: 1
-    };
-    const task2: UserTasks = {
-      id: 2,
-      title: 'Mi Tarea 2',
-      description: 'Especifica la descripcion de mi tarea',
-      status: 1
-    };
-    const task3: UserTasks = {
-      id: 3,
-      title: 'Mi Tarea 3',
-      description: 'Espero que esta tarea tenga una descripcion',
-      status: 1
-    };
-    const task4: UserTasks = {
-      id: 4,
-      title: 'Mi Tarea 4',
-      description: 'Descripcion de mi tarea 4',
-      status: 1
-    };
-    const task5: UserTasks = {
-      id: 5,
-      title: 'Mi Tarea 5',
-      description: 'Descripcion de mi tarea 5, pepe pecas',
-      status: 1
-    };
 
-    this.todoArr.push(task1, task2, task3, task4, task5);
   }
 
   ngOnInit() { }
+
+  ionViewDidEnter() {
+    this.cargarTareas();
+  }
+
+  cargarTareas() {
+    const IdUser = this.usuarioService.getLoginData()?.idUser;
+
+    if (IdUser) {
+      this.usuarioService.cargarTareasUsuario(IdUser).subscribe(tasks => {
+        this.todoArr = tasks.filter(t => t.status === 0);
+        this.doingArr = tasks.filter(t => t.status === 1);
+        this.doneArr = tasks.filter(t => t.status === 2);
+      });
+    }
+  }
+
 
   drop(event: CdkDragDrop<UserTasks[]>) {
     document.body.classList.remove('grabbing');

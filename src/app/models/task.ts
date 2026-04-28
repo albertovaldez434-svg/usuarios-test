@@ -3,4 +3,5 @@ export interface UserTasks {
     title: string;
     description: string;
     status: number;
+    idUser: number;
 }

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
 import { Localstorage } from './localstorage';
+import { UserTasks } from '../models/task';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,9 @@ export class UsuariosService {
 
   private LoginData = new BehaviorSubject<AuthUser | null>(null);
   LoginData$ = this.LoginData.asObservable();
+
+  private TasksData = new BehaviorSubject<UserTasks[] | null>(null);
+  TaskData$ = this.TasksData.asObservable();
 
   //methods
   setUser = async (usrData: Users[]) => {
@@ -64,6 +68,11 @@ export class UsuariosService {
 
   getLoginData(): AuthUser | null {
     return this.LoginData.getValue();
+  }
+
+  async setTasksData(tasks: UserTasks[]) {
+    this.TasksData.next(tasks);
+    await this.secureStorage.setItem('tasks', tasks);
   }
 
   //apis
@@ -126,6 +135,12 @@ export class UsuariosService {
     const url = `${environment.URL_API}/api/Usuarios/${idUser}`;
 
     return this.http.delete(url, httpOptions);
+  }
+
+  cargarTareasUsuario(idUser: number) {
+    const url = `${environment.URL_API}/api/Usuarios/GetTareas/${idUser}`;
+
+    return this.http.get<UserTasks[]>(url);
   }
 
 }
