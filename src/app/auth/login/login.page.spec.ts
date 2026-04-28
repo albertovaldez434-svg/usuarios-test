@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { jest, describe, beforeEach, it, expect } from '@jest/globals';
 import { IonicModule } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,8 +11,14 @@ describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
 
-  const mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-  const mockUserService = jasmine.createSpyObj('UsuariosService', ['Login', 'setLogin']);
+  const mockRouter = {
+    navigate: jest.fn()
+  };
+
+  const mockUserService = {
+    Login: jest.fn(),
+    setLogin: jest.fn()
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -32,14 +39,14 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize the form with Usuario and Password controls', () => {
-    expect(component.loginForm.contains('Usuario')).toBeTrue();
-    expect(component.loginForm.contains('Password')).toBeTrue();
+  it('should initialize the form', () => {
+    expect(component.loginForm.contains('Usuario')).toBe(true);
+    expect(component.loginForm.contains('Password')).toBe(true);
     expect(component.loginForm.value).toEqual({ Usuario: '', Password: '' });
   });
 
-  it('should show modal when loginFunction is called with empty credentials', async () => {
-    spyOn(component, 'openModalFunc').and.returnValue(Promise.resolve());
+  it('should show modal with empty credentials', async () => {
+    jest.spyOn(component, 'openModalFunc').mockResolvedValue(undefined);
 
     component.loginForm.setValue({ Usuario: '', Password: '' });
     await component.loginFunction();
@@ -49,23 +56,29 @@ describe('LoginPage', () => {
     );
   });
 
-  it('should log in and navigate when credentials are valid', async () => {
+  it('should login and navigate', async () => {
     const userInfo = { id: 1, Usuario: 'hawke434' };
-    mockUserService.Login.and.returnValue(Promise.resolve(userInfo));
-    spyOn(component, 'openModalFunc').and.returnValue(Promise.resolve());
+    mockUserService.Login.mockResolvedValue(userInfo);
+
+    jest.spyOn(component, 'openModalFunc').mockResolvedValue(undefined);
 
     component.loginForm.setValue({ Usuario: 'hawke434', Password: 'Iamd3ath' });
     await component.loginFunction();
 
-    expect(mockUserService.Login).toHaveBeenCalledWith({ Usuario: 'hawke434', Password: 'Iamd3ath' });
+    expect(mockUserService.Login).toHaveBeenCalledWith({
+      Usuario: 'hawke434',
+      Password: 'Iamd3ath'
+    });
+
     expect(mockUserService.setLogin).toHaveBeenCalledWith(userInfo);
     expect(component.openModalFunc).toHaveBeenCalledWith('Sesion iniciada');
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/usuarios']);
   });
 
-  it('should show error modal when login service throws', async () => {
-    mockUserService.Login.and.returnValue(Promise.reject('error')); 
-    spyOn(component, 'openModalFunc').and.returnValue(Promise.resolve());
+  it('should handle login error', async () => {
+    mockUserService.Login.mockRejectedValue('error');
+
+    jest.spyOn(component, 'openModalFunc').mockResolvedValue(undefined);
 
     component.loginForm.setValue({ Usuario: 'hawke434', Password: 'Iamd3ath' });
     await component.loginFunction();
@@ -75,11 +88,13 @@ describe('LoginPage', () => {
     );
   });
 
-  it('should open registration modal when registerFunction is called', async () => {
-    spyOn(component, 'openModalFunc').and.returnValue(Promise.resolve());
+  it('should open register modal', () => {
+    jest.spyOn(component, 'openModalFunc').mockResolvedValue(undefined);
 
     component.registerFunction();
 
-    expect(component.openModalFunc).toHaveBeenCalledWith('Función de registro aún no implementada');
+    expect(component.openModalFunc).toHaveBeenCalledWith(
+      'Función de registro aún no implementada'
+    );
   });
 });
