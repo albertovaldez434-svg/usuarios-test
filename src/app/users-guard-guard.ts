@@ -22,7 +22,7 @@ export const usersGuardGuard: CanActivateFn = (route, state) => {
 
       if (!token || jwtHelper.isTokenExpired(token)) {
         console.log('token expired or missing');
-        localStorage.removeItem('loginData');
+        localStorage.removeItem('authUser');
 
         return router.createUrlTree(
           ['/login'],

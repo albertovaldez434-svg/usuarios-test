@@ -37,9 +37,10 @@ export class DashboardPage implements OnInit {
 
     if (IdUser) {
       this.usuarioService.cargarTareasUsuario(IdUser).subscribe(tasks => {
-        this.todoArr = tasks.filter(t => t.status === 0);
-        this.doingArr = tasks.filter(t => t.status === 1);
-        this.doneArr = tasks.filter(t => t.status === 2);
+        console.log('Tareas cargadas:', tasks);
+        this.todoArr = tasks.filter(t => t.status === 1);
+        this.doingArr = tasks.filter(t => t.status === 2);
+        this.doneArr = tasks.filter(t => t.status === 3);
       });
     }
   }

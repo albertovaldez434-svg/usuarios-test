@@ -58,7 +58,7 @@ export class UsuariosService {
 
   clearLogin() {
     this.LoginData.next(null);
-    localStorage.removeItem('loginData');
+    localStorage.removeItem('authUser');
   }
 
   closeSesion(): void {
@@ -138,9 +138,15 @@ export class UsuariosService {
   }
 
   cargarTareasUsuario(idUser: number) {
+    const httpOptions = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
     const url = `${environment.URL_API}/api/Usuarios/GetTareas/${idUser}`;
 
-    return this.http.get<UserTasks[]>(url);
+    return this.http.get<UserTasks[]>(url, httpOptions);
   }
 
 }
