@@ -36,18 +36,25 @@ export class DashboardPage implements OnInit {
     const IdUser = this.usuarioService.getLoginData()?.idUser;
 
     if (IdUser) {
-      this.usuarioService.cargarTareasUsuario(IdUser).subscribe(tasks => {
-        console.log('Tareas cargadas:', tasks);
-        this.todoArr = tasks.filter(t => t.status === 1);
-        this.doingArr = tasks.filter(t => t.status === 2);
-        this.doneArr = tasks.filter(t => t.status === 3);
+      this.usuarioService.cargarTareasUsuario(IdUser).subscribe({
+        next: (tasks) => {
+          this.todoArr = tasks.filter(t => t.status === 1);
+          this.doingArr = tasks.filter(t => t.status === 2);
+          this.doneArr = tasks.filter(t => t.status === 3);
+        },
+        error: (err) => {
+          console.error('Error al cargar las tareas:', err);
+        }
       });
     }
   }
 
-
   drop(event: CdkDragDrop<UserTasks[]>) {
     document.body.classList.remove('grabbing');
+
+    const selectedTask: UserTasks = event.item.data;
+    const targetListId = event.container.id;
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -57,6 +64,8 @@ export class DashboardPage implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+
+      this.updateTaskStatus(selectedTask, targetListId);
     }
   }
 
@@ -98,5 +107,30 @@ export class DashboardPage implements OnInit {
     });
   }
 
+  updateTaskStatus(Task: UserTasks, newListId: string) {
+
+    switch (newListId) {
+      case 'todo':
+        Task.status = 1;
+        break;
+      case 'doing':
+        Task.status = 2;
+        break;
+      case 'done':
+        Task.status = 3;
+        break;
+    }
+
+    this.usuarioService.actualizarTarea(Task).subscribe({
+      next: (data) => {
+        console.log(data);
+        console.log('Tarea actualizada correctamente');
+      },
+      error: (err) => {
+        console.error('Error al actualizar la tarea:', err);
+      }
+    });
+
+  }
 
 }

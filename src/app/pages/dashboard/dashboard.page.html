@@ -14,13 +14,13 @@
   <div class="page-container">
     <div #srcollContainer cdkDropListGroup class="listContainer">
 
-      <div cdkDropList #todoList class="myDropList" [cdkDropListData]="todoArr" (cdkDropListDropped)="drop($event)"
+      <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr" (cdkDropListDropped)="drop($event)"
         (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
           <ion-card-title class="ion-text-center">Por Hacer</ion-card-title>
         </ion-card-header>
         @for (todoTask of todoArr; track $index) {
-        <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
+        <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)" data-id="{{todoTask.id}}">
           <ion-card>
             <ion-card-header>
               <ion-card-title>{{todoTask.title}}</ion-card-title>
@@ -45,27 +45,65 @@
         }
       </div>
 
-      <div cdkDropList #doingList class="myDropList" [cdkDropListData]="doingArr" (cdkDropListDropped)="drop($event)"
+      <div cdkDropList #doingList id="doing" class="myDropList" [cdkDropListData]="doingArr" (cdkDropListDropped)="drop($event)"
         (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
           <ion-card-title class="ion-text-center">En Curso</ion-card-title>
         </ion-card-header>
         @for (doingTask of doingArr; track $index) {
-        <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
-          {{doingTask}}
+        <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)" data-id="{{doingTask.id}}">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{doingTask.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ doingTask.description}}
+            </ion-card-content>
+          </ion-card>
         </div>
+
+        <!-- Placeholder -->
+        <ng-template cdkDragPlaceholder>
+          <div class="drag-placeholder"></div>
+        </ng-template>
+
+        <!-- Preview (ghost mientras arrastras) -->
+        <ng-template cdkDragPreview>
+          <div class="drag-preview">
+            {{doingTask}}
+          </div>
+        </ng-template>
         }
       </div>
 
-      <div cdkDropList #doneList class="myDropList" [cdkDropListData]="doneArr" (cdkDropListDropped)="drop($event)"
+      <div cdkDropList #doneList id="done" class="myDropList" [cdkDropListData]="doneArr" (cdkDropListDropped)="drop($event)"
         (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
           <ion-card-title class="ion-text-center">Terminado</ion-card-title>
         </ion-card-header>
         @for (doneTask of doneArr; track $index) {
-        <div cdkDrag class="divDrag" (cdkDragMoved)="onDragMoved($event)">
-          {{doneTask}}
+        <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)" data-id="{{doneTask.id}}">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{doneTask.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ doneTask.description}}
+            </ion-card-content>
+          </ion-card>
         </div>
+
+        <!-- Placeholder -->
+        <ng-template cdkDragPlaceholder>
+          <div class="drag-placeholder"></div>
+        </ng-template>
+
+        <!-- Preview (ghost mientras arrastras) -->
+        <ng-template cdkDragPreview>
+          <div class="drag-preview">
+            {{doneTask}}
+          </div>
+        </ng-template>
         }
       </div>
 
