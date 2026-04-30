@@ -99,6 +99,8 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": [
+              "zone.js", 
+              "zone.js/testing",
               "src/polyfills.ts",
               "@angular/localize/init"
             ],
