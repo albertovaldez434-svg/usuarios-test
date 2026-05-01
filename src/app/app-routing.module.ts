@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { usersGuardGuard } from './users-guard-guard';
+import { usersGuard } from './users-guard';
 
 const routes: Routes = [
   {
@@ -15,13 +15,13 @@ const routes: Routes = [
   {
     path: 'usuarios',
     loadChildren: () => import('./pages/usuarios/usuarios.module').then(m => m.UsuariosPageModule),
-    canActivate: [usersGuardGuard],
+    canActivate: [usersGuard],
     data: { idRol: 1 }
   },
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
-    canActivate: [usersGuardGuard]
+    canActivate: [usersGuard]
   },
   {
     path: 'registro',

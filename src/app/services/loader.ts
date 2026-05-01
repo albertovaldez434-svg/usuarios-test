@@ -19,7 +19,7 @@ export class LoaderService {
 
     this.isLoading = true;
 
-    if (this.requestCount > 1) {
+    if (this.requestCount >= 1) {
       this.loading = await this.loadingCtrl.create({
         message: 'Cargando...',
         spinner: 'crescent'
@@ -36,6 +36,7 @@ export class LoaderService {
       await this.loading.dismiss();
       this.loading = null;
       this.isLoading = false;
+      this.requestCount = 0;
     }
   }
 

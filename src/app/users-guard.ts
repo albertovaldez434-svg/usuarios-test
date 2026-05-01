@@ -4,7 +4,7 @@ import { UsuariosService } from './services/usuarios';
 import { filter, map, take } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-export const usersGuardGuard: CanActivateFn = (route, state) => {
+export const usersGuard: CanActivateFn = (route, state) => {
 
   const authService = inject(UsuariosService);
   const router = inject(Router);
