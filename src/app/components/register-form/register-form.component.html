@@ -140,15 +140,28 @@
       <ion-row class="button-row">
         <ion-col size="12" size-md="6">
           <ion-button expand="block" shape="round" type="submit" [disabled]="!registerForm.valid && submitted">
+            @if (isEditingData) {
+            <ion-icon slot="start" name="save-outline"></ion-icon>
+            Guardar Cambios
+            } @else {
             <ion-icon slot="start" name="checkmark-circle"></ion-icon>
             Registrarse
+            }
           </ion-button>
         </ion-col>
         <ion-col size="12" size-md="6">
+          @if (isEditingData) {
+          <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
+            <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+            Cancelar
+          </ion-button>
+          } @else {
           <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
             <ion-icon slot="start" name="refresh-circle"></ion-icon>
             Limpiar
           </ion-button>
+          }
+
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -76,7 +76,16 @@
 
 .user-info-section {
   ion-item {
-    --padding-start: 0;
-    --padding-end: 0;
+    --border-radius: 15px;
+    margin: 0 6px;
   }
+}
+.button-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+// se muestra el modal edicion
+.register-container .form-container {
+  height: 500px!important;
 }

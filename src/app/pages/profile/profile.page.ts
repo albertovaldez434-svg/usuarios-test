@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { AuthUser, Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Camera } from '@capacitor/camera';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, IonModal, ModalController } from '@ionic/angular';
+import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
+import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 
 @Component({
   selector: 'app-profile',
@@ -12,17 +14,20 @@ import { ActionSheetController } from '@ionic/angular';
   standalone: false
 })
 export class ProfilePage implements OnInit {
+  @ViewChild('modalEditInfo') ModalEditInfo!: IonModal;
   users!: Users[] | null;
   loggedUser!: AuthUser | null;
   currentUser?: Users;
   imgSrc: string = '';
+  editingUser: boolean = false;
 
   activeSubs!: Subscription;
 
   constructor(
     private userService: UsuariosService,
     private actionSheetCtrl: ActionSheetController,
-  ) { 
+    private modalCtrl: ModalController
+  ) {
     const imgData = localStorage.getItem('myImage');
     if (imgData) {
       this.imgSrc = imgData;
@@ -51,6 +56,20 @@ export class ProfilePage implements OnInit {
 
   ionViewWillLeave() {
     this.activeSubs.unsubscribe();
+  }
+
+  async openModalFunc(mensaje: string) {
+    const modal = this.modalCtrl.create({
+      component: IonModalComponent,
+      breakpoints: [0, 0.25, 0.5, 0.75],
+      initialBreakpoint: 0.5,
+      componentProps: {
+        mensaje: mensaje
+      }
+
+    });
+
+    (await modal).present();
   }
 
   findLoggedUser = () => {
@@ -153,6 +172,32 @@ export class ProfilePage implements OnInit {
         resolve(compressed);
       };
     });
+  }
+
+  editProfile() {
+    this.editingUser = true;
+    this.ModalEditInfo.present();
+    // this.modalCtrl.create({
+    //   component: RegisterFormComponent,
+    //   componentProps: {
+    //     userData: this.currentUser
+    //   }
+    // })
+
+  }
+
+  getDataEmitted(data: Users | null) {
+    if (data) {
+      console.log(data);
+    } else {
+      this.openModalFunc('No se han guardado los cambios.');
+      this.editingUser = false;
+      return;
+    }
+  }
+
+  guardarCambiosEdit() {
+
   }
 
 
