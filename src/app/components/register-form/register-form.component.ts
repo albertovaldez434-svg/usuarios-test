@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { Users } from 'src/app/models/users';
 
 @Component({
@@ -20,7 +20,8 @@ export class RegisterFormComponent implements OnInit {
   isEditingData: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalCtrl: ModalController
   ) {
   }
 
@@ -49,6 +50,11 @@ export class RegisterFormComponent implements OnInit {
 
   togglePasswordVisibility() {
     this.passwordVisible = !this.passwordVisible;
+  }
+
+  closeModal() {
+    this.resetForm();
+    this.modalCtrl.dismiss();
   }
 
   onSubmit() {

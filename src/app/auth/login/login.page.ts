@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Login } from 'src/app/models/login';
-import { ModalController } from '@ionic/angular';
+import { IonModal, ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { catchError, of, tap } from 'rxjs';
 import { Localstorage } from 'src/app/services/localstorage';
+import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
+import { Users } from 'src/app/models/users';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,7 @@ import { Localstorage } from 'src/app/services/localstorage';
   standalone: false
 })
 export class LoginPage implements OnInit {
+  @ViewChild('registerModal') registerModal!: IonModal;
   loginForm: FormGroup;
   valid: boolean = true;
 
@@ -82,10 +85,36 @@ export class LoginPage implements OnInit {
 
   }
 
-  registerFunction() {
-    // this.openModalFunc('Función de registro aún no implementada');
-    this.route.navigate(['/registro']);
+  async registerFunction() {
+    const modal = this.modalCtrl.create({
+      component: RegisterFormComponent,
+      breakpoints: [0, 0.25, 0.5, 0.75, 0.85],
+      initialBreakpoint: 0.85
+    });
+
+    (await modal).present();
     return;
+  }
+
+  getDataEmitted(data: Users | null) {
+    if (data) {
+      console.log('nuevo registro: ');
+      console.log(data);
+      this.UserService.signUpNewUser(data).subscribe({
+        next: (response) => {
+          console.log('Usuario registrado:', response);
+          this.registerModal.dismiss();
+          this.openModalFunc('Utilize sus credenciales para iniciar sesión');
+        },
+        error: (err) => {
+          console.log(err);
+          this.openModalFunc('Error al Registrarse, por favor intente nuevamente');
+        }
+      });
+      this.registerModal.dismiss();
+    } else {
+      return;
+    }
   }
 
 }

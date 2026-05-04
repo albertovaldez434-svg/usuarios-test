@@ -102,39 +102,21 @@ export class UsuariosService {
   }
 
   signUpNewUser(newUser: Users) {
-    const httpOptions = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
     const url = `${environment.URL_API}/api/Usuarios`;
 
-    return this.http.post<Users>(url, newUser, httpOptions);
+    return this.http.post<Users>(url, newUser);
   }
 
   editUser(user: Users) {
-    const httpOptions = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
     const url = `${environment.URL_API}/api/Usuarios/${user.idUser}`;
 
-    return this.http.put<Users>(url, user, httpOptions);
+    return this.http.put<Users>(url, user);
   }
 
   deleteUsuario(idUser: number) {
-    const httpOptions = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
     const url = `${environment.URL_API}/api/Usuarios/${idUser}`;
 
-    return this.http.delete(url, httpOptions);
+    return this.http.delete(url);
   }
 
   cargarTareasUsuario(idUser: number) {

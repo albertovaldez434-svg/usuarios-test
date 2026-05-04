@@ -1,169 +1,170 @@
-<div class="register-container">
-  <form class="form-container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <ion-grid>
-      <ion-row class="form-row">
-        <!-- First Name -->
-        <ion-col size="12" size-md="6">
-          <ion-item>
-            <ion-input type="text" formControlName="firstName" placeholder="Tu nombre"></ion-input>
-            <ion-icon slot="start" name="person-outline"></ion-icon>
-          </ion-item>
-          @if (submitted && f['firstName'].invalid) {
-          <div class="error-message">
-            @if (f['firstName'].errors?.['required']) {
-            <span>El nombre es requerido</span>
-            }
-            @if (f['firstName'].errors?.['minlength']) {
-            <span>Mínimo 2 caracteres</span>
-            }
-          </div>
-          }
-        </ion-col>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-        <!-- Last Name -->
-        <ion-col size="12" size-md="6">
-          <ion-item>
-            <ion-input type="text" formControlName="lastName" placeholder="Tu apellido"></ion-input>
-            <ion-icon slot="start" name="person-outline"></ion-icon>
-          </ion-item>
-          @if (submitted && f['lastName'].invalid) {
-          <div class="error-message">
-            @if (f['lastName'].errors?.['required']) {
-            <span>El apellido es requerido</span>
-            }
-            @if (f['lastName'].errors?.['minlength']) {
-            <span>Mínimo 2 caracteres</span>
-            }
-          </div>
-          }
-        </ion-col>
-      </ion-row>
+<form class="form-container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <ion-grid>
+    <!-- First Name -->
+    <ion-col size="12" size-md="6">
+      <ion-item>
+        <ion-input type="text" formControlName="firstName" placeholder="Tu nombre"></ion-input>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+      </ion-item>
+      @if (submitted && f['firstName'].invalid) {
+      <div class="error-message">
+        @if (f['firstName'].errors?.['required']) {
+        <span>El nombre es requerido</span>
+        }
+        @if (f['firstName'].errors?.['minlength']) {
+        <span>Mínimo 2 caracteres</span>
+        }
+      </div>
+      }
+    </ion-col>
 
-      <ion-row class="form-row">
-        <!-- Email -->
-        <ion-col size="12">
-          <ion-item>
-            <ion-input type="email" formControlName="email" placeholder="tu@correo.com"></ion-input>
-            <ion-icon slot="start" name="mail-outline"></ion-icon>
-          </ion-item>
-          @if (submitted && f['email'].invalid) {
-          <div class="error-message">
-            @if (f['email'].errors?.['required']) {
-            <span>El correo es requerido</span>
-            }
-            @if (f['email'].errors?.['email']) {
-            <span>Ingresa un correo válido</span>
-            }
-          </div>
-          }
-        </ion-col>
-      </ion-row>
+    <!-- Last Name -->
+    <ion-col size="12" size-md="6">
+      <ion-item>
+        <ion-input type="text" formControlName="lastName" placeholder="Tu apellido"></ion-input>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+      </ion-item>
+      @if (submitted && f['lastName'].invalid) {
+      <div class="error-message">
+        @if (f['lastName'].errors?.['required']) {
+        <span>El apellido es requerido</span>
+        }
+        @if (f['lastName'].errors?.['minlength']) {
+        <span>Mínimo 2 caracteres</span>
+        }
+      </div>
+      }
+    </ion-col>
 
-      <ion-row class="form-row">
-        <!-- Username -->
-        <ion-col size="12" size-md="6">
-          <ion-item>
-            <ion-input type="text" formControlName="username" placeholder="nombreusuario"></ion-input>
-            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-          </ion-item>
-          @if (submitted && f['username'].invalid) {
-          <div class="error-message">
-            @if (f['username'].errors?.['required']) {
-            <span>El usuario es requerido</span>
-            }
-            @if (f['username'].errors?.['minlength']) {
-            <span>Mínimo 3 caracteres</span>
-            }
-          </div>
-          }
-        </ion-col>
+    <!-- Email -->
+    <ion-col size="12">
+      <ion-item>
+        <ion-input type="email" formControlName="email" placeholder="tu@correo.com"></ion-input>
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
+      </ion-item>
+      @if (submitted && f['email'].invalid) {
+      <div class="error-message">
+        @if (f['email'].errors?.['required']) {
+        <span>El correo es requerido</span>
+        }
+        @if (f['email'].errors?.['email']) {
+        <span>Ingresa un correo válido</span>
+        }
+      </div>
+      }
+    </ion-col>
 
-        <!-- Mobile Number -->
-        <ion-col size="12" size-md="6">
-          <ion-item>
-            <ion-input type="tel" formControlName="mobileNumber" placeholder="+1 (555) 123-4567"></ion-input>
-            <ion-icon slot="start" name="call-outline"></ion-icon>
-          </ion-item>
-          @if (submitted && f['mobileNumber'].invalid) {
-          <div class="error-message">
-            @if (f['mobileNumber'].errors?.['required']) {
-            <span>El teléfono es requerido</span>
-            }
-            @if (f['mobileNumber'].errors?.['pattern']) {
-            <span>Teléfono inválido (mínimo 10 dígitos)</span>
-            }
-          </div>
-          }
-        </ion-col>
-      </ion-row>
+    <!-- Username -->
+    <ion-col size="12" size-md="6">
+      <ion-item>
+        <ion-input type="text" formControlName="username" placeholder="nombreusuario"></ion-input>
+        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+      </ion-item>
+      @if (submitted && f['username'].invalid) {
+      <div class="error-message">
+        @if (f['username'].errors?.['required']) {
+        <span>El usuario es requerido</span>
+        }
+        @if (f['username'].errors?.['minlength']) {
+        <span>Mínimo 3 caracteres</span>
+        }
+      </div>
+      }
+    </ion-col>
 
-      <ion-row class="form-row">
-        <!-- Password -->
-        <ion-col size="12" size-md="6">
-          <ion-item>
-            <ion-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
-              placeholder="Contraseña segura"></ion-input>
-            <ion-icon slot="end" [name]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
-              (click)="togglePasswordVisibility()" class="password-toggle"></ion-icon>
-          </ion-item>
-          @if (submitted && f['password'].invalid) {
-          <div class="error-message">
-            @if (f['password'].errors?.['required']) {
-            <span>El teléfono es requerido</span>
-            }
-            @if (f['password'].errors?.['minlength']) {
-            <span>Mínimo 8 caracteres</span>
-            }
-          </div>
-          }
-        </ion-col>
+    <!-- Mobile Number -->
+    <ion-col size="12" size-md="6">
+      <ion-item>
+        <ion-input type="tel" formControlName="mobileNumber" placeholder="+1 (555) 123-4567"></ion-input>
+        <ion-icon slot="start" name="call-outline"></ion-icon>
+      </ion-item>
+      @if (submitted && f['mobileNumber'].invalid) {
+      <div class="error-message">
+        @if (f['mobileNumber'].errors?.['required']) {
+        <span>El teléfono es requerido</span>
+        }
+        @if (f['mobileNumber'].errors?.['pattern']) {
+        <span>Teléfono inválido (mínimo 10 dígitos)</span>
+        }
+      </div>
+      }
+    </ion-col>
 
-        <!-- Confirm Password -->
-        <ion-col size="12" size-md="6">
-          <ion-item>
-            <ion-input [type]="passwordVisible ? 'text' : 'password'" formControlName="confirmPassword"
-              placeholder="Confirma tu contraseña"></ion-input>
-            <ion-icon slot="end" [name]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
-              (click)="togglePasswordVisibility()" class="password-toggle"></ion-icon>
-          </ion-item>
-          @if (submitted && f['confirmPassword'].invalid) {
-          <div class="error-message">
-            @if (f['confirmPassword'].errors?.['required']) {
-            <span>Debes confirmar la contraseña</span>
-            }
-          </div>
-          }
-        </ion-col>
-      </ion-row>
+    <!-- Password -->
+    <ion-col size="12" size-md="6">
+      <ion-item>
+        <ion-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
+          placeholder="Contraseña segura"></ion-input>
+        <ion-icon slot="end" [name]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
+          (click)="togglePasswordVisibility()" class="password-toggle"></ion-icon>
+      </ion-item>
+      @if (submitted && f['password'].invalid) {
+      <div class="error-message">
+        @if (f['password'].errors?.['required']) {
+        <span>El teléfono es requerido</span>
+        }
+        @if (f['password'].errors?.['minlength']) {
+        <span>Mínimo 8 caracteres</span>
+        }
+      </div>
+      }
+    </ion-col>
 
-      <!-- Buttons -->
-      <ion-row class="button-row">
-        <ion-col size="12" size-md="6">
-          <ion-button expand="block" shape="round" type="submit" [disabled]="!registerForm.valid && submitted">
-            @if (isEditingData) {
-            <ion-icon slot="start" name="save-outline"></ion-icon>
-            Guardar Cambios
-            } @else {
-            <ion-icon slot="start" name="checkmark-circle"></ion-icon>
-            Registrarse
-            }
-          </ion-button>
-        </ion-col>
-        <ion-col size="12" size-md="6">
+    <!-- Confirm Password -->
+    <ion-col size="12" size-md="6">
+      <ion-item>
+        <ion-input [type]="passwordVisible ? 'text' : 'password'" formControlName="confirmPassword"
+          placeholder="Confirma tu contraseña"></ion-input>
+        <ion-icon slot="end" [name]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
+          (click)="togglePasswordVisibility()" class="password-toggle"></ion-icon>
+      </ion-item>
+      @if (submitted && f['confirmPassword'].invalid) {
+      <div class="error-message">
+        @if (f['confirmPassword'].errors?.['required']) {
+        <span>Debes confirmar la contraseña</span>
+        }
+      </div>
+      }
+    </ion-col>
+
+    <!-- Buttons -->
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        @if (isEditingData) {
+        <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
+          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+          Cancelar
+        </ion-button>
+        } @else {
+        <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
+          <ion-icon slot="start" name="refresh-circle"></ion-icon>
+          Limpiar
+        </ion-button>
+        }
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-button expand="block" shape="round" type="submit" [disabled]="!registerForm.valid && submitted">
           @if (isEditingData) {
-          <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
-            <ion-icon slot="start" name="close-circle-outline"></ion-icon>
-            Cancelar
-          </ion-button>
+          <ion-icon slot="start" name="save-outline"></ion-icon>
+          Guardar Cambios
           } @else {
-          <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
-            <ion-icon slot="start" name="refresh-circle"></ion-icon>
-            Limpiar
-          </ion-button>
+          <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+          Registrarse
           }
+        </ion-button>
+      </ion-col>
+    </ion-row>
 
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
-</div>
+  </ion-grid>
+</form>
