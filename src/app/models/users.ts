@@ -14,5 +14,5 @@ export interface AuthUser {
     token_type: string;
     idUser: number;
     idRol: number;
-    nombreUsuario: string;
+    userInfo: Users;
 }

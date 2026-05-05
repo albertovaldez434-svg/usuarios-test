@@ -21,6 +21,7 @@ export class UsuariosPage implements OnInit {
   usuarioToEdit!: Users;
   usuarios: Users[] = [];
   signupForm: FormGroup;
+  searchValue: string = '';
 
   constructor(
     private usersService: UsuariosService,
@@ -43,7 +44,6 @@ export class UsuariosPage implements OnInit {
 
   ionViewDidEnter() {
     if (!this.loaded) {
-      console.log('ionViewDidEnter');
       this.obtenerUsuarios();
       this.loaded = true;
     }
@@ -68,13 +68,11 @@ export class UsuariosPage implements OnInit {
   obtenerUsuarios = () => {
     this.usersService.getUsers().subscribe({
       next: (usuarios) => {
-        console.log(usuarios);
+        this.usersService.clearUser();
         this.usuarios = usuarios;
         this.usersService.setUser(this.usuarios);
-        this.secureStorage.setItem('users', this.usuarios);
       },
       error: (error) => {
-        console.log(error);
         this.openModalFunc('No se pudo cargar la informacion de usuarios');
       }
     });
@@ -87,7 +85,6 @@ export class UsuariosPage implements OnInit {
 
   async beginSignup() {
     const formData = this.signupForm.value;
-    console.log(formData);
 
     const newUser: Users = {
       idUser: 0,
@@ -120,7 +117,6 @@ export class UsuariosPage implements OnInit {
         this.openModalFunc('Usuario registrado exitosamente');
         this.signupForm.reset();
       }, error: (error) => {
-        console.log(error);
         this.openModalFunc('Error al registrar el usuario');
         return of([]);
       }
@@ -154,7 +150,6 @@ export class UsuariosPage implements OnInit {
 
     this.usersService.editUser(this.usuarioToEdit).subscribe({
       next: (respone) => {
-        console.log(respone);
         this.modalSignUp.dismiss();
         this.editandoUsuario = false
       },

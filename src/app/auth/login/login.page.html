@@ -3,14 +3,16 @@
     <div [formGroup]="loginForm" class="form-container">
       <div class="header-wrapper">
         <h1>Bienvenido</h1>
-        <p>Ingresa tus datos para acceder a tu cuenta.</p>
+        <p>Ingresa tus datos para acceder a tu cuenta</p>
       </div>
 
       <div class="inputs-container" [formGroup]="loginForm">
         <ion-item lines="none" class="input-item">
-          <ion-input placeholder="Usuario" formControlName="Usuario" type="text"></ion-input>
+          <ion-icon name="mail-outline" slot="start" class="ion-margin-end"></ion-icon>
+          <ion-input placeholder="Email" formControlName="Email" type="text"></ion-input>
         </ion-item>
         <ion-item lines="none" class="input-item">
+          <ion-icon name="lock-closed-outline" slot="start" class="ion-margin-end"></ion-icon>
           <ion-input placeholder="Contraseña" formControlName="Password" type="password"></ion-input>
         </ion-item>
       </div>

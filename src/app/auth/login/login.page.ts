@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
     private modalCtrl: ModalController
   ) {
     this.loginForm = this.builder.group({
-      Usuario: [''],
+      Email: [''],
       Password: ['']
     });
   }
@@ -54,24 +54,25 @@ export class LoginPage implements OnInit {
   }
 
   loginFunction() {
-    const userName = this.loginForm.value.Usuario;
+    const Mail = this.loginForm.value.Email;
     const Password = this.loginForm.value.Password;
 
-    if (userName == null || userName == '' || Password == null || Password == '') {
+    if (Mail == null || Mail == '' || Password == null || Password == '') {
       this.openModalFunc('Datos incorrectos, por favor ingrese un usuario y contraseña válidos');
       return;
     }
 
     const loginRrquest: Login = {
-      Usuario: userName,
+      Email: Mail,
       Password: Password
     };
 
     this.UserService.Login(loginRrquest).subscribe({
-      next: (userInfo) => {
+      next: (loginData) => {
         console.log('iniciando subscribe');
-        this.UserService.setLogin(userInfo);
-        this.secureStorage.setItem('authUser', userInfo);
+        this.UserService.setLogin(loginData);
+        const data = [loginData.userInfo];
+        this.UserService.setUser(data);
         this.openModalFunc('Sesion iniciada');
         this.route.navigate(['/profile']);
         console.log('finalizando');

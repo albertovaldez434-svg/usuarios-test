@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Localstorage } from './services/localstorage';
 import { AuthUser } from './models/users';
 import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,8 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   isLogged: boolean = false;
 
+  loggedSubscription!: Subscription;
+
   constructor(
     private userService: UsuariosService,
     private route: Router,
@@ -23,6 +26,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loggedSubscription = this.userService.LoginData$.subscribe(
+      logindata => {
+        if (logindata) {
+          this.isLogged = true;
+        } else {
+          this.isLogged = false;
+        }
+      }
+    )
+
     this.route.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
@@ -30,6 +43,12 @@ export class AppComponent implements OnInit {
     });
 
     this.restoreLastPage();
+  }
+
+  ngOnDestroy() {
+    if (this.loggedSubscription) {
+      this.loggedSubscription.unsubscribe();
+    }
   }
 
   async checkUserdata() {

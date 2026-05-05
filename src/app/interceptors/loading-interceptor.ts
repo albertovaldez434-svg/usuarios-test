@@ -5,13 +5,13 @@ import { finalize, Observable } from "rxjs";
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
+  private totalRequests = 0;
 
   constructor(
     private loader: LoaderService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('LoadingInterceptor: intercepting request');
 
     if (req.headers.get('skip-loader')) {
       return next.handle(req); // do nothing special
@@ -20,8 +20,19 @@ export class LoadingInterceptor implements HttpInterceptor {
       // para omitir el loader en una solicitud HTTP, simplemente agrega el encabezado 'skip-loader' con cualquier valor.
     }
 
-    this.loader.show();
+    this.totalRequests++;
 
-    return next.handle(req).pipe(finalize(() => this.loader.hide()));
+    if (this.totalRequests === 1) {
+      this.loader.show();
+    }
+
+    return next.handle(req).pipe(
+      finalize(() => {
+        this.totalRequests--;
+
+        if (this.totalRequests === 0) {
+          this.loader.hide();
+        }
+      }));
   }
 }

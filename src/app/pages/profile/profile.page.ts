@@ -39,7 +39,6 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log('inicia pagina');
     this.activeSubs = new Subscription;
 
     this.activeSubs.add(
@@ -73,9 +72,7 @@ export class ProfilePage implements OnInit {
   }
 
   findLoggedUser = () => {
-    console.log('buscando usuario logeado');
     const logUser = this.users?.find(usr => usr.idUser == this.loggedUser?.idUser);
-    console.log(logUser);
     if (logUser) {
       this.currentUser = logUser;
     }
@@ -187,9 +184,7 @@ export class ProfilePage implements OnInit {
   }
 
   getDataEmitted(data: Users | null) {
-    if (data) {
-      console.log(data);
-    } else {
+    if (!data) {
       this.openModalFunc('No se han guardado los cambios.');
       this.editingUser = false;
       return;

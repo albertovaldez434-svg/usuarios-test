@@ -18,9 +18,6 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('AuthInterceptor: intercepting request');
-
-    const dataLogin = this.secureStorage.getItem<AuthUser>('authUser').then;
 
     return from(this.secureStorage.getItem<AuthUser>('authUser')).pipe(
       switchMap((dataLogin) => {

@@ -13,67 +13,61 @@
 
   <div class="page-container">
     <ion-grid>
-    <ion-row>
-      <ion-col size="12" size-md="6">
-        <ion-button expand="block" (click)="signupFunc()">
-          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-          Agregar Usuario
-        </ion-button>
-      </ion-col>
-      <ion-col size="12" size-md="6">
-        <ion-button expand="block" (click)="obtenerUsuarios()">
-          <ion-icon name="reload-outline" slot="start" class="ion-margin-end"></ion-icon>
-          Recargar Usuarios
-        </ion-button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-searchbar animated="true" show-cancel-button="focus" placeholder="Buscar"
+           [value]="searchValue" [(ngModel)]="searchValue"></ion-searchbar>
+        </ion-col>
+        <ion-col size="12" size-md="6">
+          <ion-button (click)="signupFunc()">
+            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+            Agregar Usuario
+          </ion-button>
+          <ion-button (click)="obtenerUsuarios()">
+            <ion-icon name="reload-outline" slot="start" class="ion-margin-end"></ion-icon>
+            Recargar Usuarios
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <div class="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Email</th>
-                <th>Telefono</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (usuario of usuarios; track $index) {
-              <tr>
-                <td data-label="Nombre">{{ usuario.nombre }}</td>
-                <td data-label="Apellidos">{{ usuario.apellidos }}</td>
-                <td data-label="Email">{{ usuario.email }}</td>
-                <td data-label="Telefono">{{ usuario.telefono }}</td>
-                <td>
-                  <ion-button expand="block" (click)="editarUsuario(usuario.idUser)">
-                    <ion-icon name="create-outline" slot="start" class="ion-margin-end"></ion-icon>
-                    Editar
-                  </ion-button>
-                  <ion-button expand="block" (click)="cerrarSesion()">
-                    <ion-icon name="trash-outline" slot="start" class="ion-margin-end"></ion-icon>
-                    Eliminar
-                  </ion-button>
-                </td>
-              </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </ion-col>
-    </ion-row>
+      @if (usuarios) {
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>Email</th>
+              <th>Telefono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (usuario of usuarios | search:searchValue:['nombre', 'apellidos', 'email', 'telefono']; track $index) {
+            <tr>
+              <td data-label="Nombre">{{ usuario.nombre }}</td>
+              <td data-label="Apellidos">{{ usuario.apellidos }}</td>
+              <td data-label="Email">{{ usuario.email }}</td>
+              <td data-label="Telefono">{{ usuario.telefono }}</td>
+              <td>
+                <ion-button expand="block" (click)="editarUsuario(usuario.idUser)">
+                  <ion-icon name="create-outline" slot="start" class="ion-margin-end"></ion-icon>
+                  Editar
+                </ion-button>
+                <ion-button expand="block" (click)="cerrarSesion()">
+                  <ion-icon name="trash-outline" slot="start" class="ion-margin-end"></ion-icon>
+                  Eliminar
+                </ion-button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      } @else {
+      <h4>No hay información disponible</h4>
+      }
 
-    <!-- <ion-row>
-      <ion-col>
-        <ion-button expand="block" (click)="cerrarSesion()">
-          <ion-icon name="log-out-outline" slot="start" class="ion-margin-end"></ion-icon>
-          Cerrar Sesion
-        </ion-button>
-      </ion-col>
-    </ion-row> -->
     </ion-grid>
   </div>
 

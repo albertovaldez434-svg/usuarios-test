@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { UsuariosService } from '../../services/usuarios';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -11,25 +12,22 @@ import { UsuariosService } from '../../services/usuarios';
 export class MenuComponent implements OnInit {
 
   pages = [
-    { title: 'Dashboard', url: '/dashboard' },
-    { title: 'Usuarios', url: '/usuarios' },
-    { title: 'Perfil', url: '/profile' }
+    { title: 'Dashboard', url: '/dashboard', icon: 'document-text-outline' },
+    { title: 'Usuarios', url: '/usuarios', icon: 'list-circle-outline' },
+    { title: 'Perfil', url: '/profile', icon: 'person-outline' }
   ];
   
   constructor(
-    private menuCtrl: MenuController,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private route: Router
   ) { }
 
   ngOnInit() { }
 
-  close() {
-    this.menuCtrl.close();
-  }
-
   logout() {
     this.usuarioService.closeSesion();
     localStorage.clear();
+    this.route.navigate(['/login']);
   }
 
 }

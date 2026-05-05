@@ -8,13 +8,16 @@ import { UsuariosPageRoutingModule } from './usuarios-routing.module';
 
 import { UsuariosPage } from './usuarios.page';
 
+import { SearchPipe } from '../../search-pipe'
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     UsuariosPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SearchPipe
 ],
   declarations: [UsuariosPage]
 })
