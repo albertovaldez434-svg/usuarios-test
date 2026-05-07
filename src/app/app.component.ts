@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { UsuariosService } from './services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
 import { Localstorage } from './services/localstorage';
@@ -19,14 +19,14 @@ export class AppComponent implements OnInit {
     private route: Router,
     private secureStorage: Localstorage
   ) {
-    // effect(() => {
-    //   const user = this.userService.loggedData$();
-    //   if (user) {
-    //     this.isLogged = true;
-    //   } else {
-    //     this.isLogged = false;
-    //   }
-    // });
+    effect(() => {
+      const user = this.userService.loggedData$();
+      if (user) {
+        this.isLogged = true;
+      } else {
+        this.isLogged = false;
+      }
+    });
     
     this.checkUserdata();
   }

@@ -12,23 +12,24 @@
   </ion-header> -->
 
   <div class="page-container">
+
     <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-searchbar animated="true" show-cancel-button="focus" placeholder="Buscar"
-           [value]="searchValue" [(ngModel)]="searchValue"></ion-searchbar>
-        </ion-col>
-        <ion-col size="12" size-md="6">
+      <div class="controls-header">
+        <div>
+          <ion-searchbar animated="true" show-cancel-button="focus" placeholder="Buscar" [value]="searchValue"
+            [(ngModel)]="searchValue"></ion-searchbar>
+        </div>
+        <div class="buttons-header">
           <ion-button (click)="signupFunc()">
             <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar Usuario
+            Agregar
           </ion-button>
           <ion-button (click)="obtenerUsuarios()">
             <ion-icon name="reload-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Recargar Usuarios
+            Recargar
           </ion-button>
-        </ion-col>
-      </ion-row>
+        </div>
+      </div>
 
       @if (usuarios) {
       <div class="table-responsive">
@@ -67,8 +68,9 @@
       } @else {
       <h4>No hay información disponible</h4>
       }
-
     </ion-grid>
+
+
   </div>
 
 </ion-content>

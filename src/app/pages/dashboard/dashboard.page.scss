@@ -43,12 +43,13 @@ ion-card {
 }
 
 .page-container {
-    max-width: 1300px;
+    max-width: 1500px;
     margin: 0 auto;
     width: 100%;
     padding: 15px;
     display: flex;
     justify-content: center;
+    height: 90vh;
 }
 
 .myDropList {
@@ -76,6 +77,7 @@ ion-card {
     width: 100%;
     height: $viewport-height-tablet;
     gap: 0;
+    justify-content: space-evenly;
 }
 
 /* Responsive Design for Tablet and Desktop */
@@ -88,8 +90,9 @@ ion-card {
     }
 
     .myDropList {
-        width: 33.33%;
-        min-width: 33.33%;
+        width: 450px;
+        height: 85vh;
+        overflow-y: scroll;
     }
 }
 

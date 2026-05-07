@@ -6,13 +6,14 @@ ion-searchbar {
 
 .page-container {
   max-width: 1200px;
-  margin: $spacing-xl auto;
+  // margin: $spacing-xl auto;
   width: 100%;
   padding: $spacing-lg $spacing-xl;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-md;
-  min-height: 80vh;
-  background: rgba(59, 58, 58, 0.98);
+  min-height: 86vh;
+  background: var(--ion-background-color);
+  margin: 0 auto;
 }
 
 @media (max-width: calc($breakpoint-tablet - 1px)) {
@@ -23,12 +24,27 @@ ion-searchbar {
   }
 }
 
+.controls-header {
+
+  @media (max-width: calc($breakpoint-mobile - 1px)) {}
+}
+
+.buttons-header {
+  display: flex;
+  justify-content: right;
+
+  @media (max-width: calc($breakpoint-mobile - 1px)) {
+    justify-content: space-around;
+  }
+}
+
 .table-responsive {
   width: 100%;
   overflow-x: auto;
   border-radius: $border-radius-md;
   box-shadow: $shadow-sm;
   margin-top: $spacing-lg;
+  max-height: 74vh;
 }
 
 table {
@@ -46,6 +62,10 @@ td {
   border-bottom: 1px solid $color-border-light;
   text-align: left;
   font-size: $font-size-base;
+}
+
+td {
+  background: rgba(59, 58, 58, 0.98);
 }
 
 th {
@@ -83,14 +103,18 @@ thead {
   text-align: center;
 }
 
-@media (max-width: calc($breakpoint-tablet - 1px)) {
+@media (max-width: $breakpoint-tablet) {
+  .table-responsive {
+    max-height: 72vh;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
   .table-responsive {
     overflow-y: auto;
-    max-height: 65vh;
-    padding: $spacing-xs;
+    max-height: 60vh;
     border-radius: $border-radius-base;
     box-shadow: $shadow-sm;
-    border: 1px solid $color-border-light;
   }
 
   table {
@@ -106,10 +130,11 @@ thead {
   tr {
     display: block;
     margin-bottom: $border-radius-sm;
-    border: 1px solid $color-border-light;
+    //border: 1px solid $color-border-light;
     border-radius: $border-radius-sm;
     padding: $spacing-xs;
     box-shadow: $shadow-sm;
+    background: rgba(59, 58, 58, 0.98);
   }
 
   td {
@@ -118,8 +143,9 @@ thead {
     align-items: center;
     padding: $spacing-xs $spacing-sm;
     border: none;
-    border-bottom: 1px solid $color-border-light;
+    // border-bottom: 1px solid $color-border-light;
     font-size: $font-size-sm;
+    background: none;
   }
 
   td:last-child {
@@ -163,7 +189,9 @@ ion-button {
   letter-spacing: 0.5px;
   transition: background 0.2s, box-shadow 0.2s;
 }
-ion-button:hover, ion-button:focus {
+
+ion-button:hover,
+ion-button:focus {
   background: $color-primary-shade;
   color: $color-text-primary;
   box-shadow: $shadow-md;
