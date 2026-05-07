@@ -69,16 +69,13 @@ export class LoginPage implements OnInit {
 
     this.UserService.Login(loginRrquest).subscribe({
       next: (loginData) => {
-        console.log('iniciando subscribe');
-        this.UserService.setLogin(loginData);
+        this.UserService.setLoginData(loginData);
         const data = [loginData.userInfo];
         this.UserService.setUser(data);
         this.openModalFunc('Sesion iniciada');
         this.route.navigate(['/profile']);
-        console.log('finalizando');
       },
       error: (error) => {
-        console.error('Login error:', error);
         this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
         //return of([]);
       }
@@ -99,16 +96,12 @@ export class LoginPage implements OnInit {
 
   getDataEmitted(data: Users | null) {
     if (data) {
-      console.log('nuevo registro: ');
-      console.log(data);
       this.UserService.signUpNewUser(data).subscribe({
         next: (response) => {
-          console.log('Usuario registrado:', response);
           this.registerModal.dismiss();
           this.openModalFunc('Utilize sus credenciales para iniciar sesión');
         },
         error: (err) => {
-          console.log(err);
           this.openModalFunc('Error al Registrarse, por favor intente nuevamente');
         }
       });

@@ -55,6 +55,7 @@ export class RegisterFormComponent implements OnInit {
   closeModal() {
     this.resetForm();
     this.modalCtrl.dismiss();
+    this.formSubmit.emit(null);
   }
 
   onSubmit() {
@@ -87,6 +88,11 @@ export class RegisterFormComponent implements OnInit {
 
 
   resetForm() {
+    if (this.isEditingData) {
+      this.registerForm.reset();
+      this.formSubmit.emit(null);
+      this.modalCtrl.dismiss();
+    }
     this.submitted = false;
     this.registerForm.reset();
   }

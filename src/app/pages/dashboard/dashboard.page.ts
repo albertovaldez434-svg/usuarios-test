@@ -33,7 +33,7 @@ export class DashboardPage implements OnInit {
   }
 
   cargarTareas() {
-    const IdUser = this.usuarioService.getLoginData()?.idUser;
+    const IdUser = this.usuarioService.loggedData$()?.idUser;
 
     if (IdUser) {
       this.usuarioService.cargarTareasUsuario(IdUser).subscribe({

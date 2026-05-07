@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthUser, Users } from '../models/users';
 import { HttpClient } from '@angular/common/http';
@@ -23,11 +23,24 @@ export class UsuariosService {
   private user = new BehaviorSubject<Users[] | null>(null);
   user$ = this.user.asObservable();
 
-  private LoginData = new BehaviorSubject<AuthUser | null>(null);
-  LoginData$ = this.LoginData.asObservable();
-
   private TasksData = new BehaviorSubject<UserTasks[] | null>(null);
   TaskData$ = this.TasksData.asObservable();
+
+  //test signal
+  private loggedData = signal<AuthUser | null>(null);
+  loggedData$ = this.loggedData.asReadonly();
+
+  setLoginData(data: AuthUser | null) {
+    this.loggedData.set(data);
+    this.secureStorage.setItem('authUser', data);
+  }
+
+  clearLoginData() {
+    this.loggedData.set(null);
+    this.secureStorage.clear();
+  }
+
+  //fin test signal
 
   //methods
   setUser = async (usrData: Users[]) => {
@@ -45,29 +58,14 @@ export class UsuariosService {
     }
   }
 
-  setLogin(loginData: AuthUser) {
-    this.LoginData.next(loginData);
-    this.secureStorage.setItem('authUser', loginData);
-    //localStorage.setItem('loginData', JSON.stringify(loginData));
-  }
-
   clearUser = async () => {
     this.user.next(null);
     localStorage.removeItem('users');
   }
 
-  clearLogin() {
-    this.LoginData.next(null);
-    localStorage.removeItem('authUser');
-  }
-
   closeSesion(): void {
-    this.clearLogin();
+    this.clearLoginData();
     this.clearUser();
-  }
-
-  getLoginData(): AuthUser | null {
-    return this.LoginData.getValue();
   }
 
   async setTasksData(tasks: UserTasks[]) {

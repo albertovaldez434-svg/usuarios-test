@@ -162,7 +162,7 @@ export class UsuariosPage implements OnInit {
   }
 
   cerrarSesion() {
-    this.usersService.clearLogin();
+    this.usersService.clearLoginData();
     this.route.navigate(['/login']);
   }
 

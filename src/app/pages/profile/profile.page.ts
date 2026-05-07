@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
   imgSrc: string = '';
   editingUser: boolean = false;
 
-  activeSubs!: Subscription;
+  usersSub!: Subscription;
 
   constructor(
     private userService: UsuariosService,
@@ -39,22 +39,19 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.activeSubs = new Subscription;
+    this.usersSub = new Subscription;
+    this.usersSub = this.userService.user$.subscribe({
+      next: (usersData) => {
+        this.users = usersData;
+      }, error: () => {
+        this.openModalFunc('Error al cargar información de usuarios');
+      }
+    })
 
-    this.activeSubs.add(
-      combineLatest([
-        this.userService.LoginData$,
-        this.userService.user$
-      ]).subscribe(([Login, users]) => {
-        this.loggedUser = Login;
-        this.users = users;
-        this.findLoggedUser()
-      })
-    );
   }
 
   ionViewWillLeave() {
-    this.activeSubs.unsubscribe();
+    this.usersSub.unsubscribe();
   }
 
   async openModalFunc(mensaje: string) {

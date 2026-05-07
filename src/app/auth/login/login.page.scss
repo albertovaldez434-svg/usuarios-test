@@ -16,6 +16,14 @@
   justify-content: center;
   align-items: center;
   background: var(--ion-background-color);
+
+  @media (min-width: $breakpoint-desktop) {
+    padding: $spacing-5xl $spacing-6xl;
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    padding: $spacing-4xl $spacing-4xl;
+  }
 }
 
 .form-container {
@@ -28,7 +36,21 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
+
+  @media (min-width: $breakpoint-desktop) {
+    .form-container {
+      width: min(100%, $container-md);
+      padding: $spacing-5xl $spacing-4xl;
+    }
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    .form-container {
+      padding: $spacing-4xl $spacing-4xl;
+    }
+  }
 }
+
 
 .header-wrapper {
   display: flex;
@@ -67,39 +89,19 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-base;
+
+  @media (min-width: $breakpoint-tablet) {
+    flex-direction: row;
+    gap: $spacing-md;
+  }
+
 }
 
 ion-button {
   min-height: $button-height;
   --border-radius: #{$button-border-radius};
-}
 
-@media (min-width: $breakpoint-desktop) {
-  .parent-container {
-    padding: $spacing-5xl $spacing-6xl;
-  }
-
-  .form-container {
-    width: min(100%, $container-md);
-    padding: $spacing-5xl $spacing-4xl;
-  }
-}
-
-@media (min-width: $breakpoint-tablet) {
-  .parent-container {
-    padding: $spacing-4xl $spacing-4xl;
-  }
-
-  .form-container {
-    padding: $spacing-4xl $spacing-4xl;
-  }
-
-  .buttons-container {
-    flex-direction: row;
-    gap: $spacing-md;
-  }
-
-  ion-button {
+  @media (min-width: $breakpoint-tablet) {
     flex: 1;
   }
 }

@@ -3,8 +3,7 @@ import { UsuariosService } from './services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
 import { Localstorage } from './services/localstorage';
 import { AuthUser } from './models/users';
-import { filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,27 +14,24 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit {
   isLogged: boolean = false;
 
-  loggedSubscription!: Subscription;
-
   constructor(
     private userService: UsuariosService,
     private route: Router,
     private secureStorage: Localstorage
   ) {
+    // effect(() => {
+    //   const user = this.userService.loggedData$();
+    //   if (user) {
+    //     this.isLogged = true;
+    //   } else {
+    //     this.isLogged = false;
+    //   }
+    // });
+    
     this.checkUserdata();
   }
 
   ngOnInit() {
-    this.loggedSubscription = this.userService.LoginData$.subscribe(
-      logindata => {
-        if (logindata) {
-          this.isLogged = true;
-        } else {
-          this.isLogged = false;
-        }
-      }
-    )
-
     this.route.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
@@ -45,18 +41,12 @@ export class AppComponent implements OnInit {
     this.restoreLastPage();
   }
 
-  ngOnDestroy() {
-    if (this.loggedSubscription) {
-      this.loggedSubscription.unsubscribe();
-    }
-  }
-
   async checkUserdata() {
     if (!this.isLogged) {
       const dataLogin = await this.secureStorage.getItem<AuthUser>('authUser');
       if (dataLogin) {
         const storedLogin = dataLogin;
-        this.userService.setLogin(storedLogin);
+        this.userService.setLoginData(storedLogin);
         this.isLogged = true;
         this.route.navigate(['/profile']);
       } else {

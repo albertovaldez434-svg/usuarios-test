@@ -5,11 +5,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Perfil</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
 
   <div class="page-container">
     <ion-grid>
@@ -65,7 +60,7 @@
 
               <div class="button-section">
                 @if (!editingUser) {
-                <ion-button fill="outline" color="primary" (click)="editProfile()">
+                <ion-button fill="outline" color="primary" expand="block" (click)="editProfile()">
                   Editar Perfil
                 </ion-button>
                 } @else {
@@ -86,7 +81,7 @@
   </div>
 </ion-content>
 
-<ion-modal #modalEditInfo>
+<ion-modal #modalEditInfo [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
   <ion-header>
     <ion-toolbar>
       <!-- <ion-title>Modal</ion-title> -->

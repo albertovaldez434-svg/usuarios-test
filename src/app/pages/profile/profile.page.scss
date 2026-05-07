@@ -1,15 +1,49 @@
 @import '../../../theme/variables.scss';
 
-.page-container {
-  max-width: 1300px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 $spacing-md;
+:host {
+  display: block;
 }
 
-@media (max-width: calc($breakpoint-tablet - 1px)) {
-  .page-container {
-    padding: 0 $spacing-sm;
+.profile-content {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.page-container {
+  min-height: $viewport-min-height;
+  padding: $spacing-md $spacing-md;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--ion-background-color);
+
+  @media (min-width: $breakpoint-desktop) {
+    padding: $spacing-5xl $spacing-6xl;
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    padding: $spacing-4xl $spacing-4xl;
+  }
+}
+
+.profile-container {
+  width: min(100%, $container-sm);
+  max-width: $container-max-width;
+  padding: $spacing-3xl $spacing-xl;
+  border-radius: $border-radius-lg;
+  background: $color-bg-dark-transparent;
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  @media (min-width: $breakpoint-desktop) {
+    width: min(100%, $container-md);
+    padding: $spacing-5xl $spacing-4xl;
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    padding: $spacing-4xl $spacing-4xl;
   }
 }
 
@@ -75,17 +109,17 @@
 }
 
 .user-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
   ion-item {
     --border-radius: 15px;
     margin: 0 6px;
   }
 }
-.button-section {
-  display: flex;
-  justify-content: space-between;
-}
 
 // se muestra el modal edicion
 .register-container .form-container {
-  height: 500px!important;
+  height: 500px !important;
 }
