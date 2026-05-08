@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,9 @@ import { UsuariosService } from 'src/app/services/usuarios';
   standalone: false
 })
 export class DashboardPage implements OnInit {
+  @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('srcollContainer', { static: true })
+
   scrollContainer!: ElementRef<HTMLElement>;
 
   todoArr: UserTasks[] = [];
@@ -20,16 +23,47 @@ export class DashboardPage implements OnInit {
   private edgeThreshold = 120;
   private maxScrollSpeed = 40;
 
+  selectedTask: UserTasks | null = null;
+  titleModel: string = '';
+  descModel: string = '';
+  statusModel: number = 0;
+
+  titleKeyActive: boolean = false;
+  descKeyActive: boolean = false;
+  statusKeyActive: boolean = false;
+
   constructor(
     private usuarioService: UsuariosService
   ) {
+    const Tarea1: UserTasks = {
+      id: 0,
+      title: 'Test Task 1',
+      description: 'Just a test',
+      status: 1,
+      idUser: 1
+    }
+    const Tarea2: UserTasks = {
+      id: 1,
+      title: 'Test Task 2',
+      description: 'Just a test',
+      status: 1,
+      idUser: 1
+    }
+    const Tarea3: UserTasks = {
+      id: 2,
+      title: 'Test Task 3',
+      description: 'Just a test',
+      status: 1,
+      idUser: 1
+    }
 
+    this.todoArr.push(Tarea1, Tarea2, Tarea3);
   }
 
   ngOnInit() { }
 
   ionViewDidEnter() {
-    this.cargarTareas();
+    // this.cargarTareas();
   }
 
   cargarTareas() {
@@ -131,6 +165,64 @@ export class DashboardPage implements OnInit {
       }
     });
 
+  }
+
+  showTaskDetails(data: UserTasks) {
+    console.log(data);
+    this.selectedTask = data;
+    this.titleModel = this.selectedTask.title;
+    this.descModel = this.selectedTask.description;
+    this.statusModel = this.selectedTask.status;
+    this.modalTaskDetail.present();
+  }
+
+  EditField(key: string) {
+    switch (key) {
+      case 'title':
+        if (this.titleKeyActive) {
+          this.titleKeyActive = false;
+          return;
+        }
+        this.titleKeyActive = true;
+        this.descKeyActive = false;
+        this.statusKeyActive = false;
+        break;
+      case 'description':
+        if (this.descKeyActive) {
+          this.descKeyActive = false;
+          return;
+        }
+        this.titleKeyActive = false;
+        this.descKeyActive = true;
+        this.statusKeyActive = false;
+        break;
+      case 'status':
+        if (this.statusKeyActive) {
+          this.statusKeyActive = false;
+          return;
+        }
+        this.titleKeyActive = false;
+        this.descKeyActive = false;
+        this.statusKeyActive = true;
+        break;
+      default:
+        this.titleKeyActive = false;
+        this.descKeyActive = false;
+        this.statusKeyActive = false;
+        break;
+    }
+  }
+
+  cleanTaskFlow() {
+    this.titleKeyActive = false;
+    this.descKeyActive = false;
+    this.statusKeyActive = false;
+
+    this.titleModel = '';
+    this.descModel = '';
+    this.statusModel = 0;
+
+    this.selectedTask = null;
   }
 
 }

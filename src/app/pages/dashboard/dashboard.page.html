@@ -5,53 +5,54 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
 
   <div class="page-container">
+
     <div #srcollContainer cdkDropListGroup class="listContainer">
 
-      <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr" (cdkDropListDropped)="drop($event)"
-        (cdkDropListEntered)="onListEntered($event)">
+      <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr"
+        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
-          <ion-card-title class="ion-text-center">Por Hacer</ion-card-title>
+          <ion-card-title class="ion-text-center">Por Hacer {{todoArr.length}}</ion-card-title>
         </ion-card-header>
-        @for (todoTask of todoArr; track $index) {
-        <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)" data-id="{{todoTask.id}}">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>{{todoTask.title}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              {{ todoTask.description}}
-            </ion-card-content>
-          </ion-card>
-        </div>
+        <div class="tasks-container">
+          @for (todoTask of todoArr; track $index) {
 
-        <!-- Placeholder -->
-        <ng-template cdkDragPlaceholder>
-          <div class="drag-placeholder"></div>
-        </ng-template>
-
-        <!-- Preview (ghost mientras arrastras) -->
-        <ng-template cdkDragPreview>
-          <div class="drag-preview">
-            {{todoTask}}
+          <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
+            (click)="showTaskDetails(todoTask)" data-id="{{todoTask.id}}">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{todoTask.title}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{ todoTask.description}}
+              </ion-card-content>
+            </ion-card>
           </div>
-        </ng-template>
-        }
+
+          <!-- Placeholder -->
+          <ng-template cdkDragPlaceholder>
+            <div class="drag-placeholder"></div>
+          </ng-template>
+
+          <!-- Preview (ghost mientras arrastras) -->
+          <ng-template cdkDragPreview>
+            <div class="drag-preview">
+              {{todoTask}}
+            </div>
+          </ng-template>
+          }
+        </div>
       </div>
 
-      <div cdkDropList #doingList id="doing" class="myDropList" [cdkDropListData]="doingArr" (cdkDropListDropped)="drop($event)"
-        (cdkDropListEntered)="onListEntered($event)">
+      <div cdkDropList #doingList id="doing" class="myDropList" [cdkDropListData]="doingArr"
+        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
-          <ion-card-title class="ion-text-center">En Curso</ion-card-title>
+          <ion-card-title class="ion-text-center">En Curso {{doingArr.length}}</ion-card-title>
         </ion-card-header>
         @for (doingTask of doingArr; track $index) {
-        <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)" data-id="{{doingTask.id}}">
+        <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
+          data-id="{{doingTask.id}}" (click)="showTaskDetails(doingTask)">
           <ion-card>
             <ion-card-header>
               <ion-card-title>{{doingTask.title}}</ion-card-title>
@@ -76,13 +77,14 @@
         }
       </div>
 
-      <div cdkDropList #doneList id="done" class="myDropList" [cdkDropListData]="doneArr" (cdkDropListDropped)="drop($event)"
-        (cdkDropListEntered)="onListEntered($event)">
+      <div cdkDropList #doneList id="done" class="myDropList" [cdkDropListData]="doneArr"
+        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
-          <ion-card-title class="ion-text-center">Terminado</ion-card-title>
+          <ion-card-title class="ion-text-center">Terminado {{doneArr.length}}</ion-card-title>
         </ion-card-header>
         @for (doneTask of doneArr; track $index) {
-        <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)" data-id="{{doneTask.id}}">
+        <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
+          data-id="{{doneTask.id}}" (click)="showTaskDetails(doneTask)">
           <ion-card>
             <ion-card-header>
               <ion-card-title>{{doneTask.title}}</ion-card-title>
@@ -110,3 +112,42 @@
     </div>
   </div>
 </ion-content>
+
+<ion-modal #modalTaskDetails [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title slot="center">
+          Detalles Tarea
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="modalTaskDetails.dismiss(); cleanTaskFlow()">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <div class="task-details">
+        <ion-item>
+          <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid" [value]="selectedTask?.title"
+            ngModel="{{titleModel}}" [readonly]="!titleKeyActive" [helperText]="titleKeyActive ? 'Editando titulo' : ''"></ion-input>
+          <ion-icon [class.active]="titleKeyActive" name="create-outline" slot="end"
+            (click)="EditField('title')"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input #inpDesc label="Descripcion" label-placement="floating" fill="solid"
+            [value]="selectedTask?.description" ngModel="{{descModel}}" [readonly]="!descKeyActive"></ion-input>
+          <ion-icon [class.active]="descKeyActive" name="create-outline" slot="end"
+            (click)="EditField('description')"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input #inpStatus label="Status" label-placement="floating" fill="solid" [value]="selectedTask?.status"
+            ngModel="{{statusModel}}" [readonly]="!statusKeyActive"></ion-input>
+          <ion-icon [class.active]="statusKeyActive" name="create-outline" slot="end"
+            (click)="EditField('status')"></ion-icon>
+        </ion-item>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
