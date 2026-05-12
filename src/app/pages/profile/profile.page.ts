@@ -32,6 +32,8 @@ export class ProfilePage implements OnInit {
     if (imgData) {
       this.imgSrc = imgData;
     }
+
+    this.loggedUser = this.userService.loggedData$();
   }
 
   ngOnInit() {
@@ -43,6 +45,7 @@ export class ProfilePage implements OnInit {
     this.usersSub = this.userService.user$.subscribe({
       next: (usersData) => {
         this.users = usersData;
+        this.findLoggedUser();
       }, error: () => {
         this.openModalFunc('Error al cargar información de usuarios');
       }

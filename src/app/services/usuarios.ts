@@ -128,7 +128,7 @@ export class UsuariosService {
 
     const url = `${environment.URL_API}/api/Usuarios/UpdateTarea`;
 
-    return this.http.post(url, tareaActualizada);
+    return this.http.put(url, tareaActualizada);
   }
 
 }

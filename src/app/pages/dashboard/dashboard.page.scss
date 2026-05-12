@@ -102,6 +102,18 @@ ion-card {
     border-radius: 15px;
 }
 
+.task-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.changes-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
 @media (max-width: calc($breakpoint-tablet - 1px)) {
     .page-container {
         padding: 0 $spacing-sm;

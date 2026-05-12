@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Localstorage } from './services/localstorage';
 import { AuthUser } from './models/users';
 import { filter } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ import { filter } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   isLogged: boolean = false;
+
+  jwtHelper = new JwtHelperService;
 
   constructor(
     private userService: UsuariosService,
@@ -27,7 +30,7 @@ export class AppComponent implements OnInit {
         this.isLogged = false;
       }
     });
-    
+
     this.checkUserdata();
   }
 
@@ -45,6 +48,12 @@ export class AppComponent implements OnInit {
     if (!this.isLogged) {
       const dataLogin = await this.secureStorage.getItem<AuthUser>('authUser');
       if (dataLogin) {
+        if (this.jwtHelper.isTokenExpired(dataLogin?.access_token)) {
+          this.secureStorage.clear();
+          this.isLogged = false;
+          this.route.navigate(['/login']);
+          return;
+        }
         const storedLogin = dataLogin;
         this.userService.setLoginData(storedLogin);
         this.isLogged = true;
@@ -59,7 +68,7 @@ export class AppComponent implements OnInit {
   restoreLastPage() {
     const lastPage = localStorage.getItem('lastVisitedPage');
     if (lastPage && this.route.url === '/') {
-      this.route.navigateByUrl(lastPage);
+      this.route.navigate([lastPage]);
     }
   }
 
