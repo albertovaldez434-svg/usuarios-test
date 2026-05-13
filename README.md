@@ -1,33 +1,39 @@
-# Users Management App or Usuarios Ionic
+# Users Management App or Usuarios Ionic (Now, Tasks manager :D)
 
-A simple user management application built with Ionic and Angular. This project is part of my personal portfolio and is currently under active development. 
+A simple tasks management application built with Ionic and Angular. 
+It started as a a simple CRUD app for management of users, but I decided to move it mainly to a tasks management app.
+This project is part of my personal portfolio and is currently under active development since its also my learning/testing ground. 
 ---
 
 ## 🚀 Features
-- User authentication (login)
+- User sign up and authentication (login/jwt)
 - Basic CRUD operations for users management (using restful API's wich i'm learning too)
-- Responsive design for mobile and desktop
+- only the admin can edit the other users (haven't added the page permissions yet)
+- the main feature will be the management of tasks (todo, doing and done status) wich will be editable
+- Responsive design for mobile and desktop (not final design, it will change)
+- mainly working on the dark theme, ill work on a theme toggle after the main page is fully ready.
 ---
 
 ## 🛠️ Technologies Used
-- [Ionic Framework](https://ionicframework.com/)
-- [Angular](https://angular.io/)
+- [Ionic Framework 8](https://ionicframework.com/)
+- [Angular CLI 20](https://angular.io/)
 - TypeScript & Javascript
-- CSS & SCSS
+- CSS & SCSS (testing its defualt variables)
 - Angular Material (More precisely, CdkDragAnDrop for the dashboard page).
 
 ---
 
 ## 🚧 In Development
-- Improved UI/UX and accessibility (I like Ionic so far, but since im used to things more manually im having a kind of a hard time getting used to it)
+- Mainly working right now on the Dashboard page
+- Improved UI/UX and accessibility (I like Ionic elements, still working on a definitive design)
 - Integration with backend services (Firebase or REST API in .NET, on development too)
 ---
 
 ## 📦 Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher recommended, I work with 20 or 22)
-- I use [Node Version Manager] too (https://github.com/nvm-sh/nvm), just in case.
+- Node.js (v16 or higher recommended, I work with V22.22.2)
+- [Node Version Manager] (https://github.com/nvm-sh/nvm), just in case.
 - npm or yarn (I use npm)
 - Ionic CLI (`npm install -g @ionic/cli@8`)
 - Angular Cli (`npm install -g @angular/cli@20`)
