@@ -5,8 +5,6 @@ import { UsuariosService } from 'src/app/services/usuarios';
 import { Login } from 'src/app/models/login';
 import { IonModal, ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
-import { catchError, of, tap } from 'rxjs';
-import { Localstorage } from 'src/app/services/localstorage';
 import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
 import { Users } from 'src/app/models/users';
 
@@ -24,7 +22,6 @@ export class LoginPage implements OnInit {
   constructor(
     private builder: FormBuilder,
     private UserService: UsuariosService,
-    private secureStorage: Localstorage,
     private route: Router,
     private modalCtrl: ModalController
   ) {

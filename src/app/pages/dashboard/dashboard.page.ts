@@ -59,7 +59,6 @@ export class DashboardPage implements OnInit {
       componentProps: {
         mensaje: mensaje
       }
-
     });
 
     (await modal).present();
@@ -243,12 +242,14 @@ export class DashboardPage implements OnInit {
     );
 
     // update selectedTask
+    edited.status = Number(edited.status);
     this.selectedTask.set(edited);
 
     // API call ONCE
     this.usuarioService.actualizarTarea(edited).subscribe({
       next: () => {
         this.openModalFunc('Tarea actualizada correctamente');
+        this.cleanTaskFlow();
       },
       error: () => {
         this.openModalFunc('Error al actualizar la tarea');

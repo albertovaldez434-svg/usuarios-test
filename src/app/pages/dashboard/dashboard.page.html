@@ -144,7 +144,8 @@
         </ion-item>
         <ion-item>
           <ion-input #inpStatus label="Status" label-placement="floating" fill="solid"
-            [(ngModel)]="editableTask()!.status" [readonly]="!statusKeyActive"></ion-input>
+            [(ngModel)]="editableTask()!.status" [readonly]="!statusKeyActive"
+            [helperText]="descKeyActive ? 'Editando Status' : ''"></ion-input>
           <ion-icon [class.active]="statusKeyActive" name="create-outline" slot="end"
             (click)="EditField('status')"></ion-icon>
         </ion-item>
