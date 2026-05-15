@@ -89,10 +89,12 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-base;
+  flex-wrap: wrap;
 
   @media (min-width: $breakpoint-tablet) {
     flex-direction: row;
     gap: $spacing-md;
+
   }
 
 }

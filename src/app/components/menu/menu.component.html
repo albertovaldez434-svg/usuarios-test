@@ -30,10 +30,12 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     @for (page of pages; track $index) {
-    <ion-tab-button [routerLink]="page.url">
-      <ion-icon [name]="page.icon"></ion-icon>
-      {{page.title}}
-    </ion-tab-button>
+      @if (canView(page)) {
+      <ion-tab-button [routerLink]="page.url">
+        <ion-icon [name]="page.icon"></ion-icon>
+        {{page.title}}
+      </ion-tab-button>
+      }
     }
     <ion-tab-button (click)="logout()">
       <ion-icon name="log-out-outline"></ion-icon>

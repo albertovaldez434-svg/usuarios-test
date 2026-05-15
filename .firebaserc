@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "ionic-usuarios"
-  }
+    "default": "usuarios-kanban-demo"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -6,7 +6,7 @@ import { Login } from 'src/app/models/login';
 import { IonModal, ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
-import { Users } from 'src/app/models/users';
+import { AuthUser, Users } from 'src/app/models/users';
 
 @Component({
   selector: 'app-login',
@@ -106,6 +106,30 @@ export class LoginPage implements OnInit {
     } else {
       return;
     }
+  }
+
+  logginInvitado() {
+    const userData: Users = {
+      idUser: 999,
+      idRol: 999,
+      nombre: 'Usuario',
+      apellidos: 'Invitado',
+      email: 'example@gmail.com',
+      telefono: '6441747474',
+    }
+    const invitadoAuth: AuthUser = {
+      idRol: 999,
+      idUser: 999,
+      token_type: 'bearer',
+      access_token: 'my_token_123',
+      userInfo: userData
+    }
+
+    this.UserService.setLoginData(invitadoAuth);
+    const data = [invitadoAuth.userInfo];
+    this.UserService.setUser(data);
+    this.openModalFunc('Sesion iniciada');
+    this.route.navigate(['/profile']);
   }
 
 }

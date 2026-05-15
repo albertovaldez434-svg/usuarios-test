@@ -64,18 +64,63 @@ export class DashboardPage implements OnInit {
     (await modal).present();
   }
 
+  cargarTareasTest() {
+    const tarea1: UserTasks = {
+      id: 1,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 1',
+      status: 1,
+      idUser: 999
+    }
+    const tarea2: UserTasks = {
+      id: 2,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 2',
+      status: 1,
+      idUser: 999
+    }
+    const tarea3: UserTasks = {
+      id: 3,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 3',
+      status: 1,
+      idUser: 999
+    }
+    const tarea4: UserTasks = {
+      id: 4,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 4',
+      status: 1,
+      idUser: 999
+    }
+    const tarea5: UserTasks = {
+      id: 5,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 5',
+      status: 1,
+      idUser: 999
+    }
+
+    const tasks = [tarea1, tarea2, tarea3, tarea4, tarea5];
+    this.allTasks.set(tasks);
+  }
+
   cargarTareas() {
     const IdUser = this.usuarioService.loggedData$()?.idUser;
 
     if (IdUser) {
-      this.usuarioService.cargarTareasUsuario(IdUser).subscribe({
-        next: (tasks) => {
-          this.allTasks.set(tasks);
-        },
-        error: (err) => {
-          this.openModalFunc('Error al cargar las tareas');
-        }
-      });
+      if (IdUser == 999) {
+        this.cargarTareasTest();
+      } else {
+        this.usuarioService.cargarTareasUsuario(IdUser).subscribe({
+          next: (tasks) => {
+            this.allTasks.set(tasks);
+          },
+          error: (err) => {
+            this.openModalFunc('Error al cargar las tareas');
+          }
+        });
+      }
     }
   }
 
@@ -256,9 +301,6 @@ export class DashboardPage implements OnInit {
       }
     });
   }
-
-
-
 
 }
 

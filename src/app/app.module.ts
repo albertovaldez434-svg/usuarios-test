@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -13,10 +13,8 @@ import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
-import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 
-initializeApp(environment.firebaseConfig);
 
 @NgModule({
   declarations: [
