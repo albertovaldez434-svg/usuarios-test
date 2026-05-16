@@ -184,11 +184,30 @@ export class ProfilePage implements OnInit {
   }
 
   getDataEmitted(data: Users | null) {
-    if (!data) {
-      this.openModalFunc('No se han guardado los cambios.');
-      this.editingUser = false;
-      return;
+    if (!this.users) return;
+
+    if (data) {
+      if (data.idUser === 999) {
+        this.currentUser = data;
+        let userIndex = this.users.findIndex(user => user.idUser == 999);
+
+        if (userIndex !== -1) {
+          this.users[userIndex] = this.currentUser;
+        }
+
+        this.userService.setUser(this.users);
+        this.ModalEditInfo.dismiss();
+        this.openModalFunc('Datos actualizados.');
+        this.editingUser = false;
+        return;
+      } else {
+        this.guardarCambiosEdit();
+      }
     }
+
+    this.openModalFunc('No se han guardado los cambios.');
+    this.editingUser = false;
+    return;
   }
 
   guardarCambiosEdit() {

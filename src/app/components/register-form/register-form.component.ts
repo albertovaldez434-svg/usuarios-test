@@ -73,6 +73,14 @@ export class RegisterFormComponent implements OnInit {
         password: this.registerForm.value.password,
       };
 
+      if (this.userData?.idUser === 999) {
+        formData.idUser = 999, formData.idRol = 999;
+        this.formSubmit.emit(formData);
+        this.submitted = false;
+        this.isEditingData = false;
+        return;
+      }
+
       if (this.isEditingData && this.userData) {
         formData.idUser = this.userData.idUser; // Mantener el mismo ID para edición
         this.formSubmit.emit(formData);

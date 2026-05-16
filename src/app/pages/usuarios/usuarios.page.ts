@@ -64,8 +64,122 @@ export class UsuariosPage implements OnInit {
     (await modal).present();
   }
 
+  obtenerUsuariosTest() {
+    const usersList: Users[] = [
+      {
+        idUser: 3,
+        nombre: "Carlos",
+        apellidos: "Ramírez López",
+        email: "carlos.ramirez@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "carlosram",
+        password: "Carlos123!"
+      },
+      {
+        idUser: 4,
+        nombre: "María",
+        apellidos: "González Torres",
+        email: "maria.gonzalez@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "mariagt",
+        password: "Maria123!"
+      },
+      {
+        idUser: 5,
+        nombre: "Luis",
+        apellidos: "Fernández Ruiz",
+        email: "luis.fernandez@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "luisfer",
+        password: "Luis123!"
+      },
+      {
+        idUser: 6,
+        nombre: "Ana",
+        apellidos: "Martínez Vega",
+        email: "ana.martinez@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "anamv",
+        password: "Ana123!"
+      },
+      {
+        idUser: 7,
+        nombre: "Jorge",
+        apellidos: "Hernández Castro",
+        email: "jorge.hernandez@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "jorgehc",
+        password: "Jorge123!"
+      },
+      {
+        idUser: 8,
+        nombre: "Fernanda",
+        apellidos: "Soto Navarro",
+        email: "fernanda.soto@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "fersoto",
+        password: "Fer123!"
+      },
+      {
+        idUser: 9,
+        nombre: "Ricardo",
+        apellidos: "Morales Díaz",
+        email: "ricardo.morales@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "ricmora",
+        password: "Ricardo123!"
+      },
+      {
+        idUser: 10,
+        nombre: "Daniela",
+        apellidos: "Pérez Silva",
+        email: "daniela.perez@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "danips",
+        password: "Dani123!"
+      },
+      {
+        idUser: 11,
+        nombre: "Miguel",
+        apellidos: "Ortega Reyes",
+        email: "miguel.ortega@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "miguelor",
+        password: "Miguel123!"
+      },
+      {
+        idUser: 12,
+        nombre: "Sofía",
+        apellidos: "Cruz Mendoza",
+        email: "sofia.cruz@test.com",
+        telefono: "6441747474",
+        idRol: 2,
+        nombreUsuario: "sofiacm",
+        password: "Sofia123!"
+      }
+    ];
+
+    this.usuarios = usersList;
+  }
 
   obtenerUsuarios = () => {
+
+    if (this.usersService.loggedData$()?.idUser === 999) {
+      this.usersService.clearUser();
+      this.obtenerUsuariosTest();
+      this.usersService.setUser(this.usuarios);
+      return;
+    }
+
     this.usersService.getUsers().subscribe({
       next: (usuarios) => {
         this.usersService.clearUser();
@@ -95,19 +209,22 @@ export class UsuariosPage implements OnInit {
       idRol: 2,
     }
 
-    this.usersService.signUpNewUser(newUser).pipe(
-      tap((response) => {
-        this.modalSignUp.dismiss();
-        this.usuarios.push(response);
-        this.usersService.setUser(this.usuarios);
-        this.openModalFunc('Usuario registrado exitosamente');
-        this.signupForm.reset();
-      }), catchError(error => {
-        console.log(error);
-        this.openModalFunc('Error al registrar el usuario');
-        return of([]);
-      })
-    );
+    if (this.usersService.loggedData$()?.idRol == 999) {
+      let newUser: Users = {
+        idUser: Math.random(),
+        nombre: formData.Nombre,
+        apellidos: formData.Apellidos,
+        email: formData.Email,
+        telefono: formData.Telefono,
+        idRol: 2,
+      }
+
+      this.usuarios.push(newUser);
+      this.usersService.setUser(this.usuarios);
+      this.openModalFunc('Usuario registrado exitosamente');
+      this.signupForm.reset();
+      return;
+    }
 
     this.usersService.signUpNewUser(newUser).subscribe({
       next: (response) => {
@@ -148,10 +265,20 @@ export class UsuariosPage implements OnInit {
       this.usuarioToEdit.telefono = formData.Telefono;
     }
 
+    if (this.usersService.loggedData$()?.idRol == 999) {
+      this.usersService.setUser(this.usuarios);
+      console.log(this.usuarios);
+      this.modalSignUp.dismiss();
+      this.openModalFunc('Usuario registrado exitosamente');
+      this.signupForm.reset();
+      this.editandoUsuario = false;
+      return;
+    }
+
     this.usersService.editUser(this.usuarioToEdit).subscribe({
       next: (respone) => {
         this.modalSignUp.dismiss();
-        this.editandoUsuario = false
+        this.editandoUsuario = false;
       },
       error: (error) => {
         console.log(error);
@@ -161,9 +288,25 @@ export class UsuariosPage implements OnInit {
 
   }
 
-  cerrarSesion() {
-    this.usersService.clearLoginData();
-    this.route.navigate(['/login']);
+  EliminarUsuario(idUser: number) {
+    if (this.usersService.loggedData$()?.idRol === 999) {
+      this.usuarios = this.usuarios.filter(usr => usr.idUser !== idUser);
+      this.usersService.setUser(this.usuarios);
+      this.openModalFunc('Usuario eliminado');
+      return;
+    }
+
+    this.usersService.deleteUsuario(idUser).subscribe({
+      next: () => {
+        this.openModalFunc('Usuario eliminado');
+        this.usuarios = this.usuarios.filter(usr => usr.idUser !== idUser);
+        this.usersService.setUser(this.usuarios);
+      },
+      error: (error) => {
+        console.log(error);
+        this.openModalFunc('Error al eliminar usuario');
+      }
+    });
   }
 
 }
