@@ -90,14 +90,14 @@ export class DashboardPage implements OnInit {
       id: 4,
       title: 'Tarea 1',
       description: 'Esta es una descripcion de la Tarea 4',
-      status: 1,
+      status: 2,
       idUser: 999
     }
     const tarea5: UserTasks = {
       id: 5,
       title: 'Tarea 1',
       description: 'Esta es una descripcion de la Tarea 5',
-      status: 1,
+      status: 3,
       idUser: 999
     }
 

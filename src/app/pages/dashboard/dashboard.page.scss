@@ -114,6 +114,42 @@ ion-card {
     justify-content: right;
 }
 
+.radio-grid {
+    margin-top: 15px;
+}
+
+.radio-group-horizontal {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: start;
+}
+
+.status-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+
+    &.todo {
+        background-color: blue;
+    }
+
+    &.doing {
+        background-color: yellow;
+    }
+
+    &.done {
+        background-color: red;
+    }
+}
+
 @media (max-width: calc($breakpoint-tablet - 1px)) {
     .page-container {
         padding: 0 $spacing-sm;
@@ -132,7 +168,7 @@ ion-card {
 /* Responsive Design for Tablet and Desktop */
 @media (min-width: $breakpoint-tablet) {
     .listContainer {
-        width: 90%;
+        //width: 90%;
         margin: 0 auto;
         overflow-x: auto;
         gap: 20px;

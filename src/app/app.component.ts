@@ -48,6 +48,13 @@ export class AppComponent implements OnInit {
     if (!this.isLogged) {
       const dataLogin = await this.secureStorage.getItem<AuthUser>('authUser');
       if (dataLogin) {
+        if (dataLogin.idUser === 999) {
+          const storedLogin = dataLogin;
+          this.userService.setLoginData(storedLogin);
+          this.isLogged = true;
+          this.route.navigate(['/profile']);
+          return;
+        }
         if (this.jwtHelper.isTokenExpired(dataLogin?.access_token)) {
           this.secureStorage.clear();
           this.isLogged = false;

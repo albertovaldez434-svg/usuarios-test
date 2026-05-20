@@ -128,6 +128,22 @@
     </ion-header>
     <ion-content>
       <div class="task-details">
+        <div class="status-container">
+          @if (editableTask()?.status === 1) {
+          <ion-label color="primary">Por Hacer</ion-label>
+          <div class="status-icon todo"> </div>
+          }
+          @if (editableTask()?.status === 2) {
+          <ion-label color="success">En Curso</ion-label>
+          <div class="status-icon doing"> </div>
+          }
+          @if (editableTask()?.status === 3) {
+          <ion-label color="danger">Terminado</ion-label>
+          <div class="status-icon done"> </div>
+          }
+        </div>
+
+
         <ion-item>
           <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid"
             [(ngModel)]="editableTask()!.title" [readonly]="!titleKeyActive"
@@ -141,13 +157,6 @@
             [helperText]="descKeyActive ? 'Editando descripción' : ''"></ion-input>
           <ion-icon [class.active]="descKeyActive" name="create-outline" slot="end"
             (click)="EditField('description')"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-input #inpStatus label="Status" label-placement="floating" fill="solid"
-            [(ngModel)]="editableTask()!.status" [readonly]="!statusKeyActive"
-            [helperText]="descKeyActive ? 'Editando Status' : ''"></ion-input>
-          <ion-icon [class.active]="statusKeyActive" name="create-outline" slot="end"
-            (click)="EditField('status')"></ion-icon>
         </ion-item>
       </div>
       <div class="task-actions">
