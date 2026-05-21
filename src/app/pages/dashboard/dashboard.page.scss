@@ -2,11 +2,19 @@
 
 ion-card {
     width: 300px !important;
-    /* Fixed Width */
-    height: 150px !important;
-    /* Fixed Height */
     margin: 10px !important;
-    /* Control spacing */
+
+    &.todo {
+        border-left: 5px solid blue;
+    }
+
+    &.doing {
+        border-left: 5px solid yellow;
+    }
+
+    &.done {
+        border-left: 5px solid red;
+    }
 }
 
 .cdk-drag-preview {
@@ -148,6 +156,19 @@ ion-card {
     &.done {
         background-color: red;
     }
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.small-user-ico {
+    width: 25px;
+    height: auto;
+    border-radius: 50%;
+    border: 1px solid var(--ion-color-primary);
 }
 
 @media (max-width: calc($breakpoint-tablet - 1px)) {

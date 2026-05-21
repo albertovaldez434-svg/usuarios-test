@@ -16,6 +16,7 @@ export class DashboardPage implements OnInit {
   @ViewChild('srcollContainer', { static: true })
 
   scrollContainer!: ElementRef<HTMLElement>;
+  imgSrc: string = '';
 
   allTasks = signal<UserTasks[]>([]);
   todoArr = computed(() =>
@@ -42,7 +43,10 @@ export class DashboardPage implements OnInit {
     private usuarioService: UsuariosService,
     private modalCtrl: ModalController
   ) {
-
+    const imgData = localStorage.getItem('myImage');
+    if (imgData) {
+      this.imgSrc = imgData;
+    }
   }
 
   ngOnInit() { }

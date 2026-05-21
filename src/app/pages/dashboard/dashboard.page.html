@@ -19,12 +19,20 @@
           @for (todoTask of todoArr(); track todoTask.id) {
           <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
             (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id">
-            <ion-card>
+            <ion-card class="todo">
               <ion-card-header>
                 <ion-card-title>{{todoTask.title}}</ion-card-title>
+                <ion-card-subtitle>{{ todoTask.description}}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                {{ todoTask.description}}
+                <div class="card-footer">
+                  <div>
+                    
+                  </div>
+                  <div>
+                    <img [src]="imgSrc" class="small-user-ico" />
+                  </div>
+                </div>
               </ion-card-content>
             </ion-card>
           </div>
@@ -52,13 +60,21 @@
         @for (doingTask of doingArr(); track doingTask.id) {
         <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
           data-id="{{doingTask.id}}" (click)="showTaskDetails(doingTask)">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>{{doingTask.title}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              {{ doingTask.description}}
-            </ion-card-content>
+          <ion-card class="doing">
+              <ion-card-header>
+                <ion-card-title>{{doingTask.title}}</ion-card-title>
+                <ion-card-subtitle>{{ doingTask.description}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="card-footer">
+                  <div>
+                    
+                  </div>
+                  <div>
+                    <img [src]="imgSrc" class="small-user-ico" />
+                  </div>
+                </div>
+              </ion-card-content>
           </ion-card>
         </div>
 
@@ -84,13 +100,21 @@
         @for (doneTask of doneArr(); track doneTask.id) {
         <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
           data-id="{{doneTask.id}}" (click)="showTaskDetails(doneTask)">
-          <ion-card>
-            <ion-card-header>
-              <ion-card-title>{{doneTask.title}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              {{ doneTask.description}}
-            </ion-card-content>
+          <ion-card class="done">
+              <ion-card-header>
+                <ion-card-title>{{doneTask.title}}</ion-card-title>
+                <ion-card-subtitle>{{ doneTask.description}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="card-footer">
+                  <div>
+                    
+                  </div>
+                  <div>
+                    <img [src]="imgSrc" class="small-user-ico" />
+                  </div>
+                </div>
+              </ion-card-content>
           </ion-card>
         </div>
 
