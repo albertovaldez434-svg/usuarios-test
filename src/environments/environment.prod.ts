@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  URL_API: 'https://wstestjson-api-813112132995.us-central1.run.app',
+  URL_API: 'https://usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net/',
   // url_api2: 'https://10.0.2.2:7085',
 };
