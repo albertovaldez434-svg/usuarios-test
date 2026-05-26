@@ -122,7 +122,8 @@ export class LoginPage implements OnInit {
       idUser: 999,
       token_type: 'bearer',
       access_token: 'my_token_123',
-      userInfo: userData
+      userInfo: userData,
+      avatar: ''
     }
 
     this.UserService.setLoginData(invitadoAuth);

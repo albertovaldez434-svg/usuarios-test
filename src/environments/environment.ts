@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   URL_API: 'https://localhost:7085',
-  url_api2: 'http://10.0.2.2:7085',
+  //URL_API: 'https://usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net'
 };
 
 /*

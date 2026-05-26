@@ -31,6 +31,18 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(req);
           }
 
+          // SI ES FORMDATA -> NO TOCAR CONTENT-TYPE
+          if (req.body instanceof FormData) {
+
+            const formDataReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${dataLogin.access_token}`,
+              }
+            });
+
+            return next.handle(formDataReq);
+          }
+
           const clonedReq = req.clone({
             setHeaders: {
               Authorization: `Bearer ${dataLogin.access_token}`,

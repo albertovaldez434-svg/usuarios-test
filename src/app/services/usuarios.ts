@@ -6,6 +6,7 @@ import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
 import { Localstorage } from './localstorage';
 import { UserTasks } from '../models/task';
+import { ImagenesUsuarios } from '../models/imagenesusuario';
 
 @Injectable({
   providedIn: 'root',
@@ -129,6 +130,12 @@ export class UsuariosService {
     const url = `${environment.URL_API}/api/Usuarios/UpdateTarea`;
 
     return this.http.post(url, tareaActualizada);
+  }
+
+  cargarImagen(data: FormData) {
+    const url = `${environment.URL_API}/api/Usuarios/CargarImagen`;
+
+    return this.http.post<ImagenesUsuarios>(url, data);
   }
 
 }

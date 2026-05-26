@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthUser, Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Camera } from '@capacitor/camera';
 import { ActionSheetController, IonModal, ModalController } from '@ionic/angular';
-import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
+
+import imageCompression from 'browser-image-compression';
+
 
 @Component({
   selector: 'app-profile',
@@ -34,6 +36,10 @@ export class ProfilePage implements OnInit {
     }
 
     this.loggedUser = this.userService.loggedData$();
+    if (this.loggedUser) {
+      this.imgSrc = this.loggedUser.avatar;
+    }
+
   }
 
   ngOnInit() {
@@ -131,14 +137,23 @@ export class ProfilePage implements OnInit {
     try {
       const result = await Camera.chooseFromGallery({
         quality: 40,
-        includeMetadata: true,
+        limit: 1
       });
 
       if (result?.results) {
-        const element = result.results[0];
-        const rawData = `data:image/${element.metadata?.format};base64,${element.thumbnail}`;
-        this.imgSrc = await this.compressBase64(rawData);
-        localStorage.setItem('myImage', this.imgSrc);
+        //let photo = result.results[0].webPath;
+        const response = await fetch(result.results[0].webPath!);
+
+        const blob = await response.blob();
+
+        const file = new File([blob], `image.${result.results[0].metadata?.format ?? 'jpg'}`, { type: blob.type });
+
+        const data = await this.compressWEBP(file);
+
+        if (data) {
+          console.log(data);
+          this.uploadImage(data);
+        }
       }
 
       // console.log('Format:', result.metadata?.format);
@@ -150,24 +165,38 @@ export class ProfilePage implements OnInit {
     }
   };
 
-  async compressBase64(base64: string, maxWidth = 800, quality = 0.7): Promise<string> {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = base64;
+  async compressWEBP(file: any) {
+    if (!file) return;
 
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1280,
+      useWebWorker: true,
+      fileType: 'image/webp'
+    };
 
-        const scale = maxWidth / img.width;
-        canvas.width = maxWidth;
-        canvas.height = img.height * scale;
+    const compressedFile = await imageCompression(file, options);
 
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const formData = new FormData();
+    formData.append('file', compressedFile);
 
-        const compressed = canvas.toDataURL('image/jpeg', quality);
-        resolve(compressed);
-      };
+    return compressedFile;
+  }
+
+  uploadImage(file: File) {
+    if (!this.loggedUser) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('IdUser', this.loggedUser?.idUser.toString());
+
+    this.userService.cargarImagen(formData).subscribe({
+      next: (value) => {
+        console.log(value);
+        this.imgSrc = value.URLPublica;
+      }, error: (err) => {
+        console.log(err);
+      },
     });
   }
 

@@ -15,4 +15,5 @@ export interface AuthUser {
     idUser: number;
     idRol: number;
     userInfo: Users;
+    avatar: string;
 }
