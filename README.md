@@ -33,6 +33,9 @@ I'm working on a code-first guest mode, so everyone can test it.
 - Integration with backend services (Firebase or REST API in .NET, on development too)
 ---
 
+##  Captures
+![Texto descriptivo de la imagen](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/sc1.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9zYzEucG5nIiwiaWF0IjoxNzgwNDQ0NzA3LCJleHAiOjE4MTE5ODA3MDd9.8qrv8iVSQRcdm0ObxTFjZslqrXVH0OjbWrd7y0WqC-M)
+
 ## 📦 Getting Started
 
 ### Prerequisites
