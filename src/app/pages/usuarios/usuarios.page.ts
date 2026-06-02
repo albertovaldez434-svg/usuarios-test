@@ -35,6 +35,7 @@ export class UsuariosPage implements OnInit {
       Apellidos: [''],
       Email: [''],
       Telefono: [''],
+      Rol: ['']
     });
   }
 
@@ -206,7 +207,7 @@ export class UsuariosPage implements OnInit {
       apellidos: formData.Apellidos,
       email: formData.Email,
       telefono: formData.Telefono,
-      idRol: 2,
+      idRol: parseInt(formData.Rol),
     }
 
     if (this.usersService.loggedData$()?.idRol == 999) {
@@ -216,7 +217,7 @@ export class UsuariosPage implements OnInit {
         apellidos: formData.Apellidos,
         email: formData.Email,
         telefono: formData.Telefono,
-        idRol: 2,
+        idRol: parseInt(formData.Rol),
       }
 
       this.usuarios.push(newUser);
@@ -252,6 +253,7 @@ export class UsuariosPage implements OnInit {
       Apellidos: this.usuarioToEdit?.apellidos,
       Email: this.usuarioToEdit?.email,
       Telefono: this.usuarioToEdit?.telefono,
+      Rol: this.usuarioToEdit.idRol?.toString()
     });
     this.modalSignUp.present();
   }
@@ -263,6 +265,7 @@ export class UsuariosPage implements OnInit {
       this.usuarioToEdit.apellidos = formData.Apellidos;
       this.usuarioToEdit.email = formData.Email;
       this.usuarioToEdit.telefono = formData.Telefono;
+      this.usuarioToEdit.idRol = parseInt(formData.Rol)
     }
 
     if (this.usersService.loggedData$()?.idRol == 999) {

@@ -4,6 +4,7 @@ import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { IonModal, ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
+import { AuthUser } from 'src/app/models/users';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.compon
 export class DashboardPage implements OnInit {
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('srcollContainer', { static: true })
-
+  loggedUser!: AuthUser | null;
   scrollContainer!: ElementRef<HTMLElement>;
   imgSrc: string = '';
 
@@ -46,6 +47,11 @@ export class DashboardPage implements OnInit {
     const imgData = localStorage.getItem('myImage');
     if (imgData) {
       this.imgSrc = imgData;
+    }
+
+    this.loggedUser = this.usuarioService.loggedData$();
+    if (this.loggedUser) {
+      this.imgSrc = this.loggedUser.avatar;
     }
   }
 

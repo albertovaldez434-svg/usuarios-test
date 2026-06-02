@@ -213,7 +213,10 @@ export class ProfilePage implements OnInit {
   }
 
   getDataEmitted(data: Users | null) {
-    if (!this.users) return;
+    if (!this.users) {
+      this.editingUser = false;
+      return;
+    }
 
     if (data) {
       if (data.idUser === 999) {
@@ -233,10 +236,6 @@ export class ProfilePage implements OnInit {
         this.guardarCambiosEdit();
       }
     }
-
-    this.openModalFunc('No se han guardado los cambios.');
-    this.editingUser = false;
-    return;
   }
 
   guardarCambiosEdit() {

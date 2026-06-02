@@ -115,6 +115,14 @@
           <ion-input formControlName="Telefono"></ion-input>
         </ion-item>
 
+        <ion-item>
+          <ion-select label="Rol" placeholder="Tipo Rol" formControlName="Rol">
+            <ion-select-option value="1">Administrador</ion-select-option>
+            <ion-select-option value="2">Usuario</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+
         <div class="button-container">
           @if (!editandoUsuario) {
           <ion-button expand="block" type="submit" [disabled]="signupForm.invalid">

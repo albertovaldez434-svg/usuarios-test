@@ -81,10 +81,10 @@
   </div>
 </ion-content>
 
-<ion-modal #modalEditInfo [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+<ion-modal #modalEditInfo [initialBreakpoint]="0.90" [breakpoints]="[0, 0.25, 0.5, 0.75, 0.90]">
   <ion-header>
     <ion-toolbar>
-      <!-- <ion-title>Modal</ion-title> -->
+      <ion-title>Modal</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="modalEditInfo.dismiss()">
           <ion-icon name="close-outline"></ion-icon>
@@ -92,8 +92,8 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  <!-- //[initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]" -->
+
   <ng-template>
-    <app-register-form [userData]="currentUser" (formSubmit)="getDataEmitted($event)"></app-register-form>
+    <app-register-form [Title]="'Editar Perfil'" [userData]="currentUser" (formSubmit)="getDataEmitted($event)"></app-register-form>
   </ng-template>
 </ion-modal>

@@ -14,6 +14,7 @@ import { Users } from 'src/app/models/users';
 export class RegisterFormComponent implements OnInit {
   @Input() userData?: Users;
   @Output() formSubmit = new EventEmitter<Users | null>();
+  @Input() Title?: string;
   registerForm!: FormGroup;
   submitted = false;
   passwordVisible = false;
@@ -42,6 +43,8 @@ export class RegisterFormComponent implements OnInit {
       confirmPassword: [this.userData?.password || '', [Validators.required]],
       mobileNumber: [this.userData?.telefono || '', [Validators.required, Validators.pattern(/^[\d\s\-\+\(\)]{10,}$/)]],
     });
+
+    // console.log(this.Title);
   }
 
   get f() {
