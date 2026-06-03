@@ -2,11 +2,13 @@
 
 A simple tasks management application built with Ionic and Angular. 
 It started as a a simple CRUD app for management of users, but I decided to move it mainly to a tasks management app.
-This project is part of my personal portfolio and is currently under active development since its also my learning/testing ground. 
+This project is part of my personal portfolio and is currently under active development since it's also my learning/testing ground. 
 
 this is the currently hosting: https://usuarios-kanban-demo.web.app
 
-I'm working on a code-first guest mode, so everyone can test it.
+The admin credentials are:
+    Email: admin@gmail.com
+    Psw: admin123
 ---
 
 ## 🚀 Features
