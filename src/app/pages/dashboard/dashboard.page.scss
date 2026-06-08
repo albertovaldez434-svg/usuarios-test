@@ -1,7 +1,8 @@
 @import '../../../theme/variables.scss';
 
 ion-card {
-    width: 300px !important;
+    width: 100%;
+    max-width: 300px;
     margin: 10px !important;
 
     &.todo {
@@ -71,6 +72,7 @@ ion-card {
     padding: $spacing-sm 0;
     background: $color-bg-card;
     border-radius: $border-radius-md;
+    scroll-snap-align: start;
 }
 
 .tasks-container {
@@ -171,6 +173,11 @@ ion-card {
     border: 1px solid var(--ion-color-primary);
 }
 
+.add-task:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
 @media (max-width: calc($breakpoint-tablet - 1px)) {
     .page-container {
         padding: 0 $spacing-sm;
@@ -184,6 +191,7 @@ ion-card {
     height: $viewport-height-tablet;
     gap: 0;
     justify-content: space-evenly;
+    scroll-snap-type: x mandatory;
 }
 
 /* Responsive Design for Tablet and Desktop */
@@ -214,6 +222,7 @@ ion-card {
     }
 
     .myDropList {
+        flex: 0 0 100%;
         width: 100%;
         padding: $spacing-xs;
         border-radius: $border-radius-md;

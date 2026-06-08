@@ -16,6 +16,7 @@
           <ion-card-title class="ion-text-center">Por Hacer {{todoArr().length}}</ion-card-title>
         </ion-card-header>
         <div class="tasks-container">
+          @if (todoArr().length > 0) {
           @for (todoTask of todoArr(); track todoTask.id) {
           <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
             (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id">
@@ -27,7 +28,7 @@
               <ion-card-content>
                 <div class="card-footer">
                   <div>
-                    
+
                   </div>
                   <div>
                     <img [src]="imgSrc" class="small-user-ico" />
@@ -45,9 +46,15 @@
           <!-- Preview (ghost mientras arrastras) -->
           <ng-template cdkDragPreview>
             <div class="drag-preview">
-              {{todoTask}}
+              {{todoTask.title}}
             </div>
           </ng-template>
+          }
+          } @else {
+          <div class="add-task" (click)="agregarTarea()">
+            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+            Agregar
+          </div>
           }
         </div>
       </div>
@@ -57,10 +64,12 @@
         <ion-card-header>
           <ion-card-title class="ion-text-center">En Curso {{doingArr().length}}</ion-card-title>
         </ion-card-header>
-        @for (doingTask of doingArr(); track doingTask.id) {
-        <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-          data-id="{{doingTask.id}}" (click)="showTaskDetails(doingTask)">
-          <ion-card class="doing">
+        <div class="tasks-container">
+          @if (doingArr().length > 0) {
+          @for (doingTask of doingArr(); track doingTask.id) {
+          <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
+            [attr.data-id]="doingTask.id" (click)="showTaskDetails(doingTask)">
+            <ion-card class="doing">
               <ion-card-header>
                 <ion-card-title>{{doingTask.title}}</ion-card-title>
                 <ion-card-subtitle>{{ doingTask.description}}</ion-card-subtitle>
@@ -68,28 +77,35 @@
               <ion-card-content>
                 <div class="card-footer">
                   <div>
-                    
+
                   </div>
                   <div>
                     <img [src]="imgSrc" class="small-user-ico" />
                   </div>
                 </div>
               </ion-card-content>
-          </ion-card>
-        </div>
-
-        <!-- Placeholder -->
-        <ng-template cdkDragPlaceholder>
-          <div class="drag-placeholder"></div>
-        </ng-template>
-
-        <!-- Preview (ghost mientras arrastras) -->
-        <ng-template cdkDragPreview>
-          <div class="drag-preview">
-            {{doingTask}}
+            </ion-card>
           </div>
-        </ng-template>
-        }
+
+          <!-- Placeholder -->
+          <ng-template cdkDragPlaceholder>
+            <div class="drag-placeholder"></div>
+          </ng-template>
+
+          <!-- Preview (ghost mientras arrastras) -->
+          <ng-template cdkDragPreview>
+            <div class="drag-preview">
+              {{doingTask.title}}
+            </div>
+          </ng-template>
+          }
+          } @else {
+          <div class="add-task" (click)="agregarTarea()">
+            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+            Agregar
+          </div>
+          }
+        </div>
       </div>
 
       <div cdkDropList #doneList id="done" class="myDropList" [cdkDropListData]="doneArr()"
@@ -97,10 +113,12 @@
         <ion-card-header>
           <ion-card-title class="ion-text-center">Terminado {{doneArr().length}}</ion-card-title>
         </ion-card-header>
-        @for (doneTask of doneArr(); track doneTask.id) {
-        <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-          data-id="{{doneTask.id}}" (click)="showTaskDetails(doneTask)">
-          <ion-card class="done">
+        <div class="tasks-container">
+          @if (doneArr().length > 0) {
+          @for (doneTask of doneArr(); track doneTask.id) {
+          <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
+            [attr.data-id]="doneTask.id" (click)="showTaskDetails(doneTask)">
+            <ion-card class="done">
               <ion-card-header>
                 <ion-card-title>{{doneTask.title}}</ion-card-title>
                 <ion-card-subtitle>{{ doneTask.description}}</ion-card-subtitle>
@@ -108,28 +126,35 @@
               <ion-card-content>
                 <div class="card-footer">
                   <div>
-                    
+
                   </div>
                   <div>
                     <img [src]="imgSrc" class="small-user-ico" />
                   </div>
                 </div>
               </ion-card-content>
-          </ion-card>
-        </div>
-
-        <!-- Placeholder -->
-        <ng-template cdkDragPlaceholder>
-          <div class="drag-placeholder"></div>
-        </ng-template>
-
-        <!-- Preview (ghost mientras arrastras) -->
-        <ng-template cdkDragPreview>
-          <div class="drag-preview">
-            {{doneTask}}
+            </ion-card>
           </div>
-        </ng-template>
-        }
+
+          <!-- Placeholder -->
+          <ng-template cdkDragPlaceholder>
+            <div class="drag-placeholder"></div>
+          </ng-template>
+
+          <!-- Preview (ghost mientras arrastras) -->
+          <ng-template cdkDragPreview>
+            <div class="drag-preview">
+              {{doneTask.title}}
+            </div>
+          </ng-template>
+          }
+          } @else {
+          <div class="add-task" (click)="agregarTarea()">
+            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+            Agregar
+          </div>
+          }
+        </div>
       </div>
 
     </div>

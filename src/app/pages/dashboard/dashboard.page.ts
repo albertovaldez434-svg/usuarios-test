@@ -18,6 +18,7 @@ export class DashboardPage implements OnInit {
   loggedUser!: AuthUser | null;
   scrollContainer!: ElementRef<HTMLElement>;
   imgSrc: string = '';
+  isDragging: boolean = false;
 
   allTasks = signal<UserTasks[]>([]);
   todoArr = computed(() =>
@@ -152,9 +153,12 @@ export class DashboardPage implements OnInit {
 
       this.updateTaskStatus(selectedTask, targetListId);
     }
+
+    this.isDragging = false;
   }
 
   onDragMoved(event: CdkDragMove) {
+    this.isDragging = true;
     document.body.classList.add('grabbing');
     const container = this.scrollContainer.nativeElement;
     const rect = container.getBoundingClientRect();
@@ -219,6 +223,7 @@ export class DashboardPage implements OnInit {
   }
 
   showTaskDetails(data: UserTasks) {
+    if(this.isDragging) return;
     // console.log(data);
     this.selectedTask.set(data);
 
@@ -310,6 +315,10 @@ export class DashboardPage implements OnInit {
         this.openModalFunc('Error al actualizar la tarea');
       }
     });
+  }
+
+  agregarTarea() {
+    
   }
 
 }

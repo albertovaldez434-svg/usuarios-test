@@ -6,9 +6,9 @@ This project is part of my personal portfolio and is currently under active deve
 
 this is the currently hosting: https://usuarios-kanban-demo.web.app
 
-The admin credentials are:
-    Email: admin@gmail.com
-    Psw: admin123
+## admin credentials are:
+    - Email: admin@gmail.com
+    - Psw: admin123
 ---
 
 ## 🚀 Features
