@@ -138,4 +138,10 @@ export class UsuariosService {
     return this.http.post<ImagenesUsuarios>(url, data);
   }
 
+  agregarTarea(task: UserTasks) {
+    const url = `${environment.URL_API}/api/Usuarios/AddTarea`;
+
+    return this.http.post<UserTasks>(url, task);
+  }
+
 }

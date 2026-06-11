@@ -14,7 +14,9 @@ import { AuthUser } from 'src/app/models/users';
 })
 export class DashboardPage implements OnInit {
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
+  @ViewChild('modalNewTask') modalNewTask!: IonModal;
   @ViewChild('srcollContainer', { static: true })
+
   loggedUser!: AuthUser | null;
   scrollContainer!: ElementRef<HTMLElement>;
   imgSrc: string = '';
@@ -41,9 +43,13 @@ export class DashboardPage implements OnInit {
   descKeyActive: boolean = false;
   statusKeyActive: boolean = false;
 
+  newTaskTitle: string = '';
+  newTaskDesc: string = '';
+  newTaskStatus: number = 0;
+
   constructor(
     private usuarioService: UsuariosService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
   ) {
     const imgData = localStorage.getItem('myImage');
     if (imgData) {
@@ -223,7 +229,7 @@ export class DashboardPage implements OnInit {
   }
 
   showTaskDetails(data: UserTasks) {
-    if(this.isDragging) return;
+    if (this.isDragging) return;
     // console.log(data);
     this.selectedTask.set(data);
 
@@ -274,6 +280,9 @@ export class DashboardPage implements OnInit {
     this.titleKeyActive = false;
     this.descKeyActive = false;
     this.statusKeyActive = false;
+    this.newTaskDesc = '';
+    this.newTaskStatus = 0;
+    this.newTaskTitle = '';
 
     this.selectedTask.set(null);
     this.editableTask.set(null);
@@ -317,9 +326,45 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  agregarTarea() {
-    
+  addTarea() {
+    const loggedId = this.usuarioService.loggedData$()?.idUser;
+
+    if (!loggedId) return;
+
+    let newTarea: UserTasks = {
+      title: this.newTaskTitle,
+      description: this.newTaskDesc,
+      id: 0,
+      idUser: loggedId,
+      status: this.newTaskStatus
+    };
+
+    this.usuarioService.agregarTarea(newTarea).subscribe({
+      next: (task) => {
+        this.addTaskHelper(task);
+        this.openModalFunc('Se creo la tarea correctamente.');
+      }, error: (err) => {
+        this.openModalFunc('Hubo un problema al crear la tarea');
+      },
+    });
   }
+
+  addTaskHelper(task: UserTasks) {
+    switch (task.status) {
+      case 1:
+        this.todoArr().push(task);
+        break;
+      case 2:
+        this.doingArr().push(task);
+        break;
+      case 3:
+        this.doneArr().push(task);
+        break;
+      default:
+        break;
+    }
+  }
+
 
 }
 
