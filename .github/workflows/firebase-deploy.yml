@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Build Ionic
-        run: ionic build --prod
+        run: npx ionic build --prod
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
