@@ -74,7 +74,6 @@ export class LoginPage implements OnInit {
       },
       error: (error) => {
         this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
-        //return of([]);
       }
     });
 

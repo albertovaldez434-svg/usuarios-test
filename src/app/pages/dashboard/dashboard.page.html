@@ -1,10 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Dashboard</ion-title>
+    <ion-icon name="search-outline" slot="end" class="ion-margin-end"
+      (click)="(!toggleSearch) ? toggleSearch = true : toggleSearch = false;"></ion-icon>
   </ion-toolbar>
+  @if (toggleSearch === true) {
+  <ion-toolbar class="dropdown_menu-6">
+    <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
+      [(ngModel)]="searchValue"></ion-searchbar>
+  </ion-toolbar>
+  }
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">registro</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
   <div class="page-container">
 
@@ -17,9 +34,10 @@
         </ion-card-header>
         <div class="tasks-container">
           @if (todoArr().length > 0) {
-          @for (todoTask of todoArr(); track todoTask.id) {
+          @for (todoTask of todoArr() | search: searchValue:['title', 'description']; track todoTask.id) {
           <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-            (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id">
+            (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id"
+            [cdkDragStartDelay]="{touch: 200, mouse: 0}">
             <ion-card class="todo">
               <ion-card-header>
                 <ion-card-title>{{todoTask.title}}</ion-card-title>
@@ -70,9 +88,10 @@
         </ion-card-header>
         <div class="tasks-container">
           @if (doingArr().length > 0) {
-          @for (doingTask of doingArr(); track doingTask.id) {
+          @for (doingTask of doingArr() | search: searchValue:['title', 'description']; track doingTask.id) {
           <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-            [attr.data-id]="doingTask.id" (click)="showTaskDetails(doingTask)">
+            [attr.data-id]="doingTask.id" (click)="showTaskDetails(doingTask)" [attr.data-id]="doingTask.id"
+            [cdkDragStartDelay]="{touch: 200, mouse: 0}">
             <ion-card class="doing">
               <ion-card-header>
                 <ion-card-title>{{doingTask.title}}</ion-card-title>
@@ -123,9 +142,10 @@
         </ion-card-header>
         <div class="tasks-container">
           @if (doneArr().length > 0) {
-          @for (doneTask of doneArr(); track doneTask.id) {
+          @for (doneTask of doneArr() | search: searchValue:['title', 'description']; track doneTask.id) {
           <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-            [attr.data-id]="doneTask.id" (click)="showTaskDetails(doneTask)">
+            [attr.data-id]="doneTask.id" (click)="showTaskDetails(doneTask)" [attr.data-id]="doneTask.id"
+            [cdkDragStartDelay]="{touch: 200, mouse: 0}">
             <ion-card class="done">
               <ion-card-header>
                 <ion-card-title>{{doneTask.title}}</ion-card-title>

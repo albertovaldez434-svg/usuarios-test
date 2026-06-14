@@ -2,7 +2,7 @@ import { Component, computed, ElementRef, OnInit, signal, ViewChild } from '@ang
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
-import { IonModal, ModalController } from '@ionic/angular';
+import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { AuthUser } from 'src/app/models/users';
 
@@ -17,6 +17,8 @@ export class DashboardPage implements OnInit {
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
   @ViewChild('srcollContainer', { static: true })
 
+  toggleSearch: boolean = false;
+  searchValue: string = '';
   loggedUser!: AuthUser | null;
   scrollContainer!: ElementRef<HTMLElement>;
   imgSrc: string = '';
@@ -66,6 +68,14 @@ export class DashboardPage implements OnInit {
 
   ionViewDidEnter() {
     this.cargarTareas();
+  }
+
+  handleRefresh(event: RefresherCustomEvent) {
+    setTimeout(() => {
+      alert('hi');
+      // Any calls to load data go here
+      event.target.complete();
+    }, 2000);
   }
 
   async openModalFunc(mensaje: string) {

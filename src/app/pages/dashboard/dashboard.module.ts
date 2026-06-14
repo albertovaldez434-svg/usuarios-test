@@ -8,6 +8,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { CdkDrag, CdkDropList, CdkDropListGroup, DragDropModule } from '@angular/cdk/drag-drop';
+import { SearchPipe } from 'src/app/search-pipe';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { CdkDrag, CdkDropList, CdkDropListGroup, DragDropModule } from '@angular
     CdkDropListGroup,
     CdkDropList, 
     CdkDrag,
-    DragDropModule
+    DragDropModule,
+    SearchPipe
   ],
   declarations: [DashboardPage],
 })

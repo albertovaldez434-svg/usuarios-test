@@ -76,28 +76,15 @@ export class UsuariosService {
 
   //apis
   getUsers() {
-    const httpOptions = {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }
-
     const url = `${environment.URL_API}/api/Usuarios`;
 
-    return this.http.get<Users[]>(url, httpOptions);
+    return this.http.get<Users[]>(url);
   }
 
   Login(request: Login) {
-    const httpOptions = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
     const url = `${environment.URL_API}/api/Usuarios/Login`;
 
-    // return this.http.post<AuthUser>(url, request, httpOptions).pipe(delay(5000));
-    return this.http.post<AuthUser>(url, request, httpOptions);
+    return this.http.post<AuthUser>(url, request);
   }
 
   signUpNewUser(newUser: Users) {

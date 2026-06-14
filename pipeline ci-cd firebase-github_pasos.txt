@@ -1,0 +1,54 @@
+(esto se hace a base de que ya tengas instalado y configurado firebase tools)
+
+crear token para github actions, ejecutar este comando:
+firebase login:ci
+
+esto generará y abrira una ventana de firebase para autenticar tu cuenta
+una vez autenticado se generara el token
+copia el token
+en tu repositorio de github ve a la seccion de
+- settings
+    > secrets and variables
+    > new repository secret
+
+en la interfaz de new secret le editas el nombre y el valor
+Name: mi_nombre
+Secret: token generado con firebase
+
+una vez creado esto volvemos a la raiz de nuestro proyecto y creamos 2 directorios y un archivo .yml que gestionaria el action
+.github
+    worflows
+        firebase-deploy.yml
+
+--|| este seria el contenido de ejemplo, supongo que variaria segun el proyecto ||--
+name: Deploy Ionic App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Ionic
+        run: ionic build --prod
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy Firebase
+        run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+--|| este seria el contenido de ejemplo, supongo que variaria segun el proyecto ||--
