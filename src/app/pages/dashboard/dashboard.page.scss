@@ -1,9 +1,9 @@
 @import '../../../theme/variables.scss';
 
 ion-card {
-    //width: 100%;
-    max-width: 300px;
+    width: 300px;
     margin: 10px !important;
+    padding: 10px;
 
     &.todo {
         border-left: 5px solid blue;
@@ -16,6 +16,17 @@ ion-card {
     &.done {
         border-left: 5px solid red;
     }
+}
+
+ion-card-subtitle {
+    margin-bottom: 10px;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .cdk-drag-preview {
@@ -77,9 +88,12 @@ ion-card {
 }
 
 .tasks-container {
-    height: 75vh;
+    height: 68vh;
     overflow-y: scroll;
     scrollbar-width: none;
+    background: black;
+    border-radius: 12px;
+    margin: 8px 0;
 }
 
 .divDrag {
@@ -166,6 +180,7 @@ ion-card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .small-user-ico {
@@ -173,6 +188,16 @@ ion-card {
     height: auto;
     border-radius: 50%;
     border: 1px solid var(--ion-color-primary);
+}
+
+.add-task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed white;
+    border-radius: 12px;
+    width: 100%;
+    height: 30px;
 }
 
 .add-task:hover {
@@ -254,7 +279,7 @@ ion-card {
         min-height: $viewport-height-mobile;
     }
 
-    .divDrag {
-        width: 90%;
-    }
+    // .divDrag {
+    //     width: 90%;
+    // }
 }

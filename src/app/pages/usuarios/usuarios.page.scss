@@ -29,9 +29,9 @@ ion-searchbar {
   flex-direction: row;
   justify-content: space-evenly;
 
-  @media (max-width: calc($breakpoint-mobile )) {
-    flex-direction: column;
-  }
+  // @media (max-width: calc($breakpoint-mobile )) {
+  //   flex-direction: column;
+  // }
 }
 
 .buttons-header {
@@ -117,7 +117,7 @@ thead {
 @media (max-width: $breakpoint-mobile) {
   .table-responsive {
     overflow-y: auto;
-    max-height: 60vh;
+    max-height: 75vh;
     border-radius: $border-radius-base;
     box-shadow: $shadow-sm;
   }

@@ -1,4 +1,4 @@
-1. ionic build  --prod
+1. ionic build --prod
 2. npx cap sync android
 3. npx cap open android (este abre el android studio)
 4. npx cap run android (este corre en emulador la app, o en tu telefono si ya lo configuraste para debug)

@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
   @ViewChild('srcollContainer', { static: true })
 
-  toggleSearch: boolean = false;
+  toggleSearch: boolean;
   searchValue: string = '';
   loggedUser!: AuthUser | null;
   scrollContainer!: ElementRef<HTMLElement>;
@@ -62,6 +62,8 @@ export class DashboardPage implements OnInit {
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
     }
+
+    this.toggleSearch = false;
   }
 
   ngOnInit() { }
@@ -72,8 +74,9 @@ export class DashboardPage implements OnInit {
 
   handleRefresh(event: RefresherCustomEvent) {
     setTimeout(() => {
-      alert('hi');
+      //alert('hi');
       // Any calls to load data go here
+      this.cargarTareas();
       event.target.complete();
     }, 2000);
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonModal, ModalController } from '@ionic/angular';
+import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { catchError, of, tap } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
@@ -49,6 +49,14 @@ export class UsuariosPage implements OnInit {
       this.loaded = true;
     }
 
+  }
+
+  handleRefresh(event: RefresherCustomEvent) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.obtenerUsuarios()
+      event.target.complete();
+    }, 2000);
   }
 
   async openModalFunc(mensaje: string) {

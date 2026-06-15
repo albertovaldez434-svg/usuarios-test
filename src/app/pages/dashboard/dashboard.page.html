@@ -1,8 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Dashboard</ion-title>
-    <ion-icon name="search-outline" slot="end" class="ion-margin-end"
-      (click)="(!toggleSearch) ? toggleSearch = true : toggleSearch = false;"></ion-icon>
+    <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
+      class="ion-margin-end" (click)="(toggleSearch === false) ? toggleSearch = true : toggleSearch = false;">
+    </ion-icon>
   </ion-toolbar>
   @if (toggleSearch === true) {
   <ion-toolbar class="dropdown_menu-6">
@@ -13,20 +14,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">registro</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div class="page-container">
-
     <div #srcollContainer cdkDropListGroup class="listContainer">
-
       <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr()"
         (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
         <ion-card-header>
@@ -39,20 +33,34 @@
             (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id"
             [cdkDragStartDelay]="{touch: 200, mouse: 0}">
             <ion-card class="todo">
-              <ion-card-header>
-                <ion-card-title>{{todoTask.title}}</ion-card-title>
-                <ion-card-subtitle>{{ todoTask.description}}</ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content>
-                <div class="card-footer">
-                  <div>
-
-                  </div>
-                  <div>
-                    <img [src]="imgSrc" class="small-user-ico" />
-                  </div>
+              <div class="card-header">
+                <div>{{todoTask.title}}</div>
+                <div class="status-container">
+                  @if (todoTask.status === 1) {
+                  <ion-label color="primary">Por Hacer</ion-label>
+                  <div class="status-icon todo"> </div>
+                  }
+                  @if (todoTask.status === 2) {
+                  <ion-label color="success">En Curso</ion-label>
+                  <div class="status-icon doing"> </div>
+                  }
+                  @if (todoTask.status === 3) {
+                  <ion-label color="danger">Terminado</ion-label>
+                  <div class="status-icon done"> </div>
+                  }
                 </div>
-              </ion-card-content>
+              </div>
+
+              <ion-card-subtitle>{{ todoTask.description}}</ion-card-subtitle>
+
+              <div class="card-footer">
+                <div>
+                  {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
+                </div>
+                <div>
+                  <img [src]="imgSrc" class="small-user-ico" />
+                </div>
+              </div>
             </ion-card>
           </div>
 
@@ -68,16 +76,16 @@
             </div>
           </ng-template>
           }
-          <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 1">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
-          </div>
           } @else {
           <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 1">
             <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
             Agregar
           </div>
           }
+        </div>
+        <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 1">
+          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Agregar
         </div>
       </div>
 
@@ -93,20 +101,34 @@
             [attr.data-id]="doingTask.id" (click)="showTaskDetails(doingTask)" [attr.data-id]="doingTask.id"
             [cdkDragStartDelay]="{touch: 200, mouse: 0}">
             <ion-card class="doing">
-              <ion-card-header>
-                <ion-card-title>{{doingTask.title}}</ion-card-title>
-                <ion-card-subtitle>{{ doingTask.description}}</ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content>
-                <div class="card-footer">
-                  <div>
-
-                  </div>
-                  <div>
-                    <img [src]="imgSrc" class="small-user-ico" />
-                  </div>
+              <div class="card-header">
+                <div>{{doingTask.title}}</div>
+                <div class="status-container">
+                  @if (doingTask.status === 1) {
+                  <ion-label color="primary">Por Hacer</ion-label>
+                  <div class="status-icon todo"> </div>
+                  }
+                  @if (doingTask.status === 2) {
+                  <ion-label color="success">En Curso</ion-label>
+                  <div class="status-icon doing"> </div>
+                  }
+                  @if (doingTask.status === 3) {
+                  <ion-label color="danger">Terminado</ion-label>
+                  <div class="status-icon done"> </div>
+                  }
                 </div>
-              </ion-card-content>
+              </div>
+
+              <ion-card-subtitle>{{ doingTask.description}}</ion-card-subtitle>
+
+              <div class="card-footer">
+                <div>
+                  {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
+                </div>
+                <div>
+                  <img [src]="imgSrc" class="small-user-ico" />
+                </div>
+              </div>
             </ion-card>
           </div>
 
@@ -122,16 +144,16 @@
             </div>
           </ng-template>
           }
-          <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 2">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
-          </div>
           } @else {
           <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 2">
             <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
             Agregar
           </div>
           }
+        </div>
+        <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 2">
+          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Agregar
         </div>
       </div>
 
@@ -147,20 +169,34 @@
             [attr.data-id]="doneTask.id" (click)="showTaskDetails(doneTask)" [attr.data-id]="doneTask.id"
             [cdkDragStartDelay]="{touch: 200, mouse: 0}">
             <ion-card class="done">
-              <ion-card-header>
-                <ion-card-title>{{doneTask.title}}</ion-card-title>
-                <ion-card-subtitle>{{ doneTask.description}}</ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content>
-                <div class="card-footer">
-                  <div>
-
-                  </div>
-                  <div>
-                    <img [src]="imgSrc" class="small-user-ico" />
-                  </div>
+              <div class="card-header">
+                <div>{{doneTask.title}}</div>
+                <div class="status-container">
+                  @if (doneTask.status === 1) {
+                  <ion-label color="primary">Por Hacer</ion-label>
+                  <div class="status-icon todo"> </div>
+                  }
+                  @if (doneTask.status === 2) {
+                  <ion-label color="success">En Curso</ion-label>
+                  <div class="status-icon doing"> </div>
+                  }
+                  @if (doneTask.status === 3) {
+                  <ion-label color="danger">Terminado</ion-label>
+                  <div class="status-icon done"> </div>
+                  }
                 </div>
-              </ion-card-content>
+              </div>
+
+              <ion-card-subtitle>{{ doneTask.description}}</ion-card-subtitle>
+
+              <div class="card-footer">
+                <div>
+                  {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
+                </div>
+                <div>
+                  <img [src]="imgSrc" class="small-user-ico" />
+                </div>
+              </div>
             </ion-card>
           </div>
 
@@ -176,16 +212,17 @@
             </div>
           </ng-template>
           }
-          <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 3">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
-          </div>
+
           } @else {
           <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 3">
             <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
             Agregar
           </div>
           }
+        </div>
+        <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 3">
+          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Agregar
         </div>
       </div>
 
