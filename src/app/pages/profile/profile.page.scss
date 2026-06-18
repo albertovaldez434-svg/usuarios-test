@@ -1,5 +1,10 @@
 @import '../../../theme/variables.scss';
 
+ion-label.userInfo {
+  font-size: 18px;
+  margin-top: 0;
+}
+
 :host {
   display: block;
 }

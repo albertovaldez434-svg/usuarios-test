@@ -15,7 +15,7 @@ import { AuthUser, Users } from 'src/app/models/users';
   standalone: false
 })
 export class LoginPage implements OnInit {
-  @ViewChild('registerModal') registerModal!: IonModal;
+  //@ViewChild('registerModal') registerModal!: IonModal;
   loginForm: FormGroup;
   valid: boolean = true;
 
@@ -80,7 +80,10 @@ export class LoginPage implements OnInit {
     const modal = this.modalCtrl.create({
       component: RegisterFormComponent,
       breakpoints: [0, 0.25, 0.5, 0.75, 0.85],
-      initialBreakpoint: 0.85
+      initialBreakpoint: 0.85,
+      componentProps: {
+        Title: 'Registrate'
+      }
     });
 
     (await modal).present();
@@ -91,14 +94,14 @@ export class LoginPage implements OnInit {
     if (data) {
       this.UserService.signUpNewUser(data).subscribe({
         next: (response) => {
-          this.registerModal.dismiss();
+          this.modalCtrl.dismiss();
           this.openModalFunc('Utilize sus credenciales para iniciar sesión');
         },
         error: (err) => {
           this.openModalFunc('Error al Registrarse, por favor intente nuevamente');
         }
       });
-      this.registerModal.dismiss();
+      this.modalCtrl.dismiss();
     } else {
       return;
     }

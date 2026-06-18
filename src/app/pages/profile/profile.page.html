@@ -32,7 +32,7 @@
                   <ion-button fill="outline" color="primary" size="small" class="change-picture-btn"
                     (click)="showPictureSourceOptions()">
                     <ion-icon name="camera-outline" slot="start"></ion-icon>
-                    Cambiar
+                    Cambiar Imagen
                   </ion-button>
                   }
                 </div>
@@ -42,35 +42,27 @@
               <div class="user-info-section ion-margin-top">
                 <ion-item>
                   <ion-label position="stacked">Nombre</ion-label>
-                  <ion-input [value]="currentUser?.nombre || 'Nombre'" readonly></ion-input>
+                  <ion-label position="stacked" class="userInfo">{{currentUser?.nombre || 'Nombre'}}</ion-label>
                 </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Apellidos</ion-label>
-                  <ion-input [value]="currentUser?.apellidos || 'Apellido'" readonly></ion-input>
+                  <ion-label position="stacked" class="userInfo">{{currentUser?.apellidos || 'Apellido'}}</ion-label>
                 </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Email</ion-label>
-                  <ion-input [value]="currentUser?.email || 'Email@emaple.com'" readonly></ion-input>
+                  <ion-label position="stacked" class="userInfo">{{currentUser?.email || 'nombre@correo.com'}}</ion-label>
                 </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Telefono</ion-label>
-                  <ion-input [value]="currentUser?.telefono || 'Ej: +52 644123456'" readonly></ion-input>
+                  <ion-label position="stacked" class="userInfo">{{currentUser?.telefono || 'Ej: +52 644123456'}}</ion-label>
                 </ion-item>
               </div>
 
               <div class="button-section">
-                @if (!editingUser) {
-                <ion-button fill="outline" color="primary" expand="block" (click)="editProfile()">
+                <ion-button color="primary" expand="block" (click)="editProfile()">
+                   <ion-icon slot="start" name="create-outline"></ion-icon>
                   Editar Perfil
                 </ion-button>
-                } @else {
-                <ion-button fill="outline" class="button-native" color="secondary" (click)="editingUser = false">
-                  Cancelar
-                </ion-button>
-                <ion-button fill="outline" class="button-native" color="primary" (click)="guardarCambiosEdit()">
-                  Guardar Cambios
-                </ion-button>
-                }
               </div>
 
             </ion-card-content>
@@ -82,18 +74,8 @@
 </ion-content>
 
 <ion-modal #modalEditInfo [initialBreakpoint]="0.90" [breakpoints]="[0, 0.25, 0.5, 0.75, 0.90]">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Modal</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="modalEditInfo.dismiss()">
-          <ion-icon name="close-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
   <ng-template>
-    <app-register-form [Title]="'Editar Perfil'" [userData]="currentUser" (formSubmit)="getDataEmitted($event)"></app-register-form>
+    <app-register-form [Title]="'Editar Perfil'" [userData]="currentUser"
+      (formSubmit)="getDataEmitted($event)"></app-register-form>
   </ng-template>
 </ion-modal>

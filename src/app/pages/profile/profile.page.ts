@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
   loggedUser!: AuthUser | null;
   currentUser?: Users;
   imgSrc: string = '';
-  editingUser: boolean = false;
+  //editingUser: boolean = false;
 
   usersSub!: Subscription;
 
@@ -87,24 +87,24 @@ export class ProfilePage implements OnInit {
 
   showPictureSourceOptions = async () => {
     const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Select picture source',
+      header: 'Seleccione',
       buttons: [
         {
-          text: 'Camera',
+          text: 'Camara',
           icon: 'camera',
           handler: () => {
             this.takePictureFromCamera();
           }
         },
         {
-          text: 'Photo Gallery',
+          text: 'Galeria',
           icon: 'image',
           handler: () => {
             this.pickPictureFromGallery();
           }
         },
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           icon: 'close',
           role: 'cancel'
         }
@@ -202,7 +202,7 @@ export class ProfilePage implements OnInit {
   }
 
   editProfile() {
-    this.editingUser = true;
+    //this.editingUser = true;
     this.ModalEditInfo.present();
     // this.modalCtrl.create({
     //   component: RegisterFormComponent,
@@ -214,10 +214,12 @@ export class ProfilePage implements OnInit {
   }
 
   getDataEmitted(data: Users | null) {
-    if (!this.users) {
-      this.editingUser = false;
+    if (!data) {
+      //this.editingUser = false;
       return;
     }
+
+    if(!this.users) return;
 
     if (data) {
       if (data.idUser === 999) {
@@ -231,7 +233,7 @@ export class ProfilePage implements OnInit {
         this.userService.setUsers(this.users);
         this.ModalEditInfo.dismiss();
         this.openModalFunc('Datos actualizados.');
-        this.editingUser = false;
+        //this.editingUser = false;
         return;
       } else {
         this.guardarCambiosEdit();

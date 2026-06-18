@@ -12,9 +12,10 @@ import { Users } from 'src/app/models/users';
   imports: [CommonModule, ReactiveFormsModule, IonicModule],
 })
 export class RegisterFormComponent implements OnInit {
+  @Input() Title?: string;
   @Input() userData?: Users;
   @Output() formSubmit = new EventEmitter<Users | null>();
-  @Input() Title?: string;
+  
   registerForm!: FormGroup;
   submitted = false;
   passwordVisible = false;
@@ -32,7 +33,7 @@ export class RegisterFormComponent implements OnInit {
     if (this.userData) {
       this.isEditingData = true;
     }
-    console.log('editando perfil: ', this.isEditingData);
+    // console.log('editando perfil: ', this.isEditingData);
 
     this.registerForm = this.formBuilder.group({
       firstName: [this.userData?.nombre || '', [Validators.required, Validators.minLength(2)]],
@@ -44,7 +45,7 @@ export class RegisterFormComponent implements OnInit {
       mobileNumber: [this.userData?.telefono || '', [Validators.required, Validators.pattern(/^[\d\s\-\+\(\)]{10,}$/)]],
     });
 
-    // console.log(this.Title);
+    //console.log(this.Title);
   }
 
   get f() {
