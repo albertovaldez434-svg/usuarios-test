@@ -28,6 +28,7 @@ ion-searchbar {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  position: relative;
 
   // @media (max-width: calc($breakpoint-mobile )) {
   //   flex-direction: column;
@@ -71,6 +72,11 @@ td {
 
 td {
   background: rgba(59, 58, 58, 0.98);
+}
+
+td:last-child {
+  display: flex;
+  justify-content: space-around;
 }
 
 th {
@@ -183,7 +189,7 @@ thead {
 
 // Extra: Add hover and focus for table rows and buttons
 tr:hover {
-  background: $color-primary-tint;
+  background: rgb(87 77 77 / 98%);
   transition: background 0.2s;
 }
 
@@ -191,8 +197,15 @@ ion-button {
   border-radius: $button-border-radius;
   box-shadow: $shadow-sm;
   font-weight: $font-weight-medium;
+  
   letter-spacing: 0.5px;
   transition: background 0.2s, box-shadow 0.2s;
+  width: 50px;
+  height: 50px;
+
+  ion-icon {
+    font-size: 24px;
+  }
 }
 
 ion-button:hover,

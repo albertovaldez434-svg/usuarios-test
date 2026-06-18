@@ -67,10 +67,7 @@ export class LoginPage implements OnInit {
     this.UserService.Login(loginRrquest).subscribe({
       next: (loginData) => {
         this.UserService.setLoginData(loginData);
-        const data = [loginData.userInfo];
-        this.UserService.setUser(data);
-        this.openModalFunc('Sesion iniciada');
-        this.route.navigate(['/profile']);
+        this.route.navigate(['/dashboard']);
       },
       error: (error) => {
         this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
@@ -126,8 +123,6 @@ export class LoginPage implements OnInit {
     }
 
     this.UserService.setLoginData(invitadoAuth);
-    const data = [invitadoAuth.userInfo];
-    this.UserService.setUser(data);
     this.openModalFunc('Sesion iniciada');
     this.route.navigate(['/profile']);
   }

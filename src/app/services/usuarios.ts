@@ -21,8 +21,8 @@ export class UsuariosService {
   }
 
   //subjects
-  private user = new BehaviorSubject<Users[] | null>(null);
-  user$ = this.user.asObservable();
+  private users = new BehaviorSubject<Users[] | null>(null);
+  Users$ = this.users.asObservable();
 
   private TasksData = new BehaviorSubject<UserTasks[] | null>(null);
   TaskData$ = this.TasksData.asObservable();
@@ -44,8 +44,8 @@ export class UsuariosService {
   //fin test signal
 
   //methods
-  setUser = async (usrData: Users[]) => {
-    this.user.next(usrData);
+  setUsers = async (usrData: Users[]) => {
+    this.users.next(usrData);
     this.secureStorage.setItem('users', usrData);
     //localStorage.setItem('users', JSON.stringify(usrData));
   }
@@ -55,18 +55,18 @@ export class UsuariosService {
     const users = await this.secureStorage.getItem<Users[]>('users');
     if (users) {
       const storedUsers = users;
-      this.user.next(storedUsers);
+      this.users.next(storedUsers);
     }
   }
 
-  clearUser = async () => {
-    this.user.next(null);
+  clearUsers = async () => {
+    this.users.next(null);
     localStorage.removeItem('users');
   }
 
   closeSesion(): void {
     this.clearLoginData();
-    this.clearUser();
+    this.clearUsers();
   }
 
   async setTasksData(tasks: UserTasks[]) {

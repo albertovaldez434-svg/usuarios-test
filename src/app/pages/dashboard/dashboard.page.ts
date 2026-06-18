@@ -4,7 +4,8 @@ import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
-import { AuthUser } from 'src/app/models/users';
+import { AuthUser, Users } from 'src/app/models/users';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +16,15 @@ import { AuthUser } from 'src/app/models/users';
 export class DashboardPage implements OnInit {
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
-  @ViewChild('srcollContainer', { static: true })
 
-  toggleSearch: boolean;
+  toggleSearch: boolean = false;
+  playSAnimation: boolean = false;
   searchValue: string = '';
   loggedUser!: AuthUser | null;
   scrollContainer!: ElementRef<HTMLElement>;
   imgSrc: string = '';
   isDragging: boolean = false;
+  usuarios!: Users[] | null;
 
   allTasks = signal<UserTasks[]>([]);
   todoArr = computed(() =>
@@ -40,14 +42,16 @@ export class DashboardPage implements OnInit {
 
   selectedTask = signal<UserTasks | null>(null);
   editableTask = signal<UserTasks | null>(null);
+  editableTaskPrevValue = signal<UserTasks | null>(null);
 
   titleKeyActive: boolean = false;
   descKeyActive: boolean = false;
-  statusKeyActive: boolean = false;
 
   newTaskTitle: string = '';
   newTaskDesc: string = '';
   newTaskStatus: number = 0;
+
+  //usersSub!: Subscription;
 
   constructor(
     private usuarioService: UsuariosService,
@@ -62,14 +66,29 @@ export class DashboardPage implements OnInit {
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
     }
-
-    this.toggleSearch = false;
   }
 
   ngOnInit() { }
 
   ionViewDidEnter() {
     this.cargarTareas();
+    this.obtenerUsuarios();
+  }
+
+  ionViewWillLeave() {
+    //this.usersSub.unsubscribe();
+  }
+
+  setSearchToggle() {
+    if (!this.toggleSearch) {
+      this.toggleSearch = true
+      this.playSAnimation = true;
+    } else {
+      this.playSAnimation = false;
+      setTimeout(() => {
+        this.toggleSearch = false
+      }, 300);
+    }
   }
 
   handleRefresh(event: RefresherCustomEvent) {
@@ -92,6 +111,26 @@ export class DashboardPage implements OnInit {
     });
 
     (await modal).present();
+  }
+
+  obtenerUsuarios = () => {
+    // if (this.usersService.loggedData$()?.idUser === 999) {
+    //   this.usersService.clearUser();
+    //   this.obtenerUsuariosTest();
+    //   this.usersService.setUser(this.usuarios);
+    //   return;
+    // }
+
+    this.usuarioService.getUsers().subscribe({
+      next: (usuarios) => {
+        this.usuarioService.clearUsers();
+        this.usuarios = usuarios;
+        this.usuarioService.setUsers(this.usuarios);
+      },
+      error: (error) => {
+        this.openModalFunc('No se pudo cargar la informacion de usuarios');
+      }
+    });
   }
 
   cargarTareasTest() {
@@ -248,6 +287,7 @@ export class DashboardPage implements OnInit {
 
     // editable clone
     this.editableTask.set(structuredClone(data));
+    this.editableTaskPrevValue.set(structuredClone(data));
 
     this.modalTaskDetail.present();
   }
@@ -261,7 +301,6 @@ export class DashboardPage implements OnInit {
         }
         this.titleKeyActive = true;
         this.descKeyActive = false;
-        this.statusKeyActive = false;
         break;
       case 'description':
         if (this.descKeyActive) {
@@ -270,35 +309,34 @@ export class DashboardPage implements OnInit {
         }
         this.titleKeyActive = false;
         this.descKeyActive = true;
-        this.statusKeyActive = false;
-        break;
-      case 'status':
-        if (this.statusKeyActive) {
-          this.statusKeyActive = false;
-          return;
-        }
-        this.titleKeyActive = false;
-        this.descKeyActive = false;
-        this.statusKeyActive = true;
         break;
       default:
         this.titleKeyActive = false;
         this.descKeyActive = false;
-        this.statusKeyActive = false;
         break;
     }
+  }
+  
+  changeTaskUser(idUser: number) {
+    console.log(idUser);
+  }
+
+  cancelTaskEdit() {
+    this.titleKeyActive = false;
+    this.descKeyActive = false;
+    this.editableTask.set(this.editableTaskPrevValue());
   }
 
   cleanTaskFlow() {
     this.titleKeyActive = false;
     this.descKeyActive = false;
-    this.statusKeyActive = false;
     this.newTaskDesc = '';
     this.newTaskStatus = 0;
     this.newTaskTitle = '';
 
     this.selectedTask.set(null);
     this.editableTask.set(null);
+    this.editableTaskPrevValue.set(null);
   }
 
   changeTaskStatus(idStatus: number) {
@@ -360,6 +398,10 @@ export class DashboardPage implements OnInit {
         this.openModalFunc('Hubo un problema al crear la tarea');
       },
     });
+  }
+
+  eliminarTarea() {
+    console.log(this.selectedTask());
   }
 
   addTaskHelper(task: UserTasks) {

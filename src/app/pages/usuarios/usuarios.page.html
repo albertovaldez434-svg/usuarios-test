@@ -18,19 +18,17 @@
 
     <ion-grid>
       <div class="controls-header">
-        <div>
+        <div class="ion-activable">
+          <ion-ripple-effect></ion-ripple-effect>
           <ion-searchbar animated="true" show-cancel-button="focus" placeholder="Buscar" [value]="searchValue"
-            [(ngModel)]="searchValue"></ion-searchbar>
+            [(ngModel)]="searchValue">
+          </ion-searchbar>
         </div>
         <div class="buttons-header">
-          <ion-button (click)="signupFunc()">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
+          <ion-button expand="block" (click)="signupFunc()" class="ion-activable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-icon name="person-add-outline" slot="icon-only"></ion-icon>
           </ion-button>
-          <!-- <ion-button (click)="obtenerUsuarios()">
-            <ion-icon name="reload-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Recargar
-          </ion-button> -->
         </div>
       </div>
 
@@ -55,12 +53,10 @@
               <td data-label="Telefono">{{ usuario.telefono }}</td>
               <td>
                 <ion-button expand="block" (click)="editarUsuario(usuario.idUser)">
-                  <ion-icon name="create-outline" slot="start" class="ion-margin-end"></ion-icon>
-                  Editar
+                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
                 </ion-button>
-                <ion-button expand="block" (click)="EliminarUsuario(usuario.idUser)">
-                  <ion-icon name="trash-outline" slot="start" class="ion-margin-end"></ion-icon>
-                  Eliminar
+                <ion-button expand="block" color="danger" (click)="EliminarUsuario(usuario.idUser)">
+                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
                 </ion-button>
               </td>
             </tr>

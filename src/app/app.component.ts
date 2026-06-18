@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
           const storedLogin = dataLogin;
           this.userService.setLoginData(storedLogin);
           this.isLogged = true;
-          this.route.navigate(['/profile']);
+          this.route.navigate(['/dashboard']);
           return;
         }
         if (this.jwtHelper.isTokenExpired(dataLogin?.access_token)) {
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
         const storedLogin = dataLogin;
         this.userService.setLoginData(storedLogin);
         this.isLogged = true;
-        this.route.navigate(['/profile']);
+        this.route.navigate(['/dashboard']);
       } else {
         this.isLogged = false;
         this.route.navigate(['/login']);

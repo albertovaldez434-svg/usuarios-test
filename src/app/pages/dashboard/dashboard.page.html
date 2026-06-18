@@ -2,11 +2,11 @@
   <ion-toolbar>
     <ion-title>Dashboard</ion-title>
     <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
-      class="ion-margin-end" (click)="(toggleSearch === false) ? toggleSearch = true : toggleSearch = false;">
+      class="ion-margin-end" (click)="setSearchToggle()">
     </ion-icon>
   </ion-toolbar>
   @if (toggleSearch === true) {
-  <ion-toolbar class="dropdown_menu-6">
+  <ion-toolbar [class.dropdown_menu]="playSAnimation" [class.dropdown_menu_close]="!playSAnimation">
     <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
       [(ngModel)]="searchValue"></ion-searchbar>
   </ion-toolbar>
@@ -19,222 +19,231 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="page-container">
-    <div #srcollContainer cdkDropListGroup class="listContainer">
-      <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr()"
-        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
-        <ion-card-header>
-          <ion-card-title class="ion-text-center">Por Hacer {{todoArr().length}}</ion-card-title>
-        </ion-card-header>
-        <div class="tasks-container">
-          @if (todoArr().length > 0) {
-          @for (todoTask of todoArr() | search: searchValue:['title', 'description']; track todoTask.id) {
-          <div cdkDrag [cdkDragData]="todoTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-            (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id"
-            [cdkDragStartDelay]="{touch: 200, mouse: 0}">
-            <ion-card class="todo">
-              <div class="card-header">
-                <div>{{todoTask.title}}</div>
-                <div class="status-container">
-                  @if (todoTask.status === 1) {
-                  <ion-label color="primary">Por Hacer</ion-label>
-                  <div class="status-icon todo"> </div>
-                  }
-                  @if (todoTask.status === 2) {
-                  <ion-label color="success">En Curso</ion-label>
-                  <div class="status-icon doing"> </div>
-                  }
-                  @if (todoTask.status === 3) {
-                  <ion-label color="danger">Terminado</ion-label>
-                  <div class="status-icon done"> </div>
-                  }
-                </div>
+  <div #scrollContainer cdkDropListGroup class="listContainer">
+    <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr()"
+      (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Por Hacer {{todoArr().length}}</ion-card-title>
+      </ion-card-header>
+      <div class="tasks-container">
+        @if (todoArr().length > 0) {
+        @for (todoTask of todoArr() | search: searchValue:['title', 'description']; track todoTask.id) {
+
+        <div cdkDrag [cdkDragData]="todoTask" class="divDrag ion-activatable ripple-parent"
+          (cdkDragMoved)="onDragMoved($event)" (click)="showTaskDetails(todoTask)" [attr.data-id]="todoTask.id"
+          [cdkDragStartDelay]="{touch: 200, mouse: 0}">
+          <ion-card class="todo">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="card-header">
+              <div>{{todoTask.title}}</div>
+              <div class="status-container">
+                @if (todoTask.status === 1) {
+                <ion-label color="primary">Por Hacer</ion-label>
+                <div class="status-icon todo"> </div>
+                }
+                @if (todoTask.status === 2) {
+                <ion-label color="warning">En Curso</ion-label>
+                <div class="status-icon doing"> </div>
+                }
+                @if (todoTask.status === 3) {
+                <ion-label color="success">Terminado</ion-label>
+                <div class="status-icon done"> </div>
+                }
               </div>
-
-              <ion-card-subtitle>{{ todoTask.description}}</ion-card-subtitle>
-
-              <div class="card-footer">
-                <div>
-                  {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
-                </div>
-                <div>
-                  <img [src]="imgSrc" class="small-user-ico" />
-                </div>
-              </div>
-            </ion-card>
-          </div>
-
-          <!-- Placeholder -->
-          <ng-template cdkDragPlaceholder>
-            <div class="drag-placeholder"></div>
-          </ng-template>
-
-          <!-- Preview (ghost mientras arrastras) -->
-          <ng-template cdkDragPreview>
-            <div class="drag-preview">
-              {{todoTask.title}}
             </div>
-          </ng-template>
-          }
-          } @else {
-          <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 1">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
-          </div>
-          }
+
+            <ion-card-subtitle>{{ todoTask.description}}</ion-card-subtitle>
+
+            <div class="card-footer">
+              <div>
+                {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
+              </div>
+              <div>
+                <img [src]="imgSrc" class="small-user-ico" />
+              </div>
+            </div>
+          </ion-card>
         </div>
-        <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 1">
+
+        <!-- Placeholder -->
+        <ng-template cdkDragPlaceholder>
+          <div class="drag-placeholder"></div>
+        </ng-template>
+
+        <!-- Preview (ghost mientras arrastras) -->
+        <ng-template cdkDragPreview>
+          <div class="drag-preview">
+            {{todoTask.title}}
+          </div>
+        </ng-template>
+        }
+        } @else {
+        <div class="add-task ion-activatable" (click)="modalNewTask.present(); newTaskStatus = 1">
+          <ion-ripple-effect></ion-ripple-effect>
           <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
           Agregar
         </div>
+        }
       </div>
-
-      <div cdkDropList #doingList id="doing" class="myDropList" [cdkDropListData]="doingArr()"
-        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
-        <ion-card-header>
-          <ion-card-title class="ion-text-center">En Curso {{doingArr().length}}</ion-card-title>
-        </ion-card-header>
-        <div class="tasks-container">
-          @if (doingArr().length > 0) {
-          @for (doingTask of doingArr() | search: searchValue:['title', 'description']; track doingTask.id) {
-          <div cdkDrag [cdkDragData]="doingTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-            [attr.data-id]="doingTask.id" (click)="showTaskDetails(doingTask)" [attr.data-id]="doingTask.id"
-            [cdkDragStartDelay]="{touch: 200, mouse: 0}">
-            <ion-card class="doing">
-              <div class="card-header">
-                <div>{{doingTask.title}}</div>
-                <div class="status-container">
-                  @if (doingTask.status === 1) {
-                  <ion-label color="primary">Por Hacer</ion-label>
-                  <div class="status-icon todo"> </div>
-                  }
-                  @if (doingTask.status === 2) {
-                  <ion-label color="success">En Curso</ion-label>
-                  <div class="status-icon doing"> </div>
-                  }
-                  @if (doingTask.status === 3) {
-                  <ion-label color="danger">Terminado</ion-label>
-                  <div class="status-icon done"> </div>
-                  }
-                </div>
-              </div>
-
-              <ion-card-subtitle>{{ doingTask.description}}</ion-card-subtitle>
-
-              <div class="card-footer">
-                <div>
-                  {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
-                </div>
-                <div>
-                  <img [src]="imgSrc" class="small-user-ico" />
-                </div>
-              </div>
-            </ion-card>
-          </div>
-
-          <!-- Placeholder -->
-          <ng-template cdkDragPlaceholder>
-            <div class="drag-placeholder"></div>
-          </ng-template>
-
-          <!-- Preview (ghost mientras arrastras) -->
-          <ng-template cdkDragPreview>
-            <div class="drag-preview">
-              {{doingTask.title}}
-            </div>
-          </ng-template>
-          }
-          } @else {
-          <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 2">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
-          </div>
-          }
-        </div>
-        <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 2">
-          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-          Agregar
-        </div>
+      <div class="add-task ion-activatable" (click)="modalNewTask.present(); newTaskStatus = 1">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+        Agregar
       </div>
-
-      <div cdkDropList #doneList id="done" class="myDropList" [cdkDropListData]="doneArr()"
-        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
-        <ion-card-header>
-          <ion-card-title class="ion-text-center">Terminado {{doneArr().length}}</ion-card-title>
-        </ion-card-header>
-        <div class="tasks-container">
-          @if (doneArr().length > 0) {
-          @for (doneTask of doneArr() | search: searchValue:['title', 'description']; track doneTask.id) {
-          <div cdkDrag [cdkDragData]="doneTask" class="divDrag" (cdkDragMoved)="onDragMoved($event)"
-            [attr.data-id]="doneTask.id" (click)="showTaskDetails(doneTask)" [attr.data-id]="doneTask.id"
-            [cdkDragStartDelay]="{touch: 200, mouse: 0}">
-            <ion-card class="done">
-              <div class="card-header">
-                <div>{{doneTask.title}}</div>
-                <div class="status-container">
-                  @if (doneTask.status === 1) {
-                  <ion-label color="primary">Por Hacer</ion-label>
-                  <div class="status-icon todo"> </div>
-                  }
-                  @if (doneTask.status === 2) {
-                  <ion-label color="success">En Curso</ion-label>
-                  <div class="status-icon doing"> </div>
-                  }
-                  @if (doneTask.status === 3) {
-                  <ion-label color="danger">Terminado</ion-label>
-                  <div class="status-icon done"> </div>
-                  }
-                </div>
-              </div>
-
-              <ion-card-subtitle>{{ doneTask.description}}</ion-card-subtitle>
-
-              <div class="card-footer">
-                <div>
-                  {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
-                </div>
-                <div>
-                  <img [src]="imgSrc" class="small-user-ico" />
-                </div>
-              </div>
-            </ion-card>
-          </div>
-
-          <!-- Placeholder -->
-          <ng-template cdkDragPlaceholder>
-            <div class="drag-placeholder"></div>
-          </ng-template>
-
-          <!-- Preview (ghost mientras arrastras) -->
-          <ng-template cdkDragPreview>
-            <div class="drag-preview">
-              {{doneTask.title}}
-            </div>
-          </ng-template>
-          }
-
-          } @else {
-          <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 3">
-            <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-            Agregar
-          </div>
-          }
-        </div>
-        <div class="add-task" (click)="modalNewTask.present(); newTaskStatus = 3">
-          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
-          Agregar
-        </div>
-      </div>
-
     </div>
+
+    <div cdkDropList #doingList id="doing" class="myDropList" [cdkDropListData]="doingArr()"
+      (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">En Curso {{doingArr().length}}</ion-card-title>
+      </ion-card-header>
+      <div class="tasks-container">
+        @if (doingArr().length > 0) {
+        @for (doingTask of doingArr() | search: searchValue:['title', 'description']; track doingTask.id) {
+        <div cdkDrag [cdkDragData]="doingTask" class="divDrag ion-activatable ripple-parent"
+          (cdkDragMoved)="onDragMoved($event)" [attr.data-id]="doingTask.id" (click)="showTaskDetails(doingTask)"
+          [attr.data-id]="doingTask.id" [cdkDragStartDelay]="{touch: 200, mouse: 0}">
+          <ion-card class="doing">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="card-header">
+              <div>{{doingTask.title}}</div>
+              <div class="status-container">
+                @if (doingTask.status === 1) {
+                <ion-label color="primary">Por Hacer</ion-label>
+                <div class="status-icon todo"> </div>
+                }
+                @if (doingTask.status === 2) {
+                <ion-label color="warning">En Curso</ion-label>
+                <div class="status-icon doing"> </div>
+                }
+                @if (doingTask.status === 3) {
+                <ion-label color="success">Terminado</ion-label>
+                <div class="status-icon done"> </div>
+                }
+              </div>
+            </div>
+
+            <ion-card-subtitle>{{ doingTask.description}}</ion-card-subtitle>
+
+            <div class="card-footer">
+              <div>
+                {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
+              </div>
+              <div>
+                <img [src]="imgSrc" class="small-user-ico" />
+              </div>
+            </div>
+          </ion-card>
+        </div>
+
+        <!-- Placeholder -->
+        <ng-template cdkDragPlaceholder>
+          <div class="drag-placeholder"></div>
+        </ng-template>
+
+        <!-- Preview (ghost mientras arrastras) -->
+        <ng-template cdkDragPreview>
+          <div class="drag-preview">
+            {{doingTask.title}}
+          </div>
+        </ng-template>
+        }
+        } @else {
+        <div class="add-task ion-activatable" (click)="modalNewTask.present(); newTaskStatus = 2">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Agregar
+        </div>
+        }
+      </div>
+      <div class="add-task ion-activatable" (click)="modalNewTask.present(); newTaskStatus = 2">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+        Agregar
+      </div>
+    </div>
+
+    <div cdkDropList #doneList id="done" class="myDropList" [cdkDropListData]="doneArr()"
+      (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="onListEntered($event)">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Terminado {{doneArr().length}}</ion-card-title>
+      </ion-card-header>
+      <div class="tasks-container">
+        @if (doneArr().length > 0) {
+        @for (doneTask of doneArr() | search: searchValue:['title', 'description']; track doneTask.id) {
+        <div cdkDrag [cdkDragData]="doneTask" class="divDrag ion-activatable ripple-parent"
+          (cdkDragMoved)="onDragMoved($event)" [attr.data-id]="doneTask.id" (click)="showTaskDetails(doneTask)"
+          [attr.data-id]="doneTask.id" [cdkDragStartDelay]="{touch: 200, mouse: 0}">
+          <ion-card class="done">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="card-header">
+              <div>{{doneTask.title}}</div>
+              <div class="status-container">
+                @if (doneTask.status === 1) {
+                <ion-label color="primary">Por Hacer</ion-label>
+                <div class="status-icon todo"> </div>
+                }
+                @if (doneTask.status === 2) {
+                <ion-label color="warning">En Curso</ion-label>
+                <div class="status-icon doing"> </div>
+                }
+                @if (doneTask.status === 3) {
+                <ion-label color="success">Terminado</ion-label>
+                <div class="status-icon done"> </div>
+                }
+              </div>
+            </div>
+
+            <ion-card-subtitle>{{ doneTask.description}}</ion-card-subtitle>
+
+            <div class="card-footer">
+              <div>
+                {{loggedUser!.userInfo.nombre + ' ' + loggedUser!.userInfo.apellidos}}
+              </div>
+              <div>
+                <img [src]="imgSrc" class="small-user-ico" />
+              </div>
+            </div>
+          </ion-card>
+        </div>
+
+        <!-- Placeholder -->
+        <ng-template cdkDragPlaceholder>
+          <div class="drag-placeholder"></div>
+        </ng-template>
+
+        <!-- Preview (ghost mientras arrastras) -->
+        <ng-template cdkDragPreview>
+          <div class="drag-preview">
+            {{doneTask.title}}
+          </div>
+        </ng-template>
+        }
+
+        } @else {
+        <div class="add-task ion-activatable" (click)="modalNewTask.present(); newTaskStatus = 3">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+          Agregar
+        </div>
+        }
+      </div>
+      <div class="add-task ion-activatable" (click)="modalNewTask.present(); newTaskStatus = 3">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
+        Agregar
+      </div>
+    </div>
+
   </div>
+
 </ion-content>
 
 <ion-modal #modalTaskDetails [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>
+        <ion-title slot="center">
           Detalles Tarea
         </ion-title>
         <ion-buttons slot="end">
@@ -252,48 +261,63 @@
           <div class="status-icon todo"> </div>
           }
           @if (editableTask()?.status === 2) {
-          <ion-label color="success">En Curso</ion-label>
+          <ion-label color="warning">En Curso</ion-label>
           <div class="status-icon doing"> </div>
           }
           @if (editableTask()?.status === 3) {
-          <ion-label color="danger">Terminado</ion-label>
+          <ion-label color="success">Terminado</ion-label>
           <div class="status-icon done"> </div>
           }
         </div>
 
-
         <ion-item>
           <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid"
-            [(ngModel)]="editableTask()!.title" [readonly]="!titleKeyActive"
-            [helperText]="titleKeyActive ? 'Editando titulo' : ''"></ion-input>
-          <ion-icon [class.active]="titleKeyActive" name="create-outline" slot="end"
-            (click)="EditField('title')"></ion-icon>
+            [(ngModel)]="editableTask()!.title" (click)="EditField('title')"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input #inpDesc label="Descripcion" label-placement="floating" fill="solid"
-            [(ngModel)]="editableTask()!.description" [readonly]="!descKeyActive"
-            [helperText]="descKeyActive ? 'Editando descripción' : ''"></ion-input>
-          <ion-icon [class.active]="descKeyActive" name="create-outline" slot="end"
-            (click)="EditField('description')"></ion-icon>
+          <ion-textarea #inpDesc label="Descripcion" label-placement="floating" fill="solid"
+            [(ngModel)]="editableTask()!.description" (click)="EditField('description')">
+          </ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-select #taskUserAssign label="Asignado" placeholder="Usuario asignado" [(ngModel)]="loggedUser!.idUser"
+            (ionChange)="changeTaskUser(taskUserAssign.value)">
+            @for (user of usuarios; track user.idUser) {
+            <ion-select-option [value]="user.idUser">{{user.nombre}} {{user.apellidos}}</ion-select-option>
+            }
+          </ion-select>
         </ion-item>
       </div>
+      @if (titleKeyActive || descKeyActive) {
+      <div class="changes-actions">
+        <ion-button class="btn-secondary" (click)="cancelTaskEdit()">
+          <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button class="btn-primary" (click)="saveTaskChanges()">
+          <ion-icon name="save-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+      } @else {
       <div class="task-actions">
-        @if (editableTask()?.status === 1) {
-        <ion-button color="primary" (click)="changeTaskStatus(2)">Iniciar</ion-button>
+        <ion-button color="danger" (click)="eliminarTarea()">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        @if (editableTask()?.status === 1 || editableTask()?.status === 3) {
+        <ion-button color="primary" (click)="changeTaskStatus(2)">
+          <ion-icon name="play-outline" slot="icon-only"></ion-icon>
+        </ion-button>
         } @else if (editableTask()?.status === 2) {
-        <ion-button color="warning" (click)="changeTaskStatus(1)">Detener</ion-button>
-        <ion-button color="danger" (click)="changeTaskStatus(3)">Finalizar</ion-button>
+        <ion-button color="warning" (click)="changeTaskStatus(1)">
+          <ion-icon name="pause-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button color="success" (click)="changeTaskStatus(3)">
+          <ion-icon name="checkmark-outline" slot="icon-only"></ion-icon>
+        </ion-button>
         } @else if (editableTask()?.status === 3) {
-        Tarea finalizada
+        <!-- Tarea finalizada -->
         }
       </div>
-      @if (titleKeyActive || descKeyActive || statusKeyActive) {
-      <div class="changes-actions">
-        <ion-button color="primary" (click)="cleanTaskFlow(); this.modalTaskDetail.dismiss();">Cancelar</ion-button>
-        <ion-button color="primary" (click)="saveTaskChanges()">Guardar</ion-button>
-      </div>
       }
-
     </ion-content>
   </ng-template>
 </ion-modal>

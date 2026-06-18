@@ -38,6 +38,7 @@ export class ProfilePage implements OnInit {
     this.loggedUser = this.userService.loggedData$();
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
+      this.currentUser = this.loggedUser.userInfo;
     }
 
   }
@@ -48,10 +49,10 @@ export class ProfilePage implements OnInit {
 
   ionViewDidEnter() {
     this.usersSub = new Subscription;
-    this.usersSub = this.userService.user$.subscribe({
+    this.usersSub = this.userService.Users$.subscribe({
       next: (usersData) => {
         this.users = usersData;
-        this.findLoggedUser();
+        //this.findLoggedUser();
       }, error: () => {
         this.openModalFunc('Error al cargar información de usuarios');
       }
@@ -77,12 +78,12 @@ export class ProfilePage implements OnInit {
     (await modal).present();
   }
 
-  findLoggedUser = () => {
-    const logUser = this.users?.find(usr => usr.idUser == this.loggedUser?.idUser);
-    if (logUser) {
-      this.currentUser = logUser;
-    }
-  }
+  // findLoggedUser = () => {
+  //   const logUser = this.users?.find(usr => usr.idUser == this.loggedUser?.idUser);
+  //   if (logUser) {
+  //     this.currentUser = logUser;
+  //   }
+  // }
 
   showPictureSourceOptions = async () => {
     const actionSheet = await this.actionSheetCtrl.create({
@@ -227,7 +228,7 @@ export class ProfilePage implements OnInit {
           this.users[userIndex] = this.currentUser;
         }
 
-        this.userService.setUser(this.users);
+        this.userService.setUsers(this.users);
         this.ModalEditInfo.dismiss();
         this.openModalFunc('Datos actualizados.');
         this.editingUser = false;

@@ -44,36 +44,29 @@ form {
     gap: $spacing-sm;
 }
 
-// Input box styling
-.inp-box {
-    width: 100%;
-    height: $input-height;
-    font-size: $input-font-size;
-    border-radius: $input-border-radius;
-    color: $input-color;
-    background-color: $input-bg;
-    border: $input-border;
-    box-sizing: border-box;
-    padding: $input-padding;
-}
-
-// Primary button styling
-.btn-primary {
-    width: 100%;
-    height: $input-height;
-    font-size: $input-font-size;
-    border-radius: $border-radius-xl;
-    color: $color-text-primary;
-    background-color: $input-bg;
-    border: $input-border;
-    box-sizing: border-box;
-    padding: $input-padding;
-    transition: all 0.3s ease;
+ion-button.btn-primary {
+    --border-radius: 15px;
+    --font-size: 14px;
+    --color: white;
+    --background: red;
     cursor: pointer;
 
-    &:hover {
-        background-color: $color-text-primary;
-        color: $color-text-dark;
+    :hover {
+        opacity: 0.5;
+    }
+}
+
+ion-button.btn-secondary {
+    border-radius: 15px;
+    border: 1px solid var(--ion-color-primary);
+    --font-size: 14px;
+    --color: var(--ion-color-primary);
+    --background: none;
+    
+    cursor: pointer;
+
+    :hover {
+        opacity: 0.5;
     }
 }
 

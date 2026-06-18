@@ -183,17 +183,17 @@ export class UsuariosPage implements OnInit {
   obtenerUsuarios = () => {
 
     if (this.usersService.loggedData$()?.idUser === 999) {
-      this.usersService.clearUser();
+      this.usersService.clearUsers();
       this.obtenerUsuariosTest();
-      this.usersService.setUser(this.usuarios);
+      this.usersService.setUsers(this.usuarios);
       return;
     }
 
     this.usersService.getUsers().subscribe({
       next: (usuarios) => {
-        this.usersService.clearUser();
+        this.usersService.clearUsers();
         this.usuarios = usuarios;
-        this.usersService.setUser(this.usuarios);
+        this.usersService.setUsers(this.usuarios);
       },
       error: (error) => {
         this.openModalFunc('No se pudo cargar la informacion de usuarios');
@@ -229,7 +229,7 @@ export class UsuariosPage implements OnInit {
       }
 
       this.usuarios.push(newUser);
-      this.usersService.setUser(this.usuarios);
+      this.usersService.setUsers(this.usuarios);
       this.openModalFunc('Usuario registrado exitosamente');
       this.signupForm.reset();
       return;
@@ -239,7 +239,7 @@ export class UsuariosPage implements OnInit {
       next: (response) => {
         this.modalSignUp.dismiss();
         this.usuarios.push(response);
-        this.usersService.setUser(this.usuarios);
+        this.usersService.setUsers(this.usuarios);
         this.openModalFunc('Usuario registrado exitosamente');
         this.signupForm.reset();
       }, error: (error) => {
@@ -277,7 +277,7 @@ export class UsuariosPage implements OnInit {
     }
 
     if (this.usersService.loggedData$()?.idRol == 999) {
-      this.usersService.setUser(this.usuarios);
+      this.usersService.setUsers(this.usuarios);
       console.log(this.usuarios);
       this.modalSignUp.dismiss();
       this.openModalFunc('Usuario registrado exitosamente');
@@ -302,7 +302,7 @@ export class UsuariosPage implements OnInit {
   EliminarUsuario(idUser: number) {
     if (this.usersService.loggedData$()?.idRol === 999) {
       this.usuarios = this.usuarios.filter(usr => usr.idUser !== idUser);
-      this.usersService.setUser(this.usuarios);
+      this.usersService.setUsers(this.usuarios);
       this.openModalFunc('Usuario eliminado');
       return;
     }
@@ -311,7 +311,7 @@ export class UsuariosPage implements OnInit {
       next: () => {
         this.openModalFunc('Usuario eliminado');
         this.usuarios = this.usuarios.filter(usr => usr.idUser !== idUser);
-        this.usersService.setUser(this.usuarios);
+        this.usersService.setUsers(this.usuarios);
       },
       error: (error) => {
         console.log(error);
