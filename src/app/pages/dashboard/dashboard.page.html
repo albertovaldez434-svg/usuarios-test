@@ -256,38 +256,38 @@
     <ion-content>
       <div class="signUpfrm">
         <!-- <div class="task-details"> -->
-          <div class="status-container">
-            @if (editableTask()?.status === 1) {
-            <ion-label color="primary">Por Hacer</ion-label>
-            <div class="status-icon todo"> </div>
-            }
-            @if (editableTask()?.status === 2) {
-            <ion-label color="warning">En Curso</ion-label>
-            <div class="status-icon doing"> </div>
-            }
-            @if (editableTask()?.status === 3) {
-            <ion-label color="success">Terminado</ion-label>
-            <div class="status-icon done"> </div>
-            }
-          </div>
+        <div class="status-container">
+          @if (editableTask()?.status === 1) {
+          <ion-label color="primary">Por Hacer</ion-label>
+          <div class="status-icon todo"> </div>
+          }
+          @if (editableTask()?.status === 2) {
+          <ion-label color="warning">En Curso</ion-label>
+          <div class="status-icon doing"> </div>
+          }
+          @if (editableTask()?.status === 3) {
+          <ion-label color="success">Terminado</ion-label>
+          <div class="status-icon done"> </div>
+          }
+        </div>
 
-          <ion-item>
-            <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid"
-              [(ngModel)]="editableTask()!.title" (click)="EditField('title')"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-textarea #inpDesc label="Descripcion" label-placement="floating" fill="solid"
-              [(ngModel)]="editableTask()!.description" (click)="EditField('description')">
-            </ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-select #taskUserAssign label="Asignado" placeholder="Usuario asignado" [(ngModel)]="loggedUser!.idUser"
-              (ionChange)="changeTaskUser(taskUserAssign.value)">
-              @for (user of usuarios; track user.idUser) {
-              <ion-select-option [value]="user.idUser">{{user.nombre}} {{user.apellidos}}</ion-select-option>
-              }
-            </ion-select>
-          </ion-item>
+        <ion-item>
+          <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid"
+            [(ngModel)]="editableTask()!.title" (click)="EditField('title')"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea #inpDesc label="Descripcion" label-placement="floating" fill="solid"
+            [(ngModel)]="editableTask()!.description" (click)="EditField('description')">
+          </ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-select #taskUserAssign label="Asignado" placeholder="Usuario asignado" [(ngModel)]="loggedUser!.idUser"
+            (ionChange)="changeTaskUser(taskUserAssign.value)">
+            @for (user of usuarios; track user.idUser) {
+            <ion-select-option [value]="user.idUser">{{user.nombre}} {{user.apellidos}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
         <!-- </div> -->
         @if (titleKeyActive || descKeyActive) {
         <div class="changes-actions">
@@ -342,25 +342,28 @@
     <ion-content>
       <div class="signUpfrm">
 
-          <ion-item>
-            <ion-input #inpNewTitle label="Titulo" label-placement="floating" fill="solid"
-              [(ngModel)]="newTaskTitle"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input #inpNewDesc label="Descripcion" label-placement="floating" fill="solid"
-              [(ngModel)]="newTaskDesc"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-select label="Status" placeholder="Seleccione" [value]="newTaskStatus">
-              <ion-select-option [value]="1">Por Hacer</ion-select-option>
-              <ion-select-option [value]="2">En Curso</ion-select-option>
-              <ion-select-option [value]="3">Terminado</ion-select-option>
-            </ion-select>3
-          </ion-item>
+        <ion-item>
+          <ion-input #inpNewTitle label="Titulo" label-placement="floating" fill="solid"
+            [(ngModel)]="newTaskTitle"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input #inpNewDesc label="Descripcion" label-placement="floating" fill="solid"
+            [(ngModel)]="newTaskDesc"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select label="Status" placeholder="Seleccione" [value]="newTaskStatus">
+            <ion-select-option [value]="1">Por Hacer</ion-select-option>
+            <ion-select-option [value]="2">En Curso</ion-select-option>
+            <ion-select-option [value]="3">Terminado</ion-select-option>
+          </ion-select>3
+        </ion-item>
 
         <div class="changes-actions">
-          <ion-button color="primary" (click)="cleanTaskFlow(); this.modalTaskDetail.dismiss();">Cancelar</ion-button>
-          <ion-button color="primary" (click)="addTarea()">Guardar</ion-button>
+          <app-custom-button [type]="'secondary'" [size]="'default'" [expand]="'block'" [iconName]="'close-outline'"
+            [slot]="'start'" [text]="'Cancelar'"
+            (clicked)="cleanTaskFlow(); this.modalTaskDetail.dismiss();"></app-custom-button>
+          <app-custom-button [type]="'primary'" [size]="'default'" [expand]="'block'" [iconName]="'add-outline'"
+            [slot]="'start'" [text]="'Guardar'" (clicked)="addTarea()"></app-custom-button>
         </div>
       </div>
     </ion-content>
