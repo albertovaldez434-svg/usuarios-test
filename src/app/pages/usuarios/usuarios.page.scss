@@ -99,11 +99,15 @@ thead {
 }
 
 .signUpfrm {
-  padding: $spacing-xl;
-  max-width: 500px;
-  margin: $spacing-lg auto;
+  width: 90%;
+  max-width: $container-max-width;
+  padding: $spacing-3xl $spacing-xl;
   border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
+  background: var(--ion-cont-bg);
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  margin: 8px auto;
 }
 
 .signUpfrm ion-item {
@@ -199,8 +203,14 @@ thead {
 
 // Extra: Add hover and focus for table rows and buttons
 tr:hover {
-  background: rgb(87 77 77 / 98%);
+  background: rgba(179, 177, 177, 0.98);
   transition: background 0.2s;
+  color: white;
+
+    td::before {
+     color: rgb(218, 216, 216);
+
+  }
 }
 
 ion-button {

@@ -36,6 +36,11 @@ ion-card-subtitle {
     color: var(--ion-txt-color);
 }
 
+ion-item {
+    border-radius: 15px;
+}
+
+
 ion-icon {
     font-size: 20px;
 }
@@ -148,14 +153,6 @@ ion-icon {
     justify-content: center;
     margin: 8px auto;
     padding: 8px;
-
-    ion-item {
-        border-radius: 15px;
-    }
-
-    ion-icon {
-        cursor: pointer;
-    }
 }
 
 .task-actions,
@@ -280,7 +277,18 @@ ion-icon {
     }
 }
 
-
+.signUpfrm {
+    width: 90%;
+    max-width: $container-max-width;
+    padding: $spacing-3xl $spacing-xl;
+    border-radius: $border-radius-lg;
+    background: var(--ion-cont-bg);
+    box-shadow: $shadow-lg;
+    display: flex;
+    flex-direction: column;
+    margin: 8px auto;
+    gap: 10px;
+}
 
 /* Responsive Design for Tablet and Desktop */
 @media (min-width: $breakpoint-tablet) {
@@ -329,6 +337,6 @@ ion-icon {
 
     .add-task {
         width: 98%;
-        margin-top: 0;
+        margin: 12px auto auto;
     }
 }

@@ -69,6 +69,7 @@ export class ProfilePage implements OnInit {
       component: IonModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
       initialBreakpoint: 0.5,
+      cssClass: 'custom-modal',
       componentProps: {
         mensaje: mensaje
       }

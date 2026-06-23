@@ -114,3 +114,14 @@ ion-modal {
     // }
 
 }
+
+ion-modal.custom-modal {
+    --border-top-left-radius: #{$modal-border-radius-top};
+    --border-top-right-radius: #{$modal-border-radius-top};
+
+
+    --color: black;
+    --background: white;
+
+
+}

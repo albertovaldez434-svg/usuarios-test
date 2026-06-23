@@ -41,6 +41,7 @@ export class LoginPage implements OnInit {
       component: IonModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
       initialBreakpoint: 0.5,
+      cssClass: 'custom-modal',
       componentProps: {
         mensaje: mensaje
       }
@@ -81,6 +82,7 @@ export class LoginPage implements OnInit {
       component: RegisterFormComponent,
       breakpoints: [0, 0.25, 0.5, 0.75, 0.85],
       initialBreakpoint: 0.85,
+      cssClass: 'custom-modal',
       componentProps: {
         Title: 'Registrate'
       }
