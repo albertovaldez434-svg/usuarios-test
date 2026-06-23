@@ -9,6 +9,7 @@ import { UsuariosPageRoutingModule } from './usuarios-routing.module';
 import { UsuariosPage } from './usuarios.page';
 
 import { SearchPipe } from '../../search-pipe'
+import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { SearchPipe } from '../../search-pipe'
     IonicModule,
     UsuariosPageRoutingModule,
     ReactiveFormsModule,
-    SearchPipe
+    SearchPipe,
+    CustomButtonComponent
 ],
   declarations: [UsuariosPage]
 })

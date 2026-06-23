@@ -130,4 +130,5 @@ export class LoginPage implements OnInit {
     this.route.navigate(['/profile']);
   }
 
+
 }

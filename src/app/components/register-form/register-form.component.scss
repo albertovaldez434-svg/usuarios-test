@@ -2,6 +2,12 @@
 
 :host {
   display: block;
+  background-color: var(--ion-background-color);
+}
+
+ion-header {
+  background-color: var(--ion-background-color);
+  background: var(--ion-background-color);
 }
 
 .login-content {
@@ -10,11 +16,11 @@
 }
 
 .form-container {
-  width: min(100%, $container-sm);
+  width: 90%;
   max-width: $container-max-width;
   padding: $spacing-3xl $spacing-xl;
   border-radius: $border-radius-lg;
-  background: $color-bg-dark-transparent;
+  background: var(--ion-cont-bg);
   box-shadow: $shadow-lg;
   display: flex;
   flex-direction: column;
@@ -24,6 +30,7 @@
 
 ion-item {
   --border-radius: #{$border-radius-base};
+  --background: var(--ion-background-color);
 }
 
 ion-button {

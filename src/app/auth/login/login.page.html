@@ -18,18 +18,26 @@
       </div>
 
       <div class="buttons-container">
-        <ion-button expand="block" fill="solid" (click)="loginFunction()">
+        <!-- <ion-button expand="block" fill="solid" (click)="loginFunction()">
           <ion-icon name="log-in-outline" slot="start" class="ion-margin-end"></ion-icon>
           Ingresar
-        </ion-button>
-        <ion-button expand="block" fill="solid" (click)="registerFunction()">
+        </ion-button> -->
+        <app-custom-button [text]="'Ingresar'" [type]="'primary'" [iconName]="'log-in-outline'" [expand]="'block'"
+          (clicked)="loginFunction()"></app-custom-button>
+        <!-- <ion-button expand="block" fill="solid" (click)="registerFunction()">
           <ion-icon name="person-add-outline" slot="start" class="ion-margin-end"></ion-icon>
           Registrarse
-        </ion-button>
-        <ion-button expand="block" fill="solid" (click)="logginInvitado()">
+        </ion-button> -->
+        <app-custom-button [text]="'Registrarse'" [type]="'primary'" [iconName]="'person-add-outline'"
+          (clicked)="registerFunction()"></app-custom-button>
+        <!-- <ion-button expand="block" fill="solid" (click)="logginInvitado()">
           <ion-icon name="people-outline" slot="start" class="ion-margin-end"></ion-icon>
           Ingresar como Invitado
-        </ion-button>
+        </ion-button> -->
+        <!-- <app-custom-button [text]="'Ingresa como Invitado'" [type]="'primary'" [iconName]="'people-outline'"
+          (clicked)="logginInvitado()"></app-custom-button> -->
+        <app-custom-button [text]="'Ingresa como Invitado'" [type]="'secondary'" [iconName]="'people-outline'"
+          (clicked)="logginInvitado()"></app-custom-button>
       </div>
     </div>
   </div>

@@ -8,6 +8,8 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
+import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
+import { ThemeToggleComponent } from "src/app/components/theme-toggle/theme-toggle.component";
 
 @NgModule({
   imports: [
@@ -16,7 +18,9 @@ import { RegisterFormComponent } from "src/app/components/register-form/register
     IonicModule,
     ReactiveFormsModule,
     LoginPageRoutingModule,
-    RegisterFormComponent
+    RegisterFormComponent,
+    CustomButtonComponent,
+    ThemeToggleComponent
 ],
   declarations: [LoginPage]
 })

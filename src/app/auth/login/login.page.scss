@@ -31,7 +31,7 @@
   max-width: $container-max-width;
   padding: $spacing-3xl $spacing-xl;
   border-radius: $border-radius-lg;
-  background: $color-bg-dark-transparent;
+  background: var(--ion-cont-bg);
   box-shadow: $shadow-lg;
   display: flex;
   flex-direction: column;
@@ -69,7 +69,6 @@
 .header-wrapper p {
   margin: 0;
   font-size: $font-size-sm;
-  color: $color-text-secondary;
 }
 
 .inputs-container {
@@ -83,6 +82,12 @@
   --box-shadow: #{$shadow-inset};
   --padding-start: #{$spacing-base};
   --padding-end: #{$spacing-base};
+  --background: var(--ion-background-color);
+  --color: var(--ion-txt-color);
+
+  ion-icon {
+    color: var(--ion-txt-color);
+  }
 }
 
 .buttons-container {
@@ -94,6 +99,7 @@
   @media (min-width: $breakpoint-tablet) {
     flex-direction: row;
     gap: $spacing-md;
+    justify-content: center;
 
   }
 
@@ -102,6 +108,7 @@
 ion-button {
   min-height: $button-height;
   --border-radius: #{$button-border-radius};
+  --color: var(--ion-icon-color);
 
   @media (min-width: $breakpoint-tablet) {
     flex: 1;

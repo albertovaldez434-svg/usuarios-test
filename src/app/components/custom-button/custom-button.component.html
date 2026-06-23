@@ -1,0 +1,12 @@
+<ion-button 
+[class.btn-primary]="type === 'primary'" 
+[class.btn-secondary]="type === 'secondary'" 
+[expand]="expand"
+[class]="class"
+[size]="size"
+(click)="onClick()">
+  @if (iconName) {
+    <ion-icon [slot]="slot" [name]="iconName"></ion-icon>
+  }
+  {{text}}
+</ion-button>

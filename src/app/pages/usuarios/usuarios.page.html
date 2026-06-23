@@ -20,12 +20,12 @@
       <div class="controls-header">
         <div class="ion-activable">
           <ion-ripple-effect></ion-ripple-effect>
-          <ion-searchbar animated="true" show-cancel-button="focus" placeholder="Buscar" [value]="searchValue"
+          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [value]="searchValue"
             [(ngModel)]="searchValue">
           </ion-searchbar>
         </div>
         <div class="buttons-header">
-          <ion-button expand="block" (click)="signupFunc()" class="ion-activable">
+          <ion-button expand="block" type="primary" (click)="signupFunc()" class="ion-activable">
             <ion-ripple-effect></ion-ripple-effect>
             <ion-icon name="person-add-outline" slot="icon-only"></ion-icon>
           </ion-button>
@@ -53,10 +53,10 @@
               <td data-label="Telefono">{{ usuario.telefono }}</td>
               <td>
                 <ion-button expand="block" (click)="editarUsuario(usuario.idUser)">
-                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                  <ion-icon name="create-outline" slot="icon-only" size="default"></ion-icon>
                 </ion-button>
                 <ion-button expand="block" color="danger" (click)="EliminarUsuario(usuario.idUser)">
-                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                  <ion-icon name="trash-outline" slot="icon-only" size="default"></ion-icon>
                 </ion-button>
               </td>
             </tr>
@@ -93,7 +93,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <form class="signUpfrm" [formGroup]="signupForm" (ngSubmit)="beginSignup()">
+      <form class="signUpfrm" [formGroup]="signupForm">
         <ion-item>
           <ion-label position="floating">Nombre</ion-label>
           <ion-input formControlName="Nombre"></ion-input>
@@ -124,15 +124,20 @@
 
         <div class="button-container">
           @if (!editandoUsuario) {
-          <ion-button expand="block" type="submit" [disabled]="signupForm.invalid">
+          <!-- <ion-button expand="block" type="submit" [disabled]="signupForm.invalid">
             <ion-icon name="add-outline" slot="start" class="ion-margin-end"></ion-icon>
             Registrar Usuario
-          </ion-button>
+          </ion-button> -->
+          <app-custom-button [expand]="'block'" [type]="'primary'" [iconName]="'add-outline'" [slot]="'start'"
+            [text]="'Registrar Usuario'" [size]="'default'" (clicked)="beginSignup()"></app-custom-button>
           } @else {
-          <ion-button expand="block" [disabled]="signupForm.invalid" (click)="guardarCambiosUsuario()">
+          <!-- <ion-button expand="block" [disabled]="signupForm.invalid" (click)="guardarCambiosUsuario()">
             <ion-icon name="save-outline" slot="start" class="ion-margin-end"></ion-icon>
             Guardar Cambios
-          </ion-button>
+          </ion-button> -->
+
+          <app-custom-button [expand]="'block'" [type]="'primary'" [iconName]="'save-outline'" [slot]="'start'"
+            [text]="'Guardar Cambios'" [size]="'default'" (clicked)="guardarCambiosUsuario()"></app-custom-button>
           }
 
         </div>

@@ -8,6 +8,8 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
+import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
+import { ThemeToggleComponent } from 'src/app/components/theme-toggle/theme-toggle.component';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { RegisterFormComponent } from "src/app/components/register-form/register
     FormsModule,
     IonicModule,
     ProfilePageRoutingModule,
-    RegisterFormComponent
+    RegisterFormComponent,
+    CustomButtonComponent,
+    ThemeToggleComponent
 ],
   declarations: [ProfilePage]
 })

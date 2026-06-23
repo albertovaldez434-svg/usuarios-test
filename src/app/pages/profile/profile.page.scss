@@ -5,6 +5,19 @@ ion-label.userInfo {
   margin-top: 0;
 }
 
+ion-card {
+  background: var(--ion-cont-bg);
+}
+
+ion-card-title {
+  color: var(--ion-txt-color);
+}
+
+ion-item {
+  --background: var(--ion-background-color);
+  --color: var(--ion-txt-color);
+}
+
 :host {
   display: block;
 }
@@ -29,31 +42,6 @@ ion-label.userInfo {
   @media (min-width: $breakpoint-tablet) {
     padding: $spacing-4xl $spacing-4xl;
   }
-}
-
-.profile-container {
-  width: min(100%, $container-sm);
-  max-width: $container-max-width;
-  padding: $spacing-3xl $spacing-xl;
-  border-radius: $border-radius-lg;
-  background: $color-bg-dark-transparent;
-  box-shadow: $shadow-lg;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-
-  @media (min-width: $breakpoint-desktop) {
-    width: min(100%, $container-md);
-    padding: $spacing-5xl $spacing-4xl;
-  }
-
-  @media (min-width: $breakpoint-tablet) {
-    padding: $spacing-4xl $spacing-4xl;
-  }
-}
-
-.profile-picture-section {
-  padding: 1.5rem 0;
 }
 
 .profile-picture-container {
@@ -127,4 +115,14 @@ ion-label.userInfo {
 // se muestra el modal edicion
 .register-container .form-container {
   height: 500px !important;
+}
+
+.button-section {
+
+
+  @media screen and (min-width: $breakpoint-mobile) {
+    display: flex;
+    flex-direction: columsn;
+    gap: 6px;
+  }
 }

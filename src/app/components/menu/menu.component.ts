@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit {
 
   logout() {
     this.usuarioService.closeSesion();
-    localStorage.clear();
+    //localStorage.clear();
     this.route.navigate(['/login']);
   }
 

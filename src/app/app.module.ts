@@ -14,6 +14,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { environment } from 'src/environments/environment';
+import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { environment } from 'src/environments/environment';
     }), 
     AppRoutingModule, 
     ReactiveFormsModule,
-    RegisterFormComponent
+    RegisterFormComponent,
+    ThemeToggleComponent
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

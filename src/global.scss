@@ -44,34 +44,73 @@ form {
     gap: $spacing-sm;
 }
 
-ion-button.btn-primary {
-    --border-radius: 15px;
-    --font-size: 14px;
-    --color: white;
-    --background: red;
-    cursor: pointer;
+//colores base
+:root {
+    // color boton primary
+    --primary-btn-bg: #4f46e5;
+    --primary-btn-color: #ffffff;
 
-    :hover {
-        opacity: 0.5;
-    }
+    // color boton secondary
+    --secondary-btn-bg: transparent;
+    --secondary-btn-color: #4f46e5;
+
+    //color contenedor primario
+    --primary-container-bg: blue;
+
+    // color fondo base
+    --ion-background-color: #f3f4f6 !important;
+
+    // color fondo contenedor
+    --ion-cont-bg: #ffffff;
+
+    // color text
+    --ion-txt-color: #1f2937;
+
+    // color subtext
+    --ion-stxt-color: #6b7280;
+
+    // icon-color
+    --ion-icon-color: #9ca3af;
 }
 
-ion-button.btn-secondary {
-    border-radius: 15px;
-    border: 1px solid var(--ion-color-primary);
-    --font-size: 14px;
-    --color: var(--ion-color-primary);
-    --background: none;
-    
-    cursor: pointer;
+//colores dark mode
+body.dark {
+    --primary-btn-bg: #6366f1;
+    --primary-btn-color: #ffffff;
 
-    :hover {
-        opacity: 0.5;
-    }
+    --secondary-btn-bg: transparent;
+    --secondary-btn-color: #a5b4fc;
+
+    --primary-container-bg: red;
+
+    --ion-background-color: #000000;
+
+    --ion-cont-bg: #494444;
+
+    // color text
+    --ion-txt-color: #ffffff;
+
+    // color subtext
+    --ion-stxt-color: #f3f4f6;
+
+    // icon-color
+    --ion-icon-color: #cdced1;
 }
+
+h1,
+p {
+    color: var(--ion-txt-color);
+}
+
 
 // Modal styling
 ion-modal {
     --border-top-left-radius: #{$modal-border-radius-top};
     --border-top-right-radius: #{$modal-border-radius-top};
+
+    // ion-content {
+    //     --color: var(--ion-txt-color);
+    //     --background: var(--ion-background-color) !important;
+    // }
+
 }

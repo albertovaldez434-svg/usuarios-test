@@ -5,11 +5,12 @@ ion-button {
     font-size: 20px;
 
     ion-icon {
-        font-size: 22px;
+        font-size: 24px;
     }
 }
 
 ion-card {
+    background: var(--ion-cont-bg);
     margin: 10px !important;
     padding: 10px;
 
@@ -26,12 +27,21 @@ ion-card {
     }
 }
 
+ion-card-title {
+    color: var(--ion-stxt-color);
+}
+
 ion-card-subtitle {
     margin-bottom: 10px;
+    color: var(--ion-txt-color);
 }
 
 ion-icon {
     font-size: 20px;
+}
+
+.card-title {
+    color: var(--ion-txt-color);
 }
 
 .card-header {
@@ -87,7 +97,7 @@ ion-icon {
     box-sizing: border-box;
 
 
-    background: $color-bg-card;
+    background: var(--ion-cont-bg);
     border-radius: $border-radius-md;
     scroll-snap-align: start;
     scrollbar-width: none;
@@ -116,7 +126,7 @@ ion-icon {
     height: 68vh;
     overflow-y: scroll;
     scrollbar-width: none;
-    background: black;
+    background: var(--ion-background-color);
     border-radius: 12px;
     margin: 8px 0;
 }
@@ -198,6 +208,7 @@ ion-icon {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    color: var(--ion-txt-color);
 }
 
 .small-user-ico {
@@ -212,7 +223,8 @@ ion-icon {
     position: relative;
     justify-content: center;
     align-items: center;
-    border: 1px dashed white;
+    border: 1px dashed var(--ion-icon-color);
+    color: var(--ion-stxt-color);
     border-radius: 12px;
     width: 80%;
     height: 30px;

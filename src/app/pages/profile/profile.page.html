@@ -16,17 +16,15 @@
             </ion-card-header>
             <ion-card-content>
               <!-- Profile Picture Section -->
-              <div class="profile-picture-section ion-text-center ion-margin-bottom">
+              <div class="ion-text-center ion-margin-bottom">
                 <div class="profile-picture-container">
                   @if (!imgSrc) {
                   <div class="profile-picture-placeholder">
                     <ion-icon name="person-circle-outline"></ion-icon>
                   </div>
-                  <ion-button fill="solid" color="primary" size="small" class="add-picture-btn"
-                    (click)="showPictureSourceOptions()">
-                    <ion-icon name="camera-outline" slot="start"></ion-icon>
-                    Agregar Imagen
-                  </ion-button>
+                  <app-custom-button [type]="'primary'" [size]="'small'" [iconName]="'camera-outline'"
+                    [text]="'Agregar imagen'" [class]="'add-picture-btn'" [slot]="'start'"
+                    (clicked)="showPictureSourceOptions()"></app-custom-button>
                   } @else {
                   <img [src]="imgSrc" alt="Profile Picture" class="profile-picture" />
                   <ion-button fill="outline" color="primary" size="small" class="change-picture-btn"
@@ -50,19 +48,26 @@
                 </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Email</ion-label>
-                  <ion-label position="stacked" class="userInfo">{{currentUser?.email || 'nombre@correo.com'}}</ion-label>
+                  <ion-label position="stacked" class="userInfo">{{currentUser?.email ||
+                    'nombre@correo.com'}}</ion-label>
                 </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Telefono</ion-label>
-                  <ion-label position="stacked" class="userInfo">{{currentUser?.telefono || 'Ej: +52 644123456'}}</ion-label>
+                  <ion-label position="stacked" class="userInfo">
+                    {{currentUser?.telefono || 'Ej: +52644123456'}}
+                  </ion-label>
                 </ion-item>
               </div>
 
               <div class="button-section">
-                <ion-button color="primary" expand="block" (click)="editProfile()">
+                <!-- <ion-button color="primary" size="default" (click)="editProfile()">
                    <ion-icon slot="start" name="create-outline"></ion-icon>
                   Editar Perfil
-                </ion-button>
+                </ion-button> -->
+                <app-custom-button [type]="'primary'" [expand]="'block'" [text]="'Editar Perfil'"
+                  [iconName]="'create-outline'" [slot]="'start'" (clicked)="editProfile()">
+                </app-custom-button>
+                  <app-theme-toggle></app-theme-toggle>
               </div>
 
             </ion-card-content>

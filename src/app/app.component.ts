@@ -41,6 +41,8 @@ export class AppComponent implements OnInit {
       localStorage.setItem('lastVisitedPage', event.urlAfterRedirects);
     });
 
+    this.loadTheme();
+
     this.restoreLastPage();
   }
 
@@ -76,6 +78,16 @@ export class AppComponent implements OnInit {
     const lastPage = localStorage.getItem('lastVisitedPage');
     if (lastPage && this.route.url === '/') {
       this.route.navigate([lastPage]);
+    }
+  }
+
+  loadTheme() {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
     }
   }
 

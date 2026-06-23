@@ -2,6 +2,8 @@
 
 ion-searchbar {
   --border-radius: 15px;
+  --background: var(--ion-cont-bg);
+  --color: var(--ion-txt-color)
 }
 
 .page-container {
@@ -76,7 +78,8 @@ td {
 
 td:last-child {
   display: flex;
-  justify-content: space-around;
+  gap: 10px;
+
 }
 
 th {
@@ -107,6 +110,7 @@ thead {
   margin-bottom: $spacing-md;
   border-radius: $border-radius-md;
   box-shadow: $shadow-sm;
+  background: var(--ion-background-color);
 }
 
 .button-container {
@@ -145,7 +149,7 @@ thead {
     border-radius: $border-radius-sm;
     padding: $spacing-xs;
     box-shadow: $shadow-sm;
-    background: rgba(59, 58, 58, 0.98);
+    background: var(--ion-cont-bg);
   }
 
   td {
@@ -157,6 +161,7 @@ thead {
     // border-bottom: 1px solid $color-border-light;
     font-size: $font-size-sm;
     background: none;
+    color: var(--ion-txt-color);
   }
 
   td:last-child {
@@ -166,7 +171,7 @@ thead {
   td::before {
     content: attr(data-label);
     font-weight: $font-weight-semibold;
-    color: $color-primary;
+    color: var(--ion-stxt-color);
     margin-right: $spacing-sm;
   }
 
@@ -185,6 +190,11 @@ thead {
   .button-container {
     margin-top: $spacing-md;
   }
+
+  td:last-child {
+    justify-content: end;
+    gap: 10px;
+  }
 }
 
 // Extra: Add hover and focus for table rows and buttons
@@ -194,14 +204,10 @@ tr:hover {
 }
 
 ion-button {
-  border-radius: $button-border-radius;
-  box-shadow: $shadow-sm;
-  font-weight: $font-weight-medium;
-  
-  letter-spacing: 0.5px;
-  transition: background 0.2s, box-shadow 0.2s;
+  --border-radius: 15px;
   width: 50px;
   height: 50px;
+  color: white;
 
   ion-icon {
     font-size: 24px;
@@ -210,7 +216,5 @@ ion-button {
 
 ion-button:hover,
 ion-button:focus {
-  background: $color-primary-shade;
   color: $color-text-primary;
-  box-shadow: $shadow-md;
 }
