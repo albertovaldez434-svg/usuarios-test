@@ -4,6 +4,7 @@ import { UsuariosService } from '../../services/usuarios';
 import { Router } from '@angular/router';
 import { AuthUser } from 'src/app/models/users';
 import { PermisoPagina } from 'src/app/models/pages';
+import { loginResponseDTO } from 'src/app/models/loginDTO';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +13,7 @@ import { PermisoPagina } from 'src/app/models/pages';
   standalone: false
 })
 export class MenuComponent implements OnInit {
-  user!: AuthUser | null;
+  user!: loginResponseDTO | null;
 
   pages!: PermisoPagina[];
 

@@ -1,12 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthUser, Users } from '../models/users';
+import { Users } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
 import { Localstorage } from './localstorage';
 import { UserTasks } from '../models/task';
 import { ImagenesUsuarios } from '../models/imagenesusuario';
+import { loginResponseDTO } from '../models/loginDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +29,10 @@ export class UsuariosService {
   TaskData$ = this.TasksData.asObservable();
 
   //test signal
-  private loggedData = signal<AuthUser | null>(null);
+  private loggedData = signal<loginResponseDTO | null>(null);
   loggedData$ = this.loggedData.asReadonly();
 
-  setLoginData(data: AuthUser | null) {
+  setLoginData(data: loginResponseDTO | null) {
     this.loggedData.set(data);
     this.secureStorage.setItem('authUser', data);
   }
@@ -84,7 +85,7 @@ export class UsuariosService {
   Login(request: Login) {
     const url = `${environment.URL_API}/api/Usuarios/Login`;
 
-    return this.http.post<AuthUser>(url, request);
+    return this.http.post<loginResponseDTO>(url, request);
   }
 
   signUpNewUser(newUser: Users) {
@@ -116,7 +117,7 @@ export class UsuariosService {
 
     const url = `${environment.URL_API}/api/Usuarios/UpdateTarea`;
 
-    return this.http.post(url, tareaActualizada);
+    return this.http.put(url, tareaActualizada);
   }
 
   cargarImagen(data: FormData) {

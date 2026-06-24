@@ -7,6 +7,7 @@ import { ActionSheetController, IonModal, ModalController } from '@ionic/angular
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 
 import imageCompression from 'browser-image-compression';
+import { loginResponseDTO } from 'src/app/models/loginDTO';
 
 
 @Component({
@@ -18,7 +19,7 @@ import imageCompression from 'browser-image-compression';
 export class ProfilePage implements OnInit {
   @ViewChild('modalEditInfo') ModalEditInfo!: IonModal;
   users!: Users[] | null;
-  loggedUser!: AuthUser | null;
+  loggedUser!: loginResponseDTO | null;
   currentUser?: Users;
   imgSrc: string = '';
   //editingUser: boolean = false;
@@ -38,7 +39,6 @@ export class ProfilePage implements OnInit {
     this.loggedUser = this.userService.loggedData$();
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
-      this.currentUser = this.loggedUser.userInfo;
     }
 
   }
@@ -52,7 +52,7 @@ export class ProfilePage implements OnInit {
     this.usersSub = this.userService.Users$.subscribe({
       next: (usersData) => {
         this.users = usersData;
-        //this.findLoggedUser();
+        this.findLoggedUser();
       }, error: () => {
         this.openModalFunc('Error al cargar información de usuarios');
       }
@@ -79,12 +79,12 @@ export class ProfilePage implements OnInit {
     (await modal).present();
   }
 
-  // findLoggedUser = () => {
-  //   const logUser = this.users?.find(usr => usr.idUser == this.loggedUser?.idUser);
-  //   if (logUser) {
-  //     this.currentUser = logUser;
-  //   }
-  // }
+  findLoggedUser = () => {
+    const logUser = this.users?.find(usr => usr.idUser == this.loggedUser?.idUser);
+    if (logUser) {
+      this.currentUser = logUser;
+    }
+  }
 
   showPictureSourceOptions = async () => {
     const actionSheet = await this.actionSheetCtrl.create({

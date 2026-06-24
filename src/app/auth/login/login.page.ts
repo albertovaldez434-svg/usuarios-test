@@ -7,6 +7,7 @@ import { IonModal, ModalController } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
 import { AuthUser, Users } from 'src/app/models/users';
+import { loginResponseDTO } from 'src/app/models/loginDTO';
 
 @Component({
   selector: 'app-login',
@@ -118,12 +119,14 @@ export class LoginPage implements OnInit {
       email: 'example@gmail.com',
       telefono: '6441747474',
     }
-    const invitadoAuth: AuthUser = {
-      idRol: 999,
+    const invitadoAuth: loginResponseDTO = {
+      accessToken: 'my_token_123',
+      tokenType: 'my_token_123',
       idUser: 999,
-      token_type: 'bearer',
-      access_token: 'my_token_123',
-      userInfo: userData,
+      idRol: 999,
+      nombre: 'Test',
+      apellidos: 'Admin',
+      email: 'test@user.com',
       avatar: ''
     }
 

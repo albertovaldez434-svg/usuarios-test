@@ -13,7 +13,7 @@ export const usersGuard: CanActivateFn = (route, state) => {
   const jwtHelper = new JwtHelperService;
 
   const requiredRole = route.data['idRol'];
-  const token = authService.loggedData$()?.access_token;
+  const token = authService.loggedData$()?.accessToken;
   const user = authService.loggedData$();
 
   if (user?.idRol === 999) {

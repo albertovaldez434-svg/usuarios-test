@@ -6,6 +6,7 @@ import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular'
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { AuthUser, Users } from 'src/app/models/users';
 import { Subscription } from 'rxjs';
+import { loginResponseDTO } from 'src/app/models/loginDTO';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +21,7 @@ export class DashboardPage implements OnInit {
   toggleSearch: boolean = false;
   playSAnimation: boolean = false;
   searchValue: string = '';
-  loggedUser!: AuthUser | null;
+  loggedUser!: loginResponseDTO | null;
   scrollContainer!: ElementRef<HTMLElement>;
   imgSrc: string = '';
   isDragging: boolean = false;

@@ -4,6 +4,7 @@ import { from, Observable, switchMap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { AuthUser } from '../models/users';
 import { Localstorage } from '../services/localstorage';
+import { loginResponseDTO } from '../models/loginDTO';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -19,11 +20,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return from(this.secureStorage.getItem<AuthUser>('authUser')).pipe(
+    return from(this.secureStorage.getItem<loginResponseDTO>('authUser')).pipe(
       switchMap((dataLogin) => {
 
-        if (dataLogin?.access_token) {
-          const tokenExp = this.checkTokenExpired(dataLogin.access_token);
+        if (dataLogin?.accessToken) {
+          const tokenExp = this.checkTokenExpired(dataLogin.accessToken);
 
           if (tokenExp) {
             console.log('token expirado');
@@ -36,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
             const formDataReq = req.clone({
               setHeaders: {
-                Authorization: `Bearer ${dataLogin.access_token}`,
+                Authorization: `Bearer ${dataLogin.accessToken}`,
               }
             });
 
@@ -45,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
           const clonedReq = req.clone({
             setHeaders: {
-              Authorization: `Bearer ${dataLogin.access_token}`,
+              Authorization: `Bearer ${dataLogin.accessToken}`,
               'Content-Type': 'application/json'
             }
           });

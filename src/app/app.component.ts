@@ -5,6 +5,7 @@ import { Localstorage } from './services/localstorage';
 import { AuthUser } from './models/users';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { loginResponseDTO } from './models/loginDTO';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
 
   async checkUserdata() {
     if (!this.isLogged) {
-      const dataLogin = await this.secureStorage.getItem<AuthUser>('authUser');
+      const dataLogin = await this.secureStorage.getItem<loginResponseDTO>('authUser');
       if (dataLogin) {
         if (dataLogin.idUser === 999) {
           const storedLogin = dataLogin;
@@ -57,7 +58,7 @@ export class AppComponent implements OnInit {
           this.route.navigate(['/dashboard']);
           return;
         }
-        if (this.jwtHelper.isTokenExpired(dataLogin?.access_token)) {
+        if (this.jwtHelper.isTokenExpired(dataLogin?.accessToken)) {
           this.secureStorage.clear();
           this.isLogged = false;
           this.route.navigate(['/login']);
