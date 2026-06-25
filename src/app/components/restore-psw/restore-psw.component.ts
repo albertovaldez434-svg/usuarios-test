@@ -41,7 +41,7 @@ export class RestorePswComponent implements OnInit {
   }
 
   sendPswData() {
-    this.validatedPsw.emit();
+    this.validatedPsw.emit(this.password2);
   }
 
   clean() {
