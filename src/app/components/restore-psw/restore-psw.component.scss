@@ -1,0 +1,13 @@
+@import '../../../theme/variables.scss';
+
+.signUpfrm ion-item {
+  margin-bottom: $spacing-md;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  background: var(--ion-background-color);
+}
+
+ion-icon {
+    font-size: 20px;
+    cursor: pointer;
+}

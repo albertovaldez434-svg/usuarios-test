@@ -1,0 +1,34 @@
+<div class="signUpfrm">
+  <ion-item>
+    <ion-label position="stacked">Contraseña</ion-label>
+    <ion-input [type]="verPsw ? 'text':'password'" [(ngModel)]="password1" (keyup)="validatePswMatch()">
+      @if(verPsw) {
+      <ion-icon slot="end" name="eye-outline" (click)="this.verPsw = false"></ion-icon>
+      } @else {
+      <ion-icon slot="end" name="eye-off-outline" (click)="this.verPsw = true"></ion-icon>
+      }
+    </ion-input>
+    @if (!pswMatch) {
+    <ion-label position="stacked" color="danger">Las contraseñas no coinciden</ion-label>
+    }
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Confirmar Contraseña</ion-label>
+    <ion-input [type]="verPswConf ? 'text':'password'" [(ngModel)]="password2" (keyup)="validatePswMatch()">
+      @if(verPswConf) {
+      <ion-icon slot="end" name="eye-outline" (click)="this.verPswConf = false"></ion-icon>
+      } @else {
+      <ion-icon slot="end" name="eye-off-outline" (click)="this.verPswConf = true"></ion-icon>
+      }
+    </ion-input>
+    @if (!pswMatch) {
+    <ion-label position="stacked" color="danger">Las contraseñas no coinciden</ion-label>
+    }
+  </ion-item>
+  <app-custom-button [type]="'secondary'" [iconName]="'close-outline'" [slot]="'start'" [text]="'Cancelar'"
+    [expand]="'block'" [size]="'default'" (clicked)="clean()">
+  </app-custom-button>
+  <app-custom-button [type]="'primary'" [iconName]="'checkmark-outline'" [slot]="'start'" [text]="'Confirmar'"
+    [expand]="'block'" [size]="'default'" (clicked)="sendPswData()">
+  </app-custom-button>
+</div>

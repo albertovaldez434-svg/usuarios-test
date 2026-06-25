@@ -98,17 +98,17 @@ thead {
   background: $color-primary;
 }
 
-.signUpfrm {
-  width: 90%;
-  max-width: $container-max-width;
-  padding: $spacing-3xl $spacing-xl;
-  border-radius: $border-radius-lg;
-  background: var(--ion-cont-bg);
-  box-shadow: $shadow-lg;
-  display: flex;
-  flex-direction: column;
-  margin: 8px auto;
-}
+// .signUpfrm {
+//   width: 90%;
+//   max-width: $container-max-width;
+//   padding: $spacing-3xl $spacing-xl;
+//   border-radius: $border-radius-lg;
+//   background: var(--ion-cont-bg);
+//   box-shadow: $shadow-lg;
+//   display: flex;
+//   flex-direction: column;
+//   margin: 8px auto;
+// }
 
 .signUpfrm ion-item {
   margin-bottom: $spacing-md;
