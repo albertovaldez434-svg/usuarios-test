@@ -52,3 +52,8 @@ jobs:
       - name: Deploy Firebase
         run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
 --|| este seria el contenido de ejemplo, supongo que variaria segun el proyecto ||--
+
+25 de junio del 2026
+// FIREBASE OBSOLETO, FIREBASE YA NO FUNCIONARA, CODIGO DE TOKEN OBSOLETO
+// saltaron varias restricciones dentro de propia organizacion (se supone que es free y sin restricciones de keys)
+se usara el firebase deploy manual (comandos firebase.txt)
