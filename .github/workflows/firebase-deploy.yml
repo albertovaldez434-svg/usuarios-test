@@ -26,9 +26,7 @@ jobs:
       - name: Build Ionic
         run: ionic build --prod
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ""   # 👈 NO SE USA
-          projectId: usuarios-kanban-demo
+      - name: Deploy to Firebase
+        run: firebase deploy --only hosting --token $FIREBASE_TOKEN
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
