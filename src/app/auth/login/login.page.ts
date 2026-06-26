@@ -8,6 +8,7 @@ import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.compon
 import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
 import { AuthUser, Users } from 'src/app/models/users';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
+import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ import { loginResponseDTO } from 'src/app/models/loginDTO';
   standalone: false
 })
 export class LoginPage implements OnInit {
-  //@ViewChild('registerModal') registerModal!: IonModal;
+  @ViewChild('restorePswMdl') restorePswMdl!: IonModal;
   loginForm: FormGroup;
   valid: boolean = true;
 
@@ -133,6 +134,18 @@ export class LoginPage implements OnInit {
     this.UserService.setLoginData(invitadoAuth);
     this.openModalFunc('Sesion iniciada');
     this.route.navigate(['/profile']);
+  }
+
+  restorePsw(data: string) {
+    this.UserService.UpdatePsw(data).subscribe({
+      next: () => {
+        this.modalCtrl.dismiss();
+        this.openModalFunc('Utilize sus nuevas credenciales para iniciar sesión');
+      },
+      error: (err) => {
+        this.openModalFunc('Error al restaurar su contraseña, por favor intente nuevamente');
+      }
+    });
   }
 
 

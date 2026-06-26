@@ -38,14 +38,16 @@
           (clicked)="logginInvitado()"></app-custom-button> -->
         <app-custom-button [text]="'Ingresa como Invitado'" [type]="'secondary'" [iconName]="'people-outline'"
           (clicked)="logginInvitado()"></app-custom-button>
+
+        <!-- <a class="link-psw" (click)="restorePswMdl.present()">¿Olvidaste tu contraseña?</a> -->
       </div>
-      <p>Version 1.0.0</p>
+      <!-- <p>Version 1.0.0</p> -->
     </div>
   </div>
 </ion-content>
 
-<!-- <ion-modal #registerModal [breakpoints]="[0, 0.25, 0.5, 0.75, 0.90]" [initialBreakpoint]="0.90">
+<!-- <ion-modal #restorePswMdl [breakpoints]="[0, 0.25, 0.5, 0.75, 0.90]" [initialBreakpoint]="0.90">
   <ng-template>
-    <app-register-form [Title]="'Regis trate'" [userData]="" (formSubmit)="getDataEmitted($event)"></app-register-form>
+    <app-restore-psw (validatedPsw)="restorePsw($event)"></app-restore-psw>
   </ng-template>
 </ion-modal> -->

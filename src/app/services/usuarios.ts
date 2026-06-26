@@ -132,4 +132,10 @@ export class UsuariosService {
     return this.http.post<UserTasks>(url, task);
   }
 
+  UpdatePsw(psw: string) {
+    const url = `${environment.URL_API}/api/Usuarios/UpdatePassword`;
+
+    return this.http.post<UserTasks>(url, psw);
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { IonicModule } from "@ionic/angular";
+import { IonicModule, ModalController } from "@ionic/angular";
 import { IonItem } from "@ionic/angular/standalone";
 import { FormsModule } from "@angular/forms";
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
@@ -21,7 +21,9 @@ export class RestorePswComponent implements OnInit {
 
   @Output() validatedPsw = new EventEmitter<string>();
 
-  constructor() {
+  constructor(
+    private modalCtrl: ModalController
+  ) {
     this.verPsw = false;
     this.verPswConf = false;
     this.pswMatch = true;
@@ -50,6 +52,10 @@ export class RestorePswComponent implements OnInit {
     this.pswMatch = true;
     this.verPsw = false;
     this.verPswConf = false;
+  }
+
+  close() {
+    this.modalCtrl.dismiss();
   }
 
 }

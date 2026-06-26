@@ -10,6 +10,7 @@ import { LoginPage } from './login.page';
 import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
 import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
 import { ThemeToggleComponent } from "src/app/components/theme-toggle/theme-toggle.component";
+import { RestorePswComponent } from "src/app/components/restore-psw/restore-psw.component";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ThemeToggleComponent } from "src/app/components/theme-toggle/theme-togg
     LoginPageRoutingModule,
     RegisterFormComponent,
     CustomButtonComponent,
-    ThemeToggleComponent
+    ThemeToggleComponent,
+    RestorePswComponent
 ],
   declarations: [LoginPage]
 })
