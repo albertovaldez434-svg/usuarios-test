@@ -1,3 +1,6 @@
 ion-button {
-    color: white;
+    --border-radius: 15px;
+    --font-size: 14px;
+    color: var(--ion-txt-color);
+    cursor: pointer;
 }

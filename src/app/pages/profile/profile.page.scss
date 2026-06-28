@@ -118,11 +118,12 @@ ion-item {
 }
 
 .button-section {
-
+  display: flex;
+  justify-content: right;
 
   @media screen and (min-width: $breakpoint-mobile) {
     display: flex;
-    flex-direction: columsn;
+    flex-direction: column;
     gap: 6px;
   }
 }

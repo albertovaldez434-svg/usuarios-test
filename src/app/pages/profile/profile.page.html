@@ -39,21 +39,21 @@
               <!-- User Information Section -->
               <div class="user-info-section ion-margin-top">
                 <ion-item>
-                  <ion-label position="stacked">Nombre</ion-label>
-                  <ion-label position="stacked" class="userInfo">{{currentUser?.nombre || 'Nombre'}}</ion-label>
+                  <!-- <ion-label position="stacked">Nombre</ion-label> -->
+                  <ion-label position="" class="userInfo">{{currentUser?.nombre || 'Nombre'}}</ion-label>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="stacked">Apellidos</ion-label>
-                  <ion-label position="stacked" class="userInfo">{{currentUser?.apellidos || 'Apellido'}}</ion-label>
+                  <!-- <ion-label position="stacked">Apellidos</ion-label> -->
+                  <ion-label position="" class="userInfo">{{currentUser?.apellidos || 'Apellido'}}</ion-label>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="stacked">Email</ion-label>
-                  <ion-label position="stacked" class="userInfo">{{currentUser?.email ||
+                  <!-- <ion-label position="stacked">Email</ion-label> -->
+                  <ion-label position="" class="userInfo">{{currentUser?.email ||
                     'nombre@correo.com'}}</ion-label>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="stacked">Telefono</ion-label>
-                  <ion-label position="stacked" class="userInfo">
+                  <!-- <ion-label position="stacked">Telefono</ion-label> -->
+                  <ion-label position="" class="userInfo">
                     {{currentUser?.telefono || 'Ej: +52644123456'}}
                   </ion-label>
                 </ion-item>
@@ -67,7 +67,7 @@
                 <app-custom-button [type]="'primary'" [expand]="'block'" [text]="'Editar Perfil'"
                   [iconName]="'create-outline'" [slot]="'start'" (clicked)="editProfile()">
                 </app-custom-button>
-                  <app-theme-toggle></app-theme-toggle>
+                <app-theme-toggle></app-theme-toggle>
               </div>
 
             </ion-card-content>
