@@ -8,43 +8,38 @@ improve the architecture, and experiment with modern web development practices.
 
 ## Live Demo
 
-🚀 Frontend:
-[(Your deployment link)](https://usuarios-kanban-demo.web.app/)
+🚀 Demo:
+[(Live page)](https://usuarios-kanban-demo.web.app/)
 
-⚙️ Backend API:
-usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net
-
+Demo Credentials:
+- admin@gmail.com
+- admin123
 ---
 
 ## Preview
-
+Login
 ![Login](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline1-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTEtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNjgyLCJleHAiOjE3ODUyODQ2ODJ9.TcTSgO8sd0sHMX9bIoogSW4nNZohHochR_H1F5m5UMw)
 
+Change theme
+![Change theme](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline2-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTItZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzI4LCJleHAiOjE3ODUyODQ3Mjh9.BVh2QtcqeAvmPzIhdDjGvgoSYg72bJUYofi3L0F_WSU)
 
+Upload/change picture
+![Upload Images](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline3-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTMtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzM4LCJleHAiOjE3ODUyODQ3Mzh9.B3iZCKqUohXLtCIts8PnhqijuncFdlvpAJP3Hvyc2ac)
 
-[!Change theme](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline2-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTItZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzI4LCJleHAiOjE3ODUyODQ3Mjh9.BVh2QtcqeAvmPzIhdDjGvgoSYg72bJUYofi3L0F_WSU)
+User's CRUD showcase
+![Users CRUD showcase](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline4-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTQtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzQ5LCJleHAiOjE3ODUyODQ3NDl9.4Aglrlx0WEmeKo_tkMBTu9FXtm6IkY2yO8e3MDWLDvM)
 
+Task's search (custom pipe)
+![Dashboard search](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline5-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTUtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzU5LCJleHAiOjE3ODUyODQ3NTl9.gDMDERpXryPJtlLaRVxCmCzo9NNPZ021f0QMJGlU308)
 
-[!Upload Images](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline3-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTMtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzM4LCJleHAiOjE3ODUyODQ3Mzh9.B3iZCKqUohXLtCIts8PnhqijuncFdlvpAJP3Hvyc2ac)
+Task's navigation
+![Dahsboard scroll](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline6-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTYtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzY4LCJleHAiOjE3ODUyODQ3Njh9.d69UFKFuWfRS-CkAGO8pgbId7nNHoW9JZqixjnXQ13w)
 
+Drag&Drop
+![Dashboard drag an drop](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline7-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTctZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzgwLCJleHAiOjE3ODUyODQ3ODB9.gBpTI4sLhJjNDoJyYgo_8_ioPPhcKEUg--Ska6FQFlI)
 
-[!Users CRUD showcase](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline4-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTQtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzQ5LCJleHAiOjE3ODUyODQ3NDl9.4Aglrlx0WEmeKo_tkMBTu9FXtm6IkY2yO8e3MDWLDvM)
-
-
-
-[!Dashboard search](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline5-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTUtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzU5LCJleHAiOjE3ODUyODQ3NTl9.gDMDERpXryPJtlLaRVxCmCzo9NNPZ021f0QMJGlU308)
-
-
-
-[!Dahsboard scroll](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline6-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTYtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzY4LCJleHAiOjE3ODUyODQ3Njh9.d69UFKFuWfRS-CkAGO8pgbId7nNHoW9JZqixjnXQ13w)
-
-
-
-[!Dashboard drag an drop](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline7-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTctZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzgwLCJleHAiOjE3ODUyODQ3ODB9.gBpTI4sLhJjNDoJyYgo_8_ioPPhcKEUg--Ska6FQFlI)
-
-
-
-[!Dashboard create task](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline8-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTgtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzg4LCJleHAiOjE3ODUyODQ3ODh9.G74gWCpbaaVrS1_SbfmBRkn5QB07axV9LWZ0_I29O8s)
+Create task
+![Dashboard create task](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline8-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTgtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzg4LCJleHAiOjE3ODUyODQ3ODh9.G74gWCpbaaVrS1_SbfmBRkn5QB07axV9LWZ0_I29O8s)
 ---
 
 ## Features
@@ -79,7 +74,7 @@ usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net
 ### Backend
 
 - Node.js
-- Express
+- .NET
 - PostgreSQL
 - Supabase
 - JWT Authentication
@@ -88,7 +83,7 @@ usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net
 ### Deployment
 
 - Firebase Hosting
-- Render (or your hosting provider)
+- Azure
 
 ---
 
@@ -204,15 +199,7 @@ API_URL=
 
 ## Roadmap
 
-- Email Notifications
-- Push Notifications
-- File Attachments
-- Calendar View
-- Activity Log
 - Unit Testing
-- Docker Support
-- PWA Support
-- Internationalization
 
 ---
 
@@ -220,7 +207,7 @@ API_URL=
 
 Building this project allowed me to gain practical experience with:
 
-- Angular Architecture
+- Depth Angular Architecture
 - Ionic Development
 - JWT Authentication
 - REST APIs
@@ -235,7 +222,7 @@ Building this project allowed me to gain practical experience with:
 ---
 
 GitHub:
-([your GitHub](https://github.com/albertovaldez434-svg))
+([albertovaldez434-svg](https://github.com/albertovaldez434-svg))
 
 LinkedIn:
-([your LinkedIn](https://www.linkedin.com/in/albertovaldez434))
+([albertovaldez434](https://www.linkedin.com/in/albertovaldez434))
