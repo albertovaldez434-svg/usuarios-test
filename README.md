@@ -18,34 +18,33 @@ usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net
 
 ## Preview
 
-https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline1-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTEtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNjgyLCJleHAiOjE3ODUyODQ2ODJ9.TcTSgO8sd0sHMX9bIoogSW4nNZohHochR_H1F5m5UMw
+![Login](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline1-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTEtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNjgyLCJleHAiOjE3ODUyODQ2ODJ9.TcTSgO8sd0sHMX9bIoogSW4nNZohHochR_H1F5m5UMw)
 
-Project Overview
 
-<!-- GIF 2 -->
 
-Authentication
+[!Change theme](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline2-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTItZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzI4LCJleHAiOjE3ODUyODQ3Mjh9.BVh2QtcqeAvmPzIhdDjGvgoSYg72bJUYofi3L0F_WSU)
 
-<!-- GIF 3 -->
 
-Dashboard
+[!Upload Images](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline3-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTMtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzM4LCJleHAiOjE3ODUyODQ3Mzh9.B3iZCKqUohXLtCIts8PnhqijuncFdlvpAJP3Hvyc2ac)
 
-<!-- GIF 4 -->
 
-Task Management
+[!Users CRUD showcase](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline4-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTQtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzQ5LCJleHAiOjE3ODUyODQ3NDl9.4Aglrlx0WEmeKo_tkMBTu9FXtm6IkY2yO8e3MDWLDvM)
 
-<!-- GIF 5 -->
 
-Kanban Drag & Drop
 
-<!-- GIF 6 -->
+[!Dashboard search](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline5-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTUtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzU5LCJleHAiOjE3ODUyODQ3NTl9.gDMDERpXryPJtlLaRVxCmCzo9NNPZ021f0QMJGlU308)
 
-Responsive Design
 
-<!-- GIF 7 -->
 
-Dark Theme / Extra Features
+[!Dahsboard scroll](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline6-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTYtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzY4LCJleHAiOjE3ODUyODQ3Njh9.d69UFKFuWfRS-CkAGO8pgbId7nNHoW9JZqixjnXQ13w)
 
+
+
+[!Dashboard drag an drop](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline7-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTctZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzgwLCJleHAiOjE3ODUyODQ3ODB9.gBpTI4sLhJjNDoJyYgo_8_ioPPhcKEUg--Ska6FQFlI)
+
+
+
+[!Dashboard create task](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline8-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTgtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNzg4LCJleHAiOjE3ODUyODQ3ODh9.G74gWCpbaaVrS1_SbfmBRkn5QB07axV9LWZ0_I29O8s)
 ---
 
 ## Features
@@ -64,7 +63,6 @@ Dark Theme / Extra Features
 - Loading States
 - Toast Notifications
 - Form Validation
-
 ---
 
 ## Tech Stack
@@ -165,7 +163,7 @@ Main modules include:
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/taskflow.git
+git clone https://github.com/albertovaldez434-svg/usuarios-test.git
 ```
 
 Install dependencies
@@ -226,7 +224,6 @@ Building this project allowed me to gain practical experience with:
 - Ionic Development
 - JWT Authentication
 - REST APIs
-- PostgreSQL
 - Supabase
 - Route Guards
 - State Management
@@ -237,20 +234,8 @@ Building this project allowed me to gain practical experience with:
 
 ---
 
-## Why I Built This
-
-Instead of creating another basic CRUD application, I wanted to build a complete project that resembles a real-world product.
-
-This application has become my playground for learning, experimenting, and improving as a Full Stack Developer while applying good development practices.
-
----
-
-## Author
-
-Alberto Valdez López
-
 GitHub:
-(your GitHub)
+([your GitHub](https://github.com/albertovaldez434-svg))
 
 LinkedIn:
-(your LinkedIn)
+([your LinkedIn](https://www.linkedin.com/in/albertovaldez434))
