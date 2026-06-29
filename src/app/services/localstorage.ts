@@ -55,7 +55,9 @@ export class Localstorage {
   }
 
   clear(): void {
-    localStorage.clear();
+    localStorage.removeItem('authUser');
+    localStorage.removeItem('lastVisitedPage');
+    localStorage.removeItem('users');
   }
 
 }
