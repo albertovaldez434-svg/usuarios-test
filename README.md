@@ -1,91 +1,256 @@
-# Users Management App or Usuarios Ionic (Now, Tasks manager :D)
+# TaskFlow
 
-A simple tasks management application built with Ionic and Angular. 
-It started as a a simple CRUD app for management of users, but I decided to move it mainly to a tasks management app.
-This project is part of my personal portfolio and is currently under active development since it's also my learning/testing ground. 
+A Task Management application built with **Angular**, **Ionic**, and a custom **Node.js REST API**.
 
-this is the currently hosting: https://usuarios-kanban-demo.web.app
-
-## admin credentials are:
-    - Email: admin@gmail.com
-    - Psw: admin123
+This project started as a learning experience and gradually evolved into a production-ready application where I continuously apply new concepts, 
+improve the architecture, and experiment with modern web development practices.
 ---
 
-## 🚀 Features
-- User sign up and authentication (login/jwt)
-- Basic CRUD operations for users management (using restful API's wich i'm learning too)
-- only the admin can edit the other users (haven't added the page permissions yet)
-- the main feature will be the management of tasks (todo, doing and done status) wich will be editable
-- Responsive design for mobile and desktop (not final design, it will change)
-- mainly working on the dark theme, ill work on a theme toggle after the main page is fully ready.
----
+## Live Demo
 
-## 🛠️ Technologies Used
-- [Ionic Framework 8](https://ionicframework.com/)
-- [Angular CLI 20](https://angular.io/)
-- TypeScript & Javascript
-- CSS & SCSS (testing its defualt variables)
-- Angular Material (More precisely, CdkDragAnDrop for the dashboard page).
+🚀 Frontend:
+[(Your deployment link)](https://usuarios-kanban-demo.web.app/)
+
+⚙️ Backend API:
+usuarios-api-alberto-d8czbwdzctapcddd.mexicocentral-01.azurewebsites.net
 
 ---
 
-## 🚧 In Development
-- Mainly working right now on the Dashboard page
-- Improved UI/UX and accessibility (I like Ionic elements, still working on a definitive design)
-- Integration with backend services (Firebase or REST API in .NET, on development too)
+## Preview
+
+https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/Timeline1-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9UaW1lbGluZTEtZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgyNjkyNjgyLCJleHAiOjE3ODUyODQ2ODJ9.TcTSgO8sd0sHMX9bIoogSW4nNZohHochR_H1F5m5UMw
+
+Project Overview
+
+<!-- GIF 2 -->
+
+Authentication
+
+<!-- GIF 3 -->
+
+Dashboard
+
+<!-- GIF 4 -->
+
+Task Management
+
+<!-- GIF 5 -->
+
+Kanban Drag & Drop
+
+<!-- GIF 6 -->
+
+Responsive Design
+
+<!-- GIF 7 -->
+
+Dark Theme / Extra Features
+
 ---
 
-##  Captures
-![Login](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/sc1.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9zYzEucG5nIiwiaWF0IjoxNzgwNDQ0NzA3LCJleHAiOjE4MTE5ODA3MDd9.8qrv8iVSQRcdm0ObxTFjZslqrXVH0OjbWrd7y0WqC-M)
+## Features
 
-![Profile](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/sc2.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9zYzIucG5nIiwiaWF0IjoxNzgwNDQ0ODIyLCJleHAiOjE4MTE5ODA4MjJ9.yl4FCFHPvljbE7Pjf4hIgwPsVtLfpHWyQ7-B7q2bt1k)
+- JWT Authentication
+- Protected Routes
+- Role-based Access
+- Task CRUD
+- Kanban Board
+- Drag & Drop
+- Dashboard
+- User Profile
+- Responsive Layout
+- Dark Mode
+- REST API Integration
+- Loading States
+- Toast Notifications
+- Form Validation
 
-![Users](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/sc3.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9zYzMucG5nIiwiaWF0IjoxNzgwNDQ0ODM0LCJleHAiOjE4MTE5ODA4MzR9.ktGjp6cITtv5wLsUhaoJfKKx8yPkRIIlEjMipgCCDAs)
+---
 
-![Tasks](https://hdsarnayyialwynbafhw.supabase.co/storage/v1/object/sign/capturas/sc4.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81M2ZlNTlmZS1hN2RkLTRkMDQtODU2Zi02NzE0YTgwZTgyYWIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJjYXB0dXJhcy9zYzQucG5nIiwiaWF0IjoxNzgwNDQ0ODQ1LCJleHAiOjE4MTE5ODA4NDV9.Tx7UHMp5YaoVlO7VOdJ3caqgY9koDR9yKW4t20mTPRI)
+## Tech Stack
 
-## 📦 Getting Started
+### Frontend
 
-### Prerequisites
-- Node.js (v16 or higher recommended, I work with V22.22.2)
-- [Node Version Manager] (https://github.com/nvm-sh/nvm), just in case.
-- npm or yarn (I use npm)
-- Ionic CLI (`npm install -g @ionic/cli@8`)
-- Angular Cli (`npm install -g @angular/cli@20`)
-- Services in this other proyect [https://github.com/albertovaldez434-svg/usuarios-api-test] (wich is on development, too)
+- Angular 20
+- Ionic 8
+- TypeScript
+- RxJS
+- Angular CDK Drag & Drop
+- Capacitor
 
-### Installation
+### Backend
+
+- Node.js
+- Express
+- PostgreSQL
+- Supabase
+- JWT Authentication
+- Bcrypt
+
+### Deployment
+
+- Firebase Hosting
+- Render (or your hosting provider)
+
+---
+
+## Architecture
+
+```
+src
+│
+├── core
+│   ├── guards
+│   ├── interceptors
+│   ├── services
+│   └── models
+│
+├── shared
+│   ├── components
+│   ├── directives
+│   └── pipes
+│
+├── features
+│   ├── auth
+│   ├── dashboard
+│   ├── tasks
+│   ├── profile
+│   └── settings
+│
+└── assets
+```
+
+The application follows a modular architecture to improve scalability, maintainability and code organization.
+
+---
+
+## Authentication
+
+Authentication is implemented using JSON Web Tokens (JWT).
+
+The application includes:
+
+- Login
+- Protected Routes
+- Route Guards
+- Token Validation
+- Persistent Session
+- Secure Password Hashing
+
+---
+
+## Kanban Board
+
+The task board supports drag and drop between columns using Angular CDK.
+
+Users can organize their work by moving tasks across different workflow stages.
+
+---
+
+## REST API
+
+The frontend communicates with a custom REST API built with Express.
+
+Main modules include:
+
+- Authentication
+- Users
+- Tasks
+- Dashboard
+
+---
+
+## Installation
+
+Clone the repository
+
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/yourusername/taskflow.git
+```
 
-# Install dependencies
+Install dependencies
+
+```bash
 npm install
 ```
 
-### Running the App
+Start development server
+
 ```bash
-# Start the development server
-ionic serve -o
+ionic serve
 ```
 
-The app will be available at `http://localhost:8100` by default.
+---
+
+## Environment Variables
+
+Create an `.env` file (backend) and configure:
+
+```
+JWT_SECRET=
+
+SUPABASE_URL=
+
+SUPABASE_KEY=
+
+DATABASE_URL=
+```
+
+Frontend environment:
+
+```
+API_URL=
+```
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License.
+## Roadmap
+
+- Email Notifications
+- Push Notifications
+- File Attachments
+- Calendar View
+- Activity Log
+- Unit Testing
+- Docker Support
+- PWA Support
+- Internationalization
 
 ---
 
-## 🙋‍♂️ About Me
-I'm a software developer who's been working mainly as a frontend developer this last 8 years (started on mid september 2017), right now I am learning my way into the
-full stack development while polishing my current skills (lot of work to do there pal!)
+## What I Learned
+
+Building this project allowed me to gain practical experience with:
+
+- Angular Architecture
+- Ionic Development
+- JWT Authentication
+- REST APIs
+- PostgreSQL
+- Supabase
+- Route Guards
+- State Management
+- Responsive Design
+- Drag & Drop Interfaces
+- Firebase Deployment
+- Production Builds
 
 ---
 
-> **Note:** This project is a work in progress and will continue to evolve. Feedback and suggestions are very welcome!
-> **Note 2:** Current status: `Under Construction 🚧`
-> Reason: Late discovery that portfolios are, in fact, important. Consider this the "minimum viable portfolio" phase while I race against deadlines, my own expectations and
-questionable sleep decisions.
+## Why I Built This
+
+Instead of creating another basic CRUD application, I wanted to build a complete project that resembles a real-world product.
+
+This application has become my playground for learning, experimenting, and improving as a Full Stack Developer while applying good development practices.
+
+---
+
+## Author
+
+Alberto Valdez López
+
+GitHub:
+(your GitHub)
+
+LinkedIn:
+(your LinkedIn)
