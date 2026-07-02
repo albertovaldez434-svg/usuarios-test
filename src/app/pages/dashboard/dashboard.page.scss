@@ -220,7 +220,6 @@ ion-icon {
     position: relative;
     justify-content: center;
     align-items: center;
-    border: 1px dashed var(--ion-icon-color);
     color: var(--ion-stxt-color);
     border-radius: 12px;
     width: 80%;
@@ -231,6 +230,7 @@ ion-icon {
 .add-task:hover {
     cursor: pointer;
     opacity: 0.5;
+    background-color: rgb(43, 42, 42);
 }
 
 .dropdown_menu {
@@ -289,6 +289,18 @@ ion-icon {
 //     margin: 8px auto;
 //     gap: 10px;
 // }
+
+.header-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+    margin: auto;
+
+    @media (min-width: calc($breakpoint-tablet - 1px)) {
+        flex-direction: column;
+    }
+}
 
 /* Responsive Design for Tablet and Desktop */
 @media (min-width: $breakpoint-tablet) {

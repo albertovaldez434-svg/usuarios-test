@@ -1,16 +1,24 @@
 <ion-header [translucent]="true" class="ion-hide-sm-down">
   <ion-toolbar>
     <ion-title>Dashboard</ion-title>
-    <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
-      class="ion-margin-end" (click)="setSearchToggle()">
-    </ion-icon>
+    <ion-buttons slot="end">
+      <!-- <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
+        class="ion-margin-end" (click)="setSearchToggle()">
+      </ion-icon> -->
+      <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
+        [(ngModel)]="searchValue"></ion-searchbar>
+      <app-custom-button (clicked)="modalNewTask.present(); newTaskStatus = 0" [text]="'Agregar'"
+        [iconName]="'add-outline'" [size]="'default'">
+        <ion-ripple-effect></ion-ripple-effect>
+      </app-custom-button>
+    </ion-buttons>
   </ion-toolbar>
-  @if (toggleSearch === true) {
+  <!-- @if (toggleSearch === true) {
   <ion-toolbar [class.dropdown_menu]="playSAnimation" [class.dropdown_menu_close]="!playSAnimation">
     <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
       [(ngModel)]="searchValue"></ion-searchbar>
   </ion-toolbar>
-  }
+  } -->
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -18,6 +26,16 @@
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  <div class="ion-hide-sm-up header-controls">
+    <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
+      [(ngModel)]="searchValue"></ion-searchbar>
+    <app-custom-button (clicked)="modalNewTask.present(); newTaskStatus = 0" [text]="'Agregar'"
+      [iconName]="'add-outline'" [size]="'default'">
+      <ion-ripple-effect></ion-ripple-effect>
+    </app-custom-button>
+  </div>
+
 
   <div #scrollContainer cdkDropListGroup class="listContainer">
     <div cdkDropList #todoList id="todo" class="myDropList" [cdkDropListData]="todoArr()"
@@ -355,7 +373,7 @@
             <ion-select-option [value]="1">Por Hacer</ion-select-option>
             <ion-select-option [value]="2">En Curso</ion-select-option>
             <ion-select-option [value]="3">Terminado</ion-select-option>
-          </ion-select>3
+          </ion-select>
         </ion-item>
 
         <div class="changes-actions">
