@@ -9,3 +9,7 @@ ion-tab-bar {
 ion-icon {
     --color: var(--ion-icon-color);
 }
+
+.active-menu {
+    opacity: 0.5;
+}

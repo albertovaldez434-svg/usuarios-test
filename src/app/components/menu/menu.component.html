@@ -31,7 +31,7 @@
   <ion-tab-bar slot="bottom">
     @for (page of pages; track $index) {
       @if (canView(page)) {
-      <ion-tab-button [routerLink]="page.url">
+      <ion-tab-button [routerLink]="page.url" routerLinkActive="active-menu">
         <ion-icon [name]="page.icon"></ion-icon>
         {{page.title}}
       </ion-tab-button>
