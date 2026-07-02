@@ -13,7 +13,7 @@ export class CustomButtonComponent implements OnInit {
   @Input() text: string = '';
   @Input() iconName: string = '';
   @Input() type: 'primary' | 'secondary' | 'submit' = 'primary';
-  @Input() expand: 'block' | 'full' = 'block';
+  @Input() expand?: 'block' | 'full' = 'block';
   @Input() slot: 'start' | 'end' = 'start';
   @Input() size: 'large' | 'default' | 'small' = 'default';
   @Input() class: string = '';

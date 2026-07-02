@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
       localStorage.setItem('lastVisitedPage', event.urlAfterRedirects);
     });
 
-    this.loadTheme();
+    //this.loadTheme();
 
     this.restoreLastPage();
   }

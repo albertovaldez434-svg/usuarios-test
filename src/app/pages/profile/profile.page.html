@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-hide-sm-down">
   <ion-toolbar>
     <ion-title>Perfil</ion-title>
   </ion-toolbar>
@@ -64,7 +64,7 @@
                    <ion-icon slot="start" name="create-outline"></ion-icon>
                   Editar Perfil
                 </ion-button> -->
-                <app-custom-button [type]="'primary'" [expand]="'block'" [text]="'Editar Perfil'"
+                <app-custom-button [type]="'primary'" [text]="'Editar Perfil'"
                   [iconName]="'create-outline'" [slot]="'start'" (clicked)="editProfile()">
                 </app-custom-button>
                 <!-- por ahora desactivo el tema claro -->
