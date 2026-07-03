@@ -9,9 +9,6 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-// Import design system variables
-@import 'theme/variables.scss';
-
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
@@ -41,7 +38,7 @@
 
 // Global form spacing
 form {
-    gap: $spacing-sm;
+    gap: 10px;
 }
 
 //colores base
@@ -105,8 +102,8 @@ p {
 
 // Modal styling
 ion-modal {
-    --border-top-left-radius: #{$modal-border-radius-top};
-    --border-top-right-radius: #{$modal-border-radius-top};
+    --border-top-left-radius: 25px;
+    --border-top-right-radius: 25px;
 
     // ion-content {
     //     --color: var(--ion-txt-color);
@@ -116,8 +113,8 @@ ion-modal {
 }
 
 ion-modal.custom-modal {
-    --border-top-left-radius: #{$modal-border-radius-top};
-    --border-top-right-radius: #{$modal-border-radius-top};
+    --border-top-left-radius: 25px;
+    --border-top-right-radius: 25px;
 
 
     --color: black;
@@ -128,11 +125,11 @@ ion-modal.custom-modal {
 
 .signUpfrm {
     width: 90%;
-    max-width: $container-max-width;
-    padding: $spacing-3xl $spacing-xl;
-    border-radius: $border-radius-lg;
+    max-width: 520px;
+    padding: 30px 24px;
+    border-radius: 24px;
     background: var(--ion-cont-bg);
-    box-shadow: $shadow-lg;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
     display: flex;
     flex-direction: column;
     margin: 8px auto;

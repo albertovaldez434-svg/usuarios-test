@@ -1,5 +1,3 @@
-@import '../../../theme/variables.scss';
-
 ion-label.userInfo {
   font-size: 18px;
   margin-top: 0;
@@ -28,20 +26,13 @@ ion-item {
 }
 
 .page-container {
-  //min-height: $viewport-min-height;
-  padding: $spacing-md $spacing-md;
+  padding: 16px 16px;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--ion-background-color);
-
-  @media (min-width: $breakpoint-desktop) {
-    padding: $spacing-5xl $spacing-6xl;
-  }
-
-  @media (min-width: $breakpoint-tablet) {
-    padding: $spacing-4xl $spacing-4xl;
-  }
+  max-width: 1300px;
+  margin: auto;
 }
 
 .profile-picture-container {
@@ -54,25 +45,25 @@ ion-item {
 .profile-picture-placeholder {
   width: 150px;
   height: 150px;
-  border-radius: $border-radius-full;
+  border-radius: 50%;
   background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: $shadow-md;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
   ion-icon {
     font-size: 80px;
-    color: $color-text-primary;
+    color: #ffffff;
   }
 }
 
 .profile-picture {
   width: 150px;
   height: 150px;
-  border-radius: $border-radius-full;
+  border-radius: 50%;
   object-fit: cover;
-  box-shadow: $shadow-md;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border: 3px solid var(--ion-color-primary);
 }
 
@@ -90,7 +81,7 @@ ion-item {
 
   ion-label {
     h2 {
-      font-weight: $font-weight-semibold;
+      font-weight: 600;
       margin-bottom: 0.25rem;
     }
 
@@ -112,7 +103,6 @@ ion-item {
   }
 }
 
-// se muestra el modal edicion
 .register-container .form-container {
   height: 500px !important;
 }
@@ -120,10 +110,27 @@ ion-item {
 .button-section {
   display: flex;
   justify-content: right;
+}
 
-  @media screen and (min-width: $breakpoint-mobile) {
+@media screen and (min-width: 1024px) {
+  .page-container {
+    padding: 40px 48px;
+  }
+
+}
+
+@media screen and (min-width: 768px) {
+  .page-container {
+    padding: 36px 36px;
+  }
+
+}
+
+@media screen and (min-width: 480px) {
+  .button-section {
     display: flex;
     flex-direction: column;
     gap: 6px;
   }
+
 }

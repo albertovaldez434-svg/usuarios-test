@@ -1,9 +1,6 @@
-@import '../../../theme/variables.scss';
-
 .signUpfrm ion-item {
-  margin-bottom: $spacing-md;
-  border-radius: $border-radius-md;
-  // box-shadow: $shadow-sm;
+  margin-bottom: 16px;
+  border-radius: 15px;
   --background: var(--ion-background-color);
   --color: var(--ion-txt-color);
   font-size: 18px;
