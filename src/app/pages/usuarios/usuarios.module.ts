@@ -10,6 +10,8 @@ import { UsuariosPage } from './usuarios.page';
 
 import { SearchPipe } from '../../search-pipe'
 import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
+import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
+import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { CustomButtonComponent } from "src/app/components/custom-button/custom-b
     UsuariosPageRoutingModule,
     ReactiveFormsModule,
     SearchPipe,
-    CustomButtonComponent
+    CustomButtonComponent,
+    RegisterFormComponent,
+    CdkDragPlaceholder
 ],
   declarations: [UsuariosPage]
 })

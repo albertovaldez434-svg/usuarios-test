@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Users } from '../models/users';
+import { Users, UsuariosResponse } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
@@ -79,7 +79,7 @@ export class UsuariosService {
   getUsers() {
     const url = `${environment.URL_API}/api/Usuarios`;
 
-    return this.http.get<Users[]>(url);
+    return this.http.get<UsuariosResponse[]>(url);
   }
 
   Login(request: Login) {

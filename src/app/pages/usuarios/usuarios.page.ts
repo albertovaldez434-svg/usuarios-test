@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
-import { catchError, of, tap } from 'rxjs';
+import { of } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
 import { Localstorage } from 'src/app/services/localstorage';
@@ -83,7 +83,6 @@ export class UsuariosPage implements OnInit {
         email: "carlos.ramirez@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "carlosram",
         password: "Carlos123!"
       },
       {
@@ -93,7 +92,6 @@ export class UsuariosPage implements OnInit {
         email: "maria.gonzalez@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "mariagt",
         password: "Maria123!"
       },
       {
@@ -103,7 +101,6 @@ export class UsuariosPage implements OnInit {
         email: "luis.fernandez@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "luisfer",
         password: "Luis123!"
       },
       {
@@ -113,7 +110,6 @@ export class UsuariosPage implements OnInit {
         email: "ana.martinez@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "anamv",
         password: "Ana123!"
       },
       {
@@ -123,7 +119,6 @@ export class UsuariosPage implements OnInit {
         email: "jorge.hernandez@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "jorgehc",
         password: "Jorge123!"
       },
       {
@@ -133,7 +128,6 @@ export class UsuariosPage implements OnInit {
         email: "fernanda.soto@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "fersoto",
         password: "Fer123!"
       },
       {
@@ -143,7 +137,6 @@ export class UsuariosPage implements OnInit {
         email: "ricardo.morales@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "ricmora",
         password: "Ricardo123!"
       },
       {
@@ -153,7 +146,6 @@ export class UsuariosPage implements OnInit {
         email: "daniela.perez@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "danips",
         password: "Dani123!"
       },
       {
@@ -163,7 +155,6 @@ export class UsuariosPage implements OnInit {
         email: "miguel.ortega@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "miguelor",
         password: "Miguel123!"
       },
       {
@@ -173,7 +164,6 @@ export class UsuariosPage implements OnInit {
         email: "sofia.cruz@test.com",
         telefono: "6441747474",
         idRol: 2,
-        nombreUsuario: "sofiacm",
         password: "Sofia123!"
       }
     ];
@@ -207,26 +197,26 @@ export class UsuariosPage implements OnInit {
     this.modalSignUp.present();
   }
 
-  async beginSignup() {
-    const formData = this.signupForm.value;
+  async beginSignup(data: Users | null) {
+    if (!data) return;
 
     const newUser: Users = {
       idUser: 0,
-      nombre: formData.Nombre,
-      apellidos: formData.Apellidos,
-      email: formData.Email,
-      telefono: formData.Telefono,
-      idRol: parseInt(formData.Rol),
+      nombre: data.nombre,
+      apellidos: data.apellidos,
+      email: data.email,
+      telefono: data.telefono,
+      idRol: (data.idRol) ? data.idRol : 0,
     }
 
     if (this.usersService.loggedData$()?.idRol == 999) {
       let newUser: Users = {
         idUser: Math.random(),
-        nombre: formData.Nombre,
-        apellidos: formData.Apellidos,
-        email: formData.Email,
-        telefono: formData.Telefono,
-        idRol: parseInt(formData.Rol),
+        nombre: data.nombre,
+        apellidos: data.apellidos,
+        email: data.email,
+        telefono: data.telefono,
+        idRol: (data.idRol) ? data.idRol : 0,
       }
 
       this.usuarios.push(newUser);
@@ -254,16 +244,20 @@ export class UsuariosPage implements OnInit {
   editarUsuario(idUser: number) {
     this.editandoUsuario = true;
     const userSelected = this.usuarios.find(u => u.idUser === idUser);
+
     if (userSelected) {
       this.usuarioToEdit = userSelected;
     }
-    this.signupForm.setValue({
-      Nombre: this.usuarioToEdit?.nombre,
-      Apellidos: this.usuarioToEdit?.apellidos,
-      Email: this.usuarioToEdit?.email,
-      Telefono: this.usuarioToEdit?.telefono,
-      Rol: this.usuarioToEdit.idRol?.toString()
-    });
+
+    // let usrData: Users = {
+    //   idUser: this.usuarioToEdit.idUser,
+    //   nombre: this.usuarioToEdit.nombre,
+    //   apellidos: this.usuarioToEdit.apellidos,
+    //   email: this.usuarioToEdit.email,
+    //   telefono: this.usuarioToEdit.telefono,
+    //   idRol: this.usuarioToEdit.idRol
+    // };
+
     this.modalSignUp.present();
   }
 

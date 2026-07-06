@@ -39,7 +39,6 @@ export class RegisterFormComponent implements OnInit {
       firstName: [this.userData?.nombre || '', [Validators.required, Validators.minLength(2)]],
       lastName: [this.userData?.apellidos || '', [Validators.required, Validators.minLength(2)]],
       email: [this.userData?.email || '', [Validators.required, Validators.email]],
-      username: [this.userData?.nombreUsuario || '', [Validators.required, Validators.minLength(3)]],
       password: [this.userData?.password || '', [Validators.required, Validators.minLength(8)]],
       confirmPassword: [this.userData?.password || '', [Validators.required]],
       mobileNumber: [this.userData?.telefono || '', [Validators.required, Validators.pattern(/^[\d\s\-\+\(\)]{10,}$/)]],
@@ -73,7 +72,6 @@ export class RegisterFormComponent implements OnInit {
         apellidos: this.registerForm.value.lastName,
         email: this.registerForm.value.email,
         telefono: this.registerForm.value.mobileNumber,
-        nombreUsuario: this.registerForm.value.username,
         password: this.registerForm.value.password,
       };
 

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{Title}}</ion-title>
+    <ion-title class="ion-text-center">{{Title}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">
         <ion-icon name="close-outline"></ion-icon>
@@ -60,24 +60,6 @@
         }
         @if (f['email'].errors?.['email']) {
         <span>Ingresa un correo válido</span>
-        }
-      </div>
-      }
-    </ion-col>
-
-    <!-- Username -->
-    <ion-col size="12" size-md="6">
-      <ion-item>
-        <ion-input type="text" formControlName="username" placeholder="nombreusuario"></ion-input>
-        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-      </ion-item>
-      @if (submitted && f['username'].invalid) {
-      <div class="error-message">
-        @if (f['username'].errors?.['required']) {
-        <span>El usuario es requerido</span>
-        }
-        @if (f['username'].errors?.['minlength']) {
-        <span>Mínimo 3 caracteres</span>
         }
       </div>
       }

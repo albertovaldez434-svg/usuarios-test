@@ -5,7 +5,6 @@ export interface Users {
     email: string;
     telefono: string;
     idRol?: number;
-    nombreUsuario?: string;
     password?: string;
 }
 
@@ -16,4 +15,13 @@ export interface AuthUser {
     idRol: number;
     userInfo: Users;
     avatar: string;
+}
+
+export interface UsuariosResponse {
+    idUser: number;
+    nombre: string;
+    apellidos: string;
+    email: string;
+    telefono: string;
+    idRol?: number;
 }
