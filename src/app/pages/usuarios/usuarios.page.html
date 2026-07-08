@@ -20,8 +20,8 @@
       <div class="controls-header">
         <div class="ion-activable">
           <ion-ripple-effect></ion-ripple-effect>
-          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [value]="searchValue"
-            [(ngModel)]="searchValue">
+          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [ngModel]="searchValue()"
+            (ngModelChange)="searchValue.set($event)">
           </ion-searchbar>
         </div>
         <div class="buttons-header">
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      @if (usuarios) {
+      @if (hasUsers()) {
       <div class="table-responsive">
         <table>
           <thead>
@@ -45,7 +45,8 @@
             </tr>
           </thead>
           <tbody>
-            @for (usuario of usuarios | search:searchValue:['nombre', 'apellidos', 'email', 'telefono']; track $index) {
+            @for (usuario of usuarios() | search:searchValue():['nombre', 'apellidos', 'email', 'telefono']; track
+            usuario.idUser) {
             <tr>
               <td data-label="Nombre">{{ usuario.nombre }}</td>
               <td data-label="Apellidos">{{ usuario.apellidos }}</td>
@@ -76,6 +77,7 @@
 
 <ion-modal #modalSignUp class="custom-modal" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
   <ng-template>
-    <app-register-form [Title]="'Registrar'" [userData]="usuarioToEdit" (formSubmit)="beginSignup($event)"></app-register-form>
+    <app-register-form [Title]="'Registrar'" [userData]="usuarioToEdit"
+      (formSubmit)="beginSignup($event)"></app-register-form>
   </ng-template>
 </ion-modal>

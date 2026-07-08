@@ -1,32 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { of } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
-import { Localstorage } from 'src/app/services/localstorage';
 import { UsuariosService } from 'src/app/services/usuarios';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.page.html',
   styleUrls: ['./usuarios.page.scss'],
-  standalone: false
+  standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsuariosPage implements OnInit {
   private loaded = false;
   @ViewChild('modalSignUp') modalSignUp!: IonModal;
   editandoUsuario: boolean = false;
   usuarioToEdit!: Users;
-  usuarios: Users[] = [];
+  //usuarios: Users[] = [];
+  readonly usuarios = signal<Users[]>([]);
+
   signupForm: FormGroup;
-  searchValue: string = '';
+  searchValue = signal('');
 
   constructor(
     private usersService: UsuariosService,
-    private secureStorage: Localstorage,
-    private route: Router,
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder
   ) {
@@ -58,6 +57,8 @@ export class UsuariosPage implements OnInit {
       event.target.complete();
     }, 2000);
   }
+
+  readonly hasUsers = computed(()=> this.usuarios().length > 0);
 
   async openModalFunc(mensaje: string) {
     const modal = this.modalCtrl.create({
@@ -168,7 +169,7 @@ export class UsuariosPage implements OnInit {
       }
     ];
 
-    this.usuarios = usersList;
+    this.usuarios.set(usersList);
   }
 
   obtenerUsuarios = () => {
@@ -176,17 +177,17 @@ export class UsuariosPage implements OnInit {
     if (this.usersService.loggedData$()?.idUser === 999) {
       this.usersService.clearUsers();
       this.obtenerUsuariosTest();
-      this.usersService.setUsers(this.usuarios);
+      this.usersService.setUsers(this.usuarios());
       return;
     }
 
     this.usersService.getUsers().subscribe({
       next: (usuarios) => {
         this.usersService.clearUsers();
-        this.usuarios = usuarios;
-        this.usersService.setUsers(this.usuarios);
+        this.usuarios.set(usuarios);
+        this.usersService.setUsers(this.usuarios());
       },
-      error: (error) => {
+      error: () => {
         this.openModalFunc('No se pudo cargar la informacion de usuarios');
       }
     });
@@ -219,8 +220,8 @@ export class UsuariosPage implements OnInit {
         idRol: (data.idRol) ? data.idRol : 0,
       }
 
-      this.usuarios.push(newUser);
-      this.usersService.setUsers(this.usuarios);
+      this.usuarios.update(usuarios => [...usuarios, newUser]);
+      this.usersService.setUsers(this.usuarios());
       this.openModalFunc('Usuario registrado exitosamente');
       this.signupForm.reset();
       return;
@@ -229,11 +230,12 @@ export class UsuariosPage implements OnInit {
     this.usersService.signUpNewUser(newUser).subscribe({
       next: (response) => {
         this.modalSignUp.dismiss();
-        this.usuarios.push(response);
-        this.usersService.setUsers(this.usuarios);
+        //this.usuarios.push(response);
+        this.usuarios.update(usuarios => [...usuarios, response]);
+        this.usersService.setUsers(this.usuarios());
         this.openModalFunc('Usuario registrado exitosamente');
         this.signupForm.reset();
-      }, error: (error) => {
+      }, error: () => {
         this.openModalFunc('Error al registrar el usuario');
         return of([]);
       }
@@ -243,7 +245,7 @@ export class UsuariosPage implements OnInit {
 
   editarUsuario(idUser: number) {
     this.editandoUsuario = true;
-    const userSelected = this.usuarios.find(u => u.idUser === idUser);
+    const userSelected = this.usuarios().find(u => u.idUser === idUser);
 
     if (userSelected) {
       this.usuarioToEdit = userSelected;
@@ -272,8 +274,8 @@ export class UsuariosPage implements OnInit {
     }
 
     if (this.usersService.loggedData$()?.idRol == 999) {
-      this.usersService.setUsers(this.usuarios);
-      console.log(this.usuarios);
+      this.usersService.setUsers(this.usuarios());
+      console.log(this.usuarios());
       this.modalSignUp.dismiss();
       this.openModalFunc('Usuario registrado exitosamente');
       this.signupForm.reset();
@@ -282,7 +284,7 @@ export class UsuariosPage implements OnInit {
     }
 
     this.usersService.editUser(this.usuarioToEdit).subscribe({
-      next: (respone) => {
+      next: () => {
         this.modalSignUp.dismiss();
         this.editandoUsuario = false;
       },
@@ -296,8 +298,8 @@ export class UsuariosPage implements OnInit {
 
   EliminarUsuario(idUser: number) {
     if (this.usersService.loggedData$()?.idRol === 999) {
-      this.usuarios = this.usuarios.filter(usr => usr.idUser !== idUser);
-      this.usersService.setUsers(this.usuarios);
+      this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
+      //this.usersService.setUsers(this.usuarios);
       this.openModalFunc('Usuario eliminado');
       return;
     }
@@ -305,8 +307,8 @@ export class UsuariosPage implements OnInit {
     this.usersService.deleteUsuario(idUser).subscribe({
       next: () => {
         this.openModalFunc('Usuario eliminado');
-        this.usuarios = this.usuarios.filter(usr => usr.idUser !== idUser);
-        this.usersService.setUsers(this.usuarios);
+        this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
+        //this.usersService.setUsers(this.usuarios);
       },
       error: (error) => {
         console.log(error);
