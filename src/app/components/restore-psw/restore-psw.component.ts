@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { IonItem } from "@ionic/angular/standalone";
 import { FormsModule } from "@angular/forms";
@@ -11,6 +11,9 @@ import { CustomButtonComponent } from "../custom-button/custom-button.component"
   imports: [IonicModule, FormsModule, CustomButtonComponent]
 })
 export class RestorePswComponent implements OnInit {
+  @Input() title: string = '';
+  @Input() warning: boolean = false;
+  @Output() validatedPsw = new EventEmitter<string>();
   verPsw: boolean;
   verPswConf: boolean;
   pswMatch!: boolean;
@@ -18,9 +21,7 @@ export class RestorePswComponent implements OnInit {
   password1: string;
   password2: string;
 
-
-  @Output() validatedPsw = new EventEmitter<string>();
-
+  displayWarning = signal<boolean>(true);
   constructor(
     private modalCtrl: ModalController
   ) {
@@ -32,7 +33,11 @@ export class RestorePswComponent implements OnInit {
     this.password2 = '';
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    setTimeout(() => {
+      this.displayWarning.set(false);
+    }, 3000)
+  }
 
   validatePswMatch() {
     if (this.password1 === this.password2) {

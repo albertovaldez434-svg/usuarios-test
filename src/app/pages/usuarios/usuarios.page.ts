@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { of } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
+import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
 import { Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 
@@ -58,7 +59,7 @@ export class UsuariosPage implements OnInit {
     }, 2000);
   }
 
-  readonly hasUsers = computed(()=> this.usuarios().length > 0);
+  readonly hasUsers = computed(() => this.usuarios().length > 0);
 
   async openModalFunc(mensaje: string) {
     const modal = this.modalCtrl.create({
@@ -315,6 +316,20 @@ export class UsuariosPage implements OnInit {
         this.openModalFunc('Error al eliminar usuario');
       }
     });
+  }
+
+  async editarPsw() {
+    const pswModal = this.modalCtrl.create({
+      component: RestorePswComponent,
+      breakpoints: [0, 0.25, 0.5, 0.75],
+      initialBreakpoint: 0.75,
+      componentProps: {
+        title: 'Editar Psw',
+        warning: true
+      }
+    });
+
+    (await pswModal).present();
   }
 
 }
