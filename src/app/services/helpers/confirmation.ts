@@ -1,0 +1,32 @@
+import { inject, Injectable, signal } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ActionModalComponent } from 'src/app/components/action-modal/action-modal.component';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class Confirmation {
+
+  private ModalCtrl = inject(ModalController);
+
+  confirmed = signal<boolean | null>(null);
+
+  async openConfirmationSheet(title: string, message: string) {
+    const actionSheet = await this.ModalCtrl.create({
+      component: ActionModalComponent,
+      breakpoints: [0, 0.25, 0.5, 0.75],
+      initialBreakpoint: 0.5,
+      componentProps: {
+        title: title,
+        msj: message
+      },
+    });
+
+    await actionSheet.present();
+  }
+
+  setConfirmed(data:boolean) {
+    this.confirmed.set(data);
+  }
+
+}
