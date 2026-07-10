@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { environment } from 'src/environments/environment';
 import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
+import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
+import { ActionModalComponent } from "./components/action-modal/action-modal.component";
 
 
 @NgModule({
@@ -24,15 +26,17 @@ import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.com
     IonModalComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     IonicModule.forRoot({
-      swipeBackEnabled: false
-    }), 
-    AppRoutingModule, 
+        swipeBackEnabled: false
+    }),
+    AppRoutingModule,
     ReactiveFormsModule,
     RegisterFormComponent,
-    ThemeToggleComponent
-  ],
+    ThemeToggleComponent,
+    CdkDragPlaceholder,
+    ActionModalComponent
+],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

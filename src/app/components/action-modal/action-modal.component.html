@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p class="ion-padding ion-text-center">{{msj}}</p>
+  <div class="btn-container">
+    <app-custom-button [size]="'default'" [type]="'secondary'" [iconName]="'close-outline'" [text]="'Cancelar'" (clicked)="close()"></app-custom-button>
+    <app-custom-button [size]="'default'" [type]="'primary'" [iconName]="'checkmark-outline'" [text]="'Continuar'" (clicked)="closeSession()"></app-custom-button>
+  </div>
+</ion-content>
