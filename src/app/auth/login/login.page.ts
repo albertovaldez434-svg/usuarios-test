@@ -54,6 +54,7 @@ export class LoginPage implements OnInit {
   }
 
   loginFunction() {
+    console.log('Iniciando Login')
     const Mail = this.loginForm.value.Email;
     const Password = this.loginForm.value.Password;
 

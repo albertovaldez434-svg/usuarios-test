@@ -17,6 +17,7 @@ import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.com
 import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 import { ActionModalComponent } from "./components/action-modal/action-modal.component";
 import { ErrorsInterceptor } from './interceptors/errors-interceptor';
+import { timeoutInterceptor } from './interceptors/timeout-interceptor';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ErrorsInterceptor } from './interceptors/errors-interceptor';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useExisting: timeoutInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useExisting: ErrorsInterceptor, multi: true}
     
   ],
   bootstrap: [AppComponent]

@@ -73,7 +73,7 @@ export class DashboardPage implements OnInit {
 
   ionViewDidEnter() {
     this.cargarTareas();
-    this.obtenerUsuarios();
+    // this.obtenerUsuarios();
   }
 
   ionViewWillLeave() {
@@ -116,12 +116,8 @@ export class DashboardPage implements OnInit {
   }
 
   obtenerUsuarios = () => {
-    // if (this.usersService.loggedData$()?.idUser === 999) {
-    //   this.usersService.clearUser();
-    //   this.obtenerUsuariosTest();
-    //   this.usersService.setUser(this.usuarios);
-    //   return;
-    // }
+
+    console.log('cargar usuarios');
 
     this.usuarioService.getUsers().subscribe({
       next: (usuarios) => {
@@ -177,6 +173,7 @@ export class DashboardPage implements OnInit {
   }
 
   cargarTareas() {
+    console.log('cargar tareas');
     const IdUser = this.usuarioService.loggedData$()?.idUser;
 
     if (IdUser) {
