@@ -2,7 +2,6 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { from, Observable, switchMap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
-import { AuthUser } from '../models/users';
 import { Localstorage } from '../services/localstorage';
 import { loginResponseDTO } from '../models/loginDTO';
 
