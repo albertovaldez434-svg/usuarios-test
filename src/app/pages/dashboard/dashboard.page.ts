@@ -73,7 +73,7 @@ export class DashboardPage implements OnInit {
 
   ionViewDidEnter() {
     this.cargarTareas();
-    // this.obtenerUsuarios();
+    this.obtenerUsuarios();
   }
 
   ionViewWillLeave() {
