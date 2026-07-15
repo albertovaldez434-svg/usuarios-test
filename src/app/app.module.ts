@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { MenuComponent } from './components/menu/menu.component';
 import { IonModalComponent } from './components/ion-modal/ion-modal.component';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
@@ -39,12 +39,11 @@ import { timeoutInterceptor } from './interceptors/timeout-interceptor';
     ActionModalComponent
 ],
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([timeoutInterceptor]), withInterceptorsFromDi()),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useExisting: timeoutInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useExisting: ErrorsInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true}
     
   ],
   bootstrap: [AppComponent]

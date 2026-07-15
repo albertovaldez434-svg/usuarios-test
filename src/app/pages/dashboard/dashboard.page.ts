@@ -69,7 +69,9 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log('deberia de ejecutarse 1 vez');
+  }
 
   ionViewDidEnter() {
     this.cargarTareas();
@@ -126,7 +128,8 @@ export class DashboardPage implements OnInit {
         this.usuarioService.setUsers(this.usuarios);
       },
       error: (error) => {
-        this.openModalFunc('No se pudo cargar la informacion de usuarios');
+        console.log(error);
+        //this.openModalFunc('No se pudo cargar la informacion de usuarios');
       }
     });
   }
@@ -185,7 +188,8 @@ export class DashboardPage implements OnInit {
             this.allTasks.set(tasks);
           },
           error: (err) => {
-            this.openModalFunc('Error al cargar las tareas');
+            //this.openModalFunc('Error al cargar las tareas');
+            console.log(err);
           }
         });
       }

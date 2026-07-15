@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
   }
 
   loginFunction() {
-    console.log('Iniciando Login')
+    //console.log('Iniciando Login')
     const Mail = this.loginForm.value.Email;
     const Password = this.loginForm.value.Password;
 
@@ -74,7 +74,8 @@ export class LoginPage implements OnInit {
         this.route.navigate(['/dashboard']);
       },
       error: (error) => {
-        this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
+        console.log(error);
+        //this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
       }
     });
 

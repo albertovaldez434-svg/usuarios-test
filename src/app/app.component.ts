@@ -31,8 +31,6 @@ export class AppComponent implements OnInit {
         this.isLogged = false;
       }
     });
-
-    this.checkUserdata();
   }
 
   ngOnInit() {
@@ -44,13 +42,17 @@ export class AppComponent implements OnInit {
 
     //this.loadTheme();
 
-    this.restoreLastPage();
+    //this.restoreLastPage();
+
+    this.checkUserdata();
   }
 
   async checkUserdata() {
     if (!this.isLogged) {
       const dataLogin = await this.secureStorage.getItem<loginResponseDTO>('authUser');
+
       if (dataLogin) {
+
         if (dataLogin.idUser === 999) {
           const storedLogin = dataLogin;
           this.userService.setLoginData(storedLogin);
@@ -58,6 +60,7 @@ export class AppComponent implements OnInit {
           this.route.navigate(['/dashboard']);
           return;
         }
+
         if (this.jwtHelper.isTokenExpired(dataLogin?.accessToken)) {
           this.secureStorage.clear();
           this.isLogged = false;
@@ -67,7 +70,8 @@ export class AppComponent implements OnInit {
         const storedLogin = dataLogin;
         this.userService.setLoginData(storedLogin);
         this.isLogged = true;
-        this.route.navigate(['/dashboard']);
+        //this.route.navigate(['/dashboard']);
+        this.restoreLastPage();
       } else {
         this.isLogged = false;
         this.route.navigate(['/login']);
