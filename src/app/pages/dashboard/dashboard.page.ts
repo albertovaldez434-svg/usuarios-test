@@ -70,7 +70,7 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() { 
-    console.log('deberia de ejecutarse 1 vez');
+    //console.log('deberia de ejecutarse 1 vez');
   }
 
   ionViewDidEnter() {
@@ -118,8 +118,6 @@ export class DashboardPage implements OnInit {
   }
 
   obtenerUsuarios = () => {
-
-    console.log('cargar usuarios');
 
     this.usuarioService.getUsers().subscribe({
       next: (usuarios) => {
@@ -176,7 +174,6 @@ export class DashboardPage implements OnInit {
   }
 
   cargarTareas() {
-    console.log('cargar tareas');
     const IdUser = this.usuarioService.loggedData$()?.idUser;
 
     if (IdUser) {
