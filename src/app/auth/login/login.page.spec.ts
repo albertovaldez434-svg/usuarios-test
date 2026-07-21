@@ -120,7 +120,8 @@ describe('LoginPage', () => {
                 nombre: 'Alberto',
                 apellidos: 'Valdez Lopez',
                 telefono: '6441727482'
-            }
+            },
+            avatar: '....'
         };
 
         /*
@@ -145,7 +146,7 @@ describe('LoginPage', () => {
 
         // verify navigation
         expect(routerMock.navigate)
-            .toHaveBeenCalledWith(['/profile']);
+            .toHaveBeenCalledWith(['/dashboard']);
 
     });
 

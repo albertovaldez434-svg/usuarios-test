@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthUser, Users } from 'src/app/models/users';
+import { Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Camera } from '@capacitor/camera';
 import { ActionSheetController, IonModal, ModalController } from '@ionic/angular';
@@ -24,8 +23,6 @@ export class ProfilePage implements OnInit {
   imgSrc: string = '';
   //editingUser: boolean = false;
 
-  usersSub!: Subscription;
-
   constructor(
     private userService: UsuariosService,
     private actionSheetCtrl: ActionSheetController,
@@ -41,6 +38,12 @@ export class ProfilePage implements OnInit {
       this.imgSrc = this.loggedUser.avatar;
     }
 
+    // effect(() => {
+    //   this.users = this.userService.users$();
+    //   if (this.users) {
+    //     this.findLoggedUser();
+    //   }
+    // });
   }
 
   ngOnInit() {
@@ -48,20 +51,11 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.usersSub = new Subscription;
-    this.usersSub = this.userService.Users$.subscribe({
-      next: (usersData) => {
-        this.users = usersData;
-        this.findLoggedUser();
-      }, error: () => {
-        this.openModalFunc('Error al cargar información de usuarios');
-      }
-    })
-
+    //
   }
 
   ionViewWillLeave() {
-    this.usersSub.unsubscribe();
+    //
   }
 
   async openModalFunc(mensaje: string) {
@@ -220,7 +214,7 @@ export class ProfilePage implements OnInit {
       return;
     }
 
-    if(!this.users) return;
+    if (!this.users) return;
 
     if (data) {
       if (data.idUser === 999) {

@@ -17,16 +17,14 @@ export class UsuariosService {
   constructor(
     private http: HttpClient,
     private secureStorage: Localstorage
-  ) {
-    this.loadStoredData();
-  }
+  ) { }
 
   //subjects
-  private users = new BehaviorSubject<Users[] | null>(null);
-  Users$ = this.users.asObservable();
+  private users = signal<Users[] | null>(null);
+  users$ = this.users.asReadonly();
 
-  private TasksData = new BehaviorSubject<UserTasks[] | null>(null);
-  TaskData$ = this.TasksData.asObservable();
+  private TasksData = signal<UserTasks[] | null>(null);
+  taskData$ = this.TasksData.asReadonly();
 
   //test signal
   private loggedData = signal<loginResponseDTO | null>(null);
@@ -46,22 +44,22 @@ export class UsuariosService {
 
   //methods
   setUsers = async (usrData: Users[]) => {
-    this.users.next(usrData);
+    this.users.set(usrData);
     this.secureStorage.setItem('users', usrData);
     //localStorage.setItem('users', JSON.stringify(usrData));
   }
 
   async loadStoredData() {
     //cargar usuarios
-    const users = await this.secureStorage.getItem<Users[]>('users');
-    if (users) {
-      const storedUsers = users;
-      this.users.next(storedUsers);
-    }
+    const usersData = await this.secureStorage.getItem<Users[]>('users');
+    if (!usersData) return;
+
+    const storedUsers = usersData;
+    this.users.set(storedUsers);
   }
 
   clearUsers = async () => {
-    this.users.next(null);
+    this.users.set(null);
     localStorage.removeItem('users');
   }
 
@@ -71,7 +69,7 @@ export class UsuariosService {
   }
 
   async setTasksData(tasks: UserTasks[]) {
-    this.TasksData.next(tasks);
+    this.TasksData.set(tasks);
     await this.secureStorage.setItem('tasks', tasks);
   }
 
@@ -94,6 +92,18 @@ export class UsuariosService {
     return this.http.post<Users>(url, newUser);
   }
 
+  cargarImagen(data: FormData) {
+    const url = `${environment.URL_API}/api/Usuarios/CargarImagen`;
+
+    return this.http.post<ImagenesUsuarios>(url, data);
+  }
+
+  UpdatePsw(psw: string) {
+    const url = `${environment.URL_API}/api/Usuarios/UpdatePassword`;
+
+    return this.http.post<UserTasks>(url, psw);
+  }
+
   editUser(user: Users) {
     const url = `${environment.URL_API}/api/Usuarios/${user.idUser}`;
 
@@ -104,38 +114,6 @@ export class UsuariosService {
     const url = `${environment.URL_API}/api/Usuarios/${idUser}`;
 
     return this.http.delete(url);
-  }
-
-  cargarTareasUsuario(idUser: number) {
-
-    const url = `${environment.URL_API}/api/Usuarios/GetTareas/${idUser}`;
-
-    return this.http.get<UserTasks[]>(url);
-  }
-
-  actualizarTarea(tareaActualizada: UserTasks) {
-
-    const url = `${environment.URL_API}/api/Usuarios/UpdateTarea`;
-
-    return this.http.put(url, tareaActualizada);
-  }
-
-  cargarImagen(data: FormData) {
-    const url = `${environment.URL_API}/api/Usuarios/CargarImagen`;
-
-    return this.http.post<ImagenesUsuarios>(url, data);
-  }
-
-  agregarTarea(task: UserTasks) {
-    const url = `${environment.URL_API}/api/Usuarios/AddTarea`;
-
-    return this.http.post<UserTasks>(url, task);
-  }
-
-  UpdatePsw(psw: string) {
-    const url = `${environment.URL_API}/api/Usuarios/UpdatePassword`;
-
-    return this.http.post<UserTasks>(url, psw);
   }
 
 }

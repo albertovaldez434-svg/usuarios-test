@@ -1,12 +1,12 @@
 import { Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
-import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragEnter, CdkDragMove, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
-import { AuthUser, Users } from 'src/app/models/users';
-import { Subscription } from 'rxjs';
+import { Users } from 'src/app/models/users';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
+import { TasksService } from 'src/app/services/tasks/tasks-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -56,6 +56,7 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private usuarioService: UsuariosService,
+    private tareasService: TasksService,
     private modalCtrl: ModalController,
   ) {
     const imgData = localStorage.getItem('myImage');
@@ -180,7 +181,7 @@ export class DashboardPage implements OnInit {
       if (IdUser == 999) {
         this.cargarTareasTest();
       } else {
-        this.usuarioService.cargarTareasUsuario(IdUser).subscribe({
+        this.tareasService.cargarTareasUsuario(IdUser).subscribe({
           next: (tasks) => {
             this.allTasks.set(tasks);
           },
@@ -268,7 +269,7 @@ export class DashboardPage implements OnInit {
         break;
     }
 
-    this.usuarioService.actualizarTarea(Task).subscribe({
+    this.tareasService.actualizarTarea(Task).subscribe({
       next: () => {
         this.openModalFunc('Tarea actualizada correctamente');
       },
@@ -366,7 +367,7 @@ export class DashboardPage implements OnInit {
     this.selectedTask.set(edited);
 
     // API call ONCE
-    this.usuarioService.actualizarTarea(edited).subscribe({
+    this.tareasService.actualizarTarea(edited).subscribe({
       next: () => {
         this.openModalFunc('Tarea actualizada correctamente');
         this.cleanTaskFlow();
@@ -390,7 +391,7 @@ export class DashboardPage implements OnInit {
       status: this.newTaskStatus
     };
 
-    this.usuarioService.agregarTarea(newTarea).subscribe({
+    this.tareasService.agregarTarea(newTarea).subscribe({
       next: (task) => {
         this.addTaskHelper(task);
         this.openModalFunc('Se creo la tarea correctamente.');

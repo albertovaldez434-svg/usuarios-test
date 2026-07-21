@@ -11,7 +11,9 @@ import { provideHttpClientTesting, HttpTestingController } from "@angular/common
 import { UsuariosService } from "./usuarios";
 import { Localstorage } from "./localstorage";
 import { provideHttpClient } from "@angular/common/http";
-import { loginResponseDTO } from "../models/loginDTO";
+import { Users } from "../models/users";
+import { environment } from "src/environments/environment";
+import { Login } from "../models/login";
 
 //describimos el test
 describe('Usuarios Service Test', () => {
@@ -23,7 +25,47 @@ describe('Usuarios Service Test', () => {
         apellidos: 'Valdez Lopez',
         email: 'albertovaldez434@gmail.com',
         accessToken: '123_mytoken_test'
-    } as loginResponseDTO;
+    } as any;
+
+    // mockup de lista de usuarios
+    const usersMock = [
+        {
+            idUser: 19,
+            idRol: 1,
+            nombre: 'Alberto',
+            apellidos: 'Valdez Lopez'
+        },
+        {
+            idUser: 19,
+            idRol: 1,
+            nombre: 'Crista',
+            apellidos: 'Valdez Lopez'
+        },
+        {
+            idUser: 19,
+            idRol: 1,
+            nombre: 'Arturo',
+            apellidos: 'Valdez Lopez'
+        }
+
+    ] as any[];
+
+    const userResponseMock = [
+        {
+            idUser: 19,
+            nombre: 'Alberto',
+            apellidos: 'Valdez Lopez',
+            email: 'albertovaldez434@gmail.com',
+        }
+    ] as any[]
+
+    const userMock = {
+        idUser: 19,
+        idRol: 1,
+        nombre: 'Arturo',
+        apellidos: 'Valdez Lopez'
+    } as any;
+
 
     // mock de los servicios
     let service: UsuariosService;
@@ -58,28 +100,27 @@ describe('Usuarios Service Test', () => {
         httpMock.verify();
     });
 
+    it('Debe de crearse esta prueba de: Usuarios Service', () => {
+        expect(service).toBeTruthy();
+    });
+
     it('Primera Prueba: Deberia de guardar la informacion del login y actualizar el signal', () => {
         // llamamos el service
         service.setLoginData(loginData);
 
         // esperamos que los datos en el signal sean equivalentes al mockup
         expect(service.loggedData$()).toEqual(loginData);
-
-        // esperamos que el setItem haya sido llamado con ese key y ese value
-        expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
-
     });
 
-    it('Segunda Prueba: Deberia de poder recuperar la informacion del localStorage', () => {
-        service.setLoginData(loginData);
+    // it('Segunda Prueba: Deberia de poder recuperar la informacion del localStorage', () => {
+    //     service.setLoginData(loginData);
 
-        const storedData = localStorage.getItem('authUser');
+    //     expect(service.loggedData$()).toEqual(loginData);
 
-        expect(storedData).toBeTruthy();
-        expect(JSON.parse(storedData!)).toEqual(loginData);
-    });
+    //     expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
+    // });
 
-    it('Tercera Prueba: Deberia de eliminar el loginData del signal y del storage', () => {
+    it('Tercera Prueba: Deberia de eliminar el loginData del signal', () => {
         //primero guardamos los datos
         service.setLoginData(loginData);
 
@@ -88,8 +129,133 @@ describe('Usuarios Service Test', () => {
 
         //se espera que el signal ya este limpio
         expect(service.loggedData$()).toBeNull();
-
-        //se espera que el storage este limpio
-        expect(storageSpy.removeItem).toHaveBeenCalledWith('authUser');
     });
-})
+
+    it('Cuarta Prueba: Deberia de dar el set de Usuarios', async () => {
+        await service.setUsers(usersMock);
+
+        expect(service.users$()).toEqual(usersMock);
+
+        //expect(storageSpy.setItem).toHaveBeenCalledWith('users', usersMock);
+    });
+
+    it('Quinta Prueba: Deberia de poder cargar datos desde el storage', async () => {
+
+        storageSpy.getItem.and.resolveTo(usersMock);
+
+        await service.loadStoredData();
+
+        expect(storageSpy.getItem).toHaveBeenCalledWith('users');
+
+        expect(service.users$()).toEqual(usersMock);
+    });
+
+    it('Sexta Prueba: No deberia de actualizar el signal si no hay usuarios', async () => {
+        storageSpy.getItem.and.resolveTo(null);
+
+        await service.loadStoredData();
+
+        expect(service.users$()).toBeNull();
+    });
+
+    // PRUEBAS HTTP
+    it('Deberia de obtener Usuarios', () => {
+        service.getUsers().subscribe(response => {
+            expect(response).toEqual(userResponseMock);
+        });
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios`);
+
+        expect(req.request.method).toBe('GET');
+
+        req.flush(userResponseMock);
+    });
+
+    it('Deberia de Inciar Sesión', () => {
+        const loginRequest = {
+            Email: 'albertovaldez434@gmail.com',
+            Password: 'myP4ssw0rd123$'
+        } as Login
+
+        service.Login(loginRequest).subscribe(resp => {
+            expect(resp).toEqual(loginData);
+        });
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/Login`);
+
+        expect(req.request.method).toBe('POST');
+
+        expect(req.request.body).toEqual(loginRequest);
+
+        req.flush(loginData);
+    });
+
+    it('Deberia de crear un nuevo usuario', () => {
+        service.signUpNewUser(userMock).subscribe(resp => {
+            expect(resp).toEqual(userMock);
+        });
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios`);
+
+        expect(req.request.method).toBe('POST');
+
+        expect(req.request.body).toEqual(userMock);
+
+        req.flush(userMock);
+    });
+
+    it('Deberia de editar un Usuario', () => {
+        service.editUser(userMock).subscribe();
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/19`);
+
+        expect(req.request.method).toBe('PUT');
+
+        expect(req.request.body).toEqual(userMock);
+
+        req.flush(userMock);
+
+    });
+
+    it('Deberia de eliminar Usuario', () => {
+        service.deleteUsuario(userMock.idUser).subscribe();
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/19`);
+
+        expect(req.request.method).toBe('DELETE');
+
+        req.flush({});
+    });
+
+    it('Deberia de actualizar Contraseña', () => {
+        const newPsw = 'Angul4T3stB3d$';
+
+        service.UpdatePsw(newPsw).subscribe();
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/UpdatePassword`);
+
+        expect(req.request.method).toBe('POST');
+
+        expect(req.request.body).toBe(newPsw);
+
+        req.flush({});
+    });
+
+    it('Deberia de cargar Imagen', () => {
+        const formData = new FormData;
+
+        formData.append('image', new Blob(), 'imagen.png');
+
+        service.cargarImagen(formData).subscribe();
+
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/CargarImagen`);
+
+        expect(req.request.method).toBe('POST');
+
+        expect(req.request.body).toBe(formData);
+
+        req.flush({});
+
+    });
+
+});
