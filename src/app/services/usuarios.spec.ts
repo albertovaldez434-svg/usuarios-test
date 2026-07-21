@@ -77,7 +77,7 @@ describe('Usuarios Service Test', () => {
 
     beforeEach(() => {
         // se crea el objeto spy
-        storageSpy = jasmine.createSpyObj('localStorage', [
+        storageSpy = jasmine.createSpyObj('Localstorage', [
             'setItem', 'getItem', 'clear'
         ]);
 
@@ -87,7 +87,8 @@ describe('Usuarios Service Test', () => {
             providers: [
                 UsuariosService, provideHttpClient(), provideHttpClientTesting(),
                 {
-                    provide: localStorage, useValue: storageSpy
+                    provide: Localstorage, 
+                    useValue: storageSpy
                 }]
         });
 
@@ -112,13 +113,13 @@ describe('Usuarios Service Test', () => {
         expect(service.loggedData$()).toEqual(loginData);
     });
 
-    // it('Segunda Prueba: Deberia de poder recuperar la informacion del localStorage', () => {
-    //     service.setLoginData(loginData);
+    it('Segunda Prueba: Deberia de poder recuperar la informacion del localStorage', () => {
+        service.setLoginData(loginData);
 
-    //     expect(service.loggedData$()).toEqual(loginData);
+        expect(service.loggedData$()).toEqual(loginData);
 
-    //     expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
-    // });
+        expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
+    });
 
     it('Tercera Prueba: Deberia de eliminar el loginData del signal', () => {
         //primero guardamos los datos
@@ -136,7 +137,7 @@ describe('Usuarios Service Test', () => {
 
         expect(service.users$()).toEqual(usersMock);
 
-        //expect(storageSpy.setItem).toHaveBeenCalledWith('users', usersMock);
+        expect(storageSpy.setItem).toHaveBeenCalledWith('users', usersMock);
     });
 
     it('Quinta Prueba: Deberia de poder cargar datos desde el storage', async () => {
