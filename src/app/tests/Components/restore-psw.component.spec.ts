@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CustomButtonComponent } from './custom-button.component';
+import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
 
-describe('CustomButtonComponent', () => {
-  let component: CustomButtonComponent;
-  let fixture: ComponentFixture<CustomButtonComponent>;
+describe('RestorePswComponent', () => {
+  let component: RestorePswComponent;
+  let fixture: ComponentFixture<RestorePswComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomButtonComponent ],
+      declarations: [ RestorePswComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CustomButtonComponent);
+    fixture = TestBed.createComponent(RestorePswComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

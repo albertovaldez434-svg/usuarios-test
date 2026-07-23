@@ -19,16 +19,17 @@ export class UsuariosService {
     private secureStorage: Localstorage
   ) { }
 
-  //subjects
   private users = signal<Users[] | null>(null);
   users$ = this.users.asReadonly();
 
   private TasksData = signal<UserTasks[] | null>(null);
   taskData$ = this.TasksData.asReadonly();
 
-  //test signal
   private loggedData = signal<loginResponseDTO | null>(null);
   loggedData$ = this.loggedData.asReadonly();
+
+  private demoTasks = signal<UserTasks[] | null>(null);
+  demoTasks$ = this.demoTasks.asReadonly();
 
   setLoginData(data: loginResponseDTO | null) {
     this.loggedData.set(data);
@@ -77,7 +78,12 @@ export class UsuariosService {
   getUsers() {
     const url = `${environment.URL_API}/api/Usuarios`;
 
-    return this.http.get<UsuariosResponse[]>(url);
+    return this.http.get<UsuariosResponse[]>(url).subscribe({
+      next: (usuarios) => {
+        this.clearUsers();
+        this.setUsers(usuarios);
+      }
+    });
   }
 
   Login(request: Login) {
@@ -114,6 +120,48 @@ export class UsuariosService {
     const url = `${environment.URL_API}/api/Usuarios/${idUser}`;
 
     return this.http.delete(url);
+  }
+
+  // extras
+  cargarTareasTest() {
+    const tarea1: UserTasks = {
+      id: 1,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 1',
+      status: 1,
+      idUser: 999
+    }
+    const tarea2: UserTasks = {
+      id: 2,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 2',
+      status: 1,
+      idUser: 999
+    }
+    const tarea3: UserTasks = {
+      id: 3,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 3',
+      status: 1,
+      idUser: 999
+    }
+    const tarea4: UserTasks = {
+      id: 4,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 4',
+      status: 2,
+      idUser: 999
+    }
+    const tarea5: UserTasks = {
+      id: 5,
+      title: 'Tarea 1',
+      description: 'Esta es una descripcion de la Tarea 5',
+      status: 3,
+      idUser: 999
+    }
+
+    const tasks = [tarea1, tarea2, tarea3, tarea4, tarea5];
+    this.demoTasks.set(tasks);
   }
 
 }

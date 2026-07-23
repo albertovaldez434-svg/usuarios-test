@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { UserTasks } from 'src/app/models/task';
 import { environment } from 'src/environments/environment';
 
@@ -10,11 +10,18 @@ export class TasksService {
 
   private http = inject(HttpClient);
 
+  private tasks = signal<UserTasks[] | null>(null);
+  tasks$ = this.tasks.asReadonly();
+
   cargarTareasUsuario(idUser: number) {
 
     const url = `${environment.URL_API}/api/Usuarios/GetTareas/${idUser}`;
 
-    return this.http.get<UserTasks[]>(url);
+    return this.http.get<UserTasks[]>(url).subscribe({
+      next: (tasks) => {
+        this.tasks.set(tasks);
+      }
+    });
   }
 
   actualizarTarea(tareaActualizada: UserTasks) {

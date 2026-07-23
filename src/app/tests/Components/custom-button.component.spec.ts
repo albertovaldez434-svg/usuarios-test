@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ActionModalComponent } from './action-modal.component';
+import { CustomButtonComponent } from 'src/app/components/custom-button/custom-button.component';
 
-describe('ActionModalComponent', () => {
-  let component: ActionModalComponent;
-  let fixture: ComponentFixture<ActionModalComponent>;
+describe('CustomButtonComponent', () => {
+  let component: CustomButtonComponent;
+  let fixture: ComponentFixture<CustomButtonComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActionModalComponent ],
+      declarations: [ CustomButtonComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ActionModalComponent);
+    fixture = TestBed.createComponent(CustomButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

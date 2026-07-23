@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, OnInit, ViewChild } from '@angular/core';
 import { Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Camera } from '@capacitor/camera';
@@ -38,12 +38,12 @@ export class ProfilePage implements OnInit {
       this.imgSrc = this.loggedUser.avatar;
     }
 
-    // effect(() => {
-    //   this.users = this.userService.users$();
-    //   if (this.users) {
-    //     this.findLoggedUser();
-    //   }
-    // });
+    effect(() => {
+      this.users = this.userService.users$();
+      if (this.users) {
+        this.findLoggedUser();
+      }
+    });
   }
 
   ngOnInit() {

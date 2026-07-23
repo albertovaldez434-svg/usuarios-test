@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'
 import { of } from 'rxjs';
 
-import { LoginPage } from './login.page';
+import { LoginPage } from 'src/app/auth/login/login.page';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';

@@ -301,7 +301,7 @@
         <ion-item>
           <ion-select #taskUserAssign label="Asignado" placeholder="Usuario asignado" [(ngModel)]="loggedUser!.idUser"
             (ionChange)="changeTaskUser(taskUserAssign.value)">
-            @for (user of usuarios; track user.idUser) {
+            @for (user of usuarios(); track user.idUser) {
             <ion-select-option [value]="user.idUser">{{user.nombre}} {{user.apellidos}}</ion-select-option>
             }
           </ion-select>

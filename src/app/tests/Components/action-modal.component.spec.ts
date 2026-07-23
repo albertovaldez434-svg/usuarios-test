@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RestorePswComponent } from './restore-psw.component';
+import { ActionModalComponent } from 'src/app/components/action-modal/action-modal.component';
 
-describe('RestorePswComponent', () => {
-  let component: RestorePswComponent;
-  let fixture: ComponentFixture<RestorePswComponent>;
+describe('ActionModalComponent', () => {
+  let component: ActionModalComponent;
+  let fixture: ComponentFixture<ActionModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RestorePswComponent ],
+      declarations: [ ActionModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RestorePswComponent);
+    fixture = TestBed.createComponent(ActionModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

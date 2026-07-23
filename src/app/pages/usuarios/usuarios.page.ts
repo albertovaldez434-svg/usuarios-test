@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { of } from 'rxjs';
@@ -37,6 +37,13 @@ export class UsuariosPage implements OnInit {
       Telefono: [''],
       Rol: ['']
     });
+
+    effect(() => {
+      const usersData = this.usersService.users$();
+      if (usersData) {
+        this.usuarios.set(usersData);
+      }
+    }) 
   }
 
   ngOnInit() {
@@ -182,16 +189,16 @@ export class UsuariosPage implements OnInit {
       return;
     }
 
-    this.usersService.getUsers().subscribe({
-      next: (usuarios) => {
-        this.usersService.clearUsers();
-        this.usuarios.set(usuarios);
-        this.usersService.setUsers(this.usuarios());
-      },
-      error: () => {
-        this.openModalFunc('No se pudo cargar la informacion de usuarios');
-      }
-    });
+    // this.usersService.getUsers().subscribe({
+    //   next: (usuarios) => {
+    //     this.usersService.clearUsers();
+    //     this.usuarios.set(usuarios);
+    //     this.usersService.setUsers(this.usuarios());
+    //   },
+    //   error: () => {
+    //     this.openModalFunc('No se pudo cargar la informacion de usuarios');
+    //   }
+    // });
   }
 
   signupFunc() {

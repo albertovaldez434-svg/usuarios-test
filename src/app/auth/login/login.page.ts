@@ -71,6 +71,7 @@ export class LoginPage implements OnInit {
     this.UserService.Login(loginRrquest).subscribe({
       next: (loginData) => {
         this.UserService.setLoginData(loginData);
+        this.UserService.getUsers();
         this.route.navigate(['/dashboard']);
       },
       error: (error) => {

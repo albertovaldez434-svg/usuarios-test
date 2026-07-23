@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, OnInit, signal, viewChild, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
@@ -17,15 +17,16 @@ import { TasksService } from 'src/app/services/tasks/tasks-service';
 export class DashboardPage implements OnInit {
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLElement>;
 
   toggleSearch: boolean = false;
   playSAnimation: boolean = false;
   searchValue: string = '';
   loggedUser!: loginResponseDTO | null;
-  scrollContainer!: ElementRef<HTMLElement>;
+  
   imgSrc: string = '';
   isDragging: boolean = false;
-  usuarios!: Users[] | null;
+  usuarios = signal<Users[]>([]);
 
   allTasks = signal<UserTasks[]>([]);
   todoArr = computed(() =>
@@ -68,6 +69,14 @@ export class DashboardPage implements OnInit {
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
     }
+
+    effect(() => {
+      const users = this.usuarioService.users$();
+      const tareas = this.usuarioService.taskData$();
+      
+      if (users) this.usuarios.set(users);
+      if (tareas) this.allTasks.set(tareas);
+    });
   }
 
   ngOnInit() { 
@@ -75,8 +84,8 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.cargarTareas();
-    this.obtenerUsuarios();
+    //this.cargarTareas();
+    // this.obtenerUsuarios();
   }
 
   ionViewWillLeave() {
@@ -118,78 +127,17 @@ export class DashboardPage implements OnInit {
     (await modal).present();
   }
 
-  obtenerUsuarios = () => {
-
-    this.usuarioService.getUsers().subscribe({
-      next: (usuarios) => {
-        this.usuarioService.clearUsers();
-        this.usuarios = usuarios;
-        this.usuarioService.setUsers(this.usuarios);
-      },
-      error: (error) => {
-        console.log(error);
-        //this.openModalFunc('No se pudo cargar la informacion de usuarios');
-      }
-    });
-  }
-
-  cargarTareasTest() {
-    const tarea1: UserTasks = {
-      id: 1,
-      title: 'Tarea 1',
-      description: 'Esta es una descripcion de la Tarea 1',
-      status: 1,
-      idUser: 999
-    }
-    const tarea2: UserTasks = {
-      id: 2,
-      title: 'Tarea 1',
-      description: 'Esta es una descripcion de la Tarea 2',
-      status: 1,
-      idUser: 999
-    }
-    const tarea3: UserTasks = {
-      id: 3,
-      title: 'Tarea 1',
-      description: 'Esta es una descripcion de la Tarea 3',
-      status: 1,
-      idUser: 999
-    }
-    const tarea4: UserTasks = {
-      id: 4,
-      title: 'Tarea 1',
-      description: 'Esta es una descripcion de la Tarea 4',
-      status: 2,
-      idUser: 999
-    }
-    const tarea5: UserTasks = {
-      id: 5,
-      title: 'Tarea 1',
-      description: 'Esta es una descripcion de la Tarea 5',
-      status: 3,
-      idUser: 999
-    }
-
-    const tasks = [tarea1, tarea2, tarea3, tarea4, tarea5];
-    this.allTasks.set(tasks);
-  }
-
   cargarTareas() {
     const IdUser = this.usuarioService.loggedData$()?.idUser;
 
     if (IdUser) {
       if (IdUser == 999) {
-        this.cargarTareasTest();
+        this.usuarioService.cargarTareasTest();
+        const demoData = this.usuarioService.demoTasks$();
+        if (!demoData) return;
+        this.allTasks.set(demoData);
       } else {
-        this.tareasService.cargarTareasUsuario(IdUser).subscribe({
-          next: (tasks) => {
-            this.allTasks.set(tasks);
-          },
-          error: (err) => {
-            //this.openModalFunc('Error al cargar las tareas');
-            console.log(err);
-          }
-        });
+        this.tareasService.cargarTareasUsuario(IdUser);
       }
     }
   }

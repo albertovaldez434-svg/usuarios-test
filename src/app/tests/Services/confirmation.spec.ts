@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TasksService } from './tasks-service';
+import { Confirmation } from 'src/app/services/helpers/confirmation';
 
-describe('TasksService', () => {
-  let service: TasksService;
+describe('Confirmation', () => {
+  let service: Confirmation;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TasksService);
+    service = TestBed.inject(Confirmation);
   });
 
   it('should be created', () => {
