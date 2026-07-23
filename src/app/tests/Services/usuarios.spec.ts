@@ -159,15 +159,19 @@ describe('Usuarios Service Test', () => {
     });
 
     // PRUEBAS HTTP
-    // it('Deberia de obtener Usuarios', () => {
-    //     service.getUsers().subscribe(response => { expect(response).toEqual(userResponseMock); });
+    it('Deberia de obtener Usuarios', () => {
+        service.getUsers();
 
-    //     const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios`);
+        const response = service.users$();
+            
+        expect(response).toEqual(userResponseMock);
 
-    //     expect(req.request.method).toBe('GET');
+        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios`);
 
-    //     req.flush(userResponseMock);
-    // });
+        expect(req.request.method).toBe('GET');
+
+        req.flush(userResponseMock);
+    });
 
     it('Deberia de Inciar Sesión', () => {
         const loginRequest = {
