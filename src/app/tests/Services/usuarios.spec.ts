@@ -9,7 +9,7 @@ import { TestBed } from "@angular/core/testing";
 import { provideHttpClientTesting, HttpTestingController } from "@angular/common/http/testing"
 import { provideHttpClient } from "@angular/common/http";
 import { Login } from "src/app/models/login";
-import { Localstorage } from "src/app/services/localstorage";
+import { SecureStorageService } from "src/app/services/securestorage-service";
 import { UsuariosService } from "src/app/services/usuarios";
 import { environment } from "src/environments/environment";
 
@@ -72,11 +72,11 @@ describe('Usuarios Service Test', () => {
 
     // spy/mockup del servicio del localstorage para no usar el real
     // ya que tendra su propio testing
-    let storageSpy: jasmine.SpyObj<Localstorage>;
+    let storageSpy: jasmine.SpyObj<SecureStorageService>;
 
     beforeEach(() => {
         // se crea el objeto spy
-        storageSpy = jasmine.createSpyObj('Localstorage', [
+        storageSpy = jasmine.createSpyObj('SecureStorageService', [
             'setItem', 'getItem', 'clear'
         ]);
 
@@ -86,7 +86,7 @@ describe('Usuarios Service Test', () => {
             providers: [
                 UsuariosService, provideHttpClient(), provideHttpClientTesting(),
                 {
-                    provide: Localstorage,
+                    provide: SecureStorageService,
                     useValue: storageSpy
                 }]
         });

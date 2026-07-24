@@ -1,17 +1,17 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { UsuariosService } from './services/usuarios';
-import { Localstorage } from './services/localstorage';
-import { filter, map, take } from 'rxjs';
+import { SecureStorageService } from './services/securestorage-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 export const usersGuard: CanActivateFn = (route, state) => {
 
   const authService = inject(UsuariosService);
-  const secureSService = inject(Localstorage)
+  const secureSService = inject(SecureStorageService)
   const router = inject(Router);
   const jwtHelper = new JwtHelperService;
 
+  console.log(authService.loggedData$());
   const requiredRole = route.data['idRol'];
   const token = authService.loggedData$()?.accessToken;
   const user = authService.loggedData$();

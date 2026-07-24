@@ -9,6 +9,8 @@ import { RegisterFormComponent } from 'src/app/components/register-form/register
 import { AuthUser, Users } from 'src/app/models/users';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
 import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
+import { TasksService } from 'src/app/services/tasks/tasks-service';
+import { forkJoin, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +26,7 @@ export class LoginPage implements OnInit {
   constructor(
     private builder: FormBuilder,
     private UserService: UsuariosService,
+    private TasksService: TasksService,
     private route: Router,
     private modalCtrl: ModalController
   ) {
@@ -68,18 +71,19 @@ export class LoginPage implements OnInit {
       Password: Password
     };
 
-    this.UserService.Login(loginRrquest).subscribe({
-      next: (loginData) => {
-        this.UserService.setLoginData(loginData);
-        this.UserService.getUsers();
+    this.UserService.Login(loginRrquest).pipe(
+      switchMap(user =>
+        forkJoin({
+          users: this.UserService.getUsers(),
+          tasks: this.TasksService.cargarTareasUsuario(user.idUser)
+        })
+      )
+    ).subscribe({
+      next: () => {
+        console.log(this.UserService.loggedData$());
         this.route.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        console.log(error);
-        //this.openModalFunc('Error al iniciar sesión, por favor intente nuevamente');
       }
     });
-
   }
 
   async registerFunction() {

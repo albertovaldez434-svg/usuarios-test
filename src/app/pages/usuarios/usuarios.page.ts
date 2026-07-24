@@ -83,108 +83,11 @@ export class UsuariosPage implements OnInit {
     (await modal).present();
   }
 
-  obtenerUsuariosTest() {
-    const usersList: Users[] = [
-      {
-        idUser: 3,
-        nombre: "Carlos",
-        apellidos: "Ramírez López",
-        email: "carlos.ramirez@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Carlos123!"
-      },
-      {
-        idUser: 4,
-        nombre: "María",
-        apellidos: "González Torres",
-        email: "maria.gonzalez@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Maria123!"
-      },
-      {
-        idUser: 5,
-        nombre: "Luis",
-        apellidos: "Fernández Ruiz",
-        email: "luis.fernandez@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Luis123!"
-      },
-      {
-        idUser: 6,
-        nombre: "Ana",
-        apellidos: "Martínez Vega",
-        email: "ana.martinez@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Ana123!"
-      },
-      {
-        idUser: 7,
-        nombre: "Jorge",
-        apellidos: "Hernández Castro",
-        email: "jorge.hernandez@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Jorge123!"
-      },
-      {
-        idUser: 8,
-        nombre: "Fernanda",
-        apellidos: "Soto Navarro",
-        email: "fernanda.soto@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Fer123!"
-      },
-      {
-        idUser: 9,
-        nombre: "Ricardo",
-        apellidos: "Morales Díaz",
-        email: "ricardo.morales@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Ricardo123!"
-      },
-      {
-        idUser: 10,
-        nombre: "Daniela",
-        apellidos: "Pérez Silva",
-        email: "daniela.perez@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Dani123!"
-      },
-      {
-        idUser: 11,
-        nombre: "Miguel",
-        apellidos: "Ortega Reyes",
-        email: "miguel.ortega@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Miguel123!"
-      },
-      {
-        idUser: 12,
-        nombre: "Sofía",
-        apellidos: "Cruz Mendoza",
-        email: "sofia.cruz@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Sofia123!"
-      }
-    ];
-
-    this.usuarios.set(usersList);
-  }
-
   obtenerUsuarios = () => {
 
     if (this.usersService.loggedData$()?.idUser === 999) {
       this.usersService.clearUsers();
-      this.obtenerUsuariosTest();
+      this.usersService.obtenerUsuariosTest();
       this.usersService.setUsers(this.usuarios());
       return;
     }

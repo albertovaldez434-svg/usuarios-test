@@ -7,7 +7,7 @@ import { LoginPage } from 'src/app/auth/login/login.page';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { Localstorage } from 'src/app/services/localstorage';
+import { Localstorage } from 'src/app/services/securestorage-service';
 import { AuthUser } from 'src/app/models/users';
 
 // describe('nombre_de_prueba')

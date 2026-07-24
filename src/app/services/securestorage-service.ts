@@ -4,7 +4,7 @@ import { Crypto } from './crypto';
 @Injectable({
   providedIn: 'root',
 })
-export class Localstorage {
+export class SecureStorageService {
   private passWord = 'mypasswordtest';
 
   constructor(

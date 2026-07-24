@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { from, Observable, switchMap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
-import { Localstorage } from '../services/localstorage';
+import { SecureStorageService } from '../services/securestorage-service';
 import { loginResponseDTO } from '../models/loginDTO';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private jwtHelper = new JwtHelperService;
 
   constructor(
-    private secureStorage: Localstorage
+    private secureStorage: SecureStorageService
   ) { }
 
   checkTokenExpired(tokenString: string): boolean {

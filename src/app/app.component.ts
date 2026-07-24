@@ -1,7 +1,7 @@
 import { Component, effect, OnInit } from '@angular/core';
 import { UsuariosService } from './services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
-import { Localstorage } from './services/localstorage';
+import { SecureStorageService } from './services/securestorage-service';
 import { AuthUser } from './models/users';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   constructor(
     private userService: UsuariosService,
     private route: Router,
-    private secureStorage: Localstorage
+    private secureStorage: SecureStorageService
   ) {
     effect(() => {
       const user = this.userService.loggedData$();

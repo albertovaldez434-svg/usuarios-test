@@ -23,7 +23,7 @@ export class DashboardPage implements OnInit {
   playSAnimation: boolean = false;
   searchValue: string = '';
   loggedUser!: loginResponseDTO | null;
-  
+
   imgSrc: string = '';
   isDragging: boolean = false;
   usuarios = signal<Users[]>([]);
@@ -70,27 +70,29 @@ export class DashboardPage implements OnInit {
       this.imgSrc = this.loggedUser.avatar;
     }
 
+    const tareas = this.tareasService.tasks$();
+    if (tareas) this.allTasks.set(tareas);
+
     effect(() => {
       const users = this.usuarioService.users$();
-      const tareas = this.usuarioService.taskData$();
-      
+      const tareas = this.tareasService.tasks$();
+
       if (users) this.usuarios.set(users);
       if (tareas) this.allTasks.set(tareas);
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     //console.log('deberia de ejecutarse 1 vez');
   }
 
-  ionViewDidEnter() {
-    //this.cargarTareas();
-    // this.obtenerUsuarios();
-  }
+  // ionViewDidEnter() {
 
-  ionViewWillLeave() {
-    //this.usersSub.unsubscribe();
-  }
+  // }
+
+  // ionViewWillLeave() {
+
+  // }
 
   setSearchToggle() {
     if (!this.toggleSearch) {
@@ -106,7 +108,6 @@ export class DashboardPage implements OnInit {
 
   handleRefresh(event: RefresherCustomEvent) {
     setTimeout(() => {
-      //alert('hi');
       // Any calls to load data go here
       this.cargarTareas();
       event.target.complete();
@@ -132,12 +133,16 @@ export class DashboardPage implements OnInit {
 
     if (IdUser) {
       if (IdUser == 999) {
-        this.usuarioService.cargarTareasTest();
+        this.tareasService.cargarTareasTest();
         const demoData = this.usuarioService.demoTasks$();
         if (!demoData) return;
         this.allTasks.set(demoData);
       } else {
-        this.tareasService.cargarTareasUsuario(IdUser);
+        this.tareasService.cargarTareasUsuario(IdUser).subscribe({
+          next: (data) => {
+            this.allTasks.set(data);
+          }
+        });
       }
     }
   }
@@ -265,7 +270,7 @@ export class DashboardPage implements OnInit {
         break;
     }
   }
-  
+
   changeTaskUser(idUser: number) {
     console.log(idUser);
   }
