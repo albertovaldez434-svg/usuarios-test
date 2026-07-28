@@ -1,17 +1,15 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { from, Observable, switchMap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { SecureStorageService } from '../services/securestorage-service';
 import { loginResponseDTO } from '../models/loginDTO';
+import { UsuariosService } from '../services/usuarios';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private jwtHelper = new JwtHelperService;
-
-  constructor(
-    private secureStorage: SecureStorageService
-  ) { }
+  private UsuarioService = inject(UsuariosService);
 
   checkTokenExpired(tokenString: string): boolean {
     return this.jwtHelper.isTokenExpired(tokenString);
@@ -19,44 +17,40 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return from(this.secureStorage.getItem<loginResponseDTO>('authUser')).pipe(
-      switchMap((dataLogin) => {
+    const user = this.UsuarioService.loggedData$();
 
-        if (dataLogin?.accessToken) {
-          const tokenExp = this.checkTokenExpired(dataLogin.accessToken);
+    if (!user?.accessToken) {
+      return next.handle(req);
+    }
 
-          if (tokenExp) {
-            console.log('token expirado');
-            localStorage.removeItem('authUser');
-            return next.handle(req);
-          }
+    const tokenExp = this.checkTokenExpired(user.accessToken);
 
-          // SI ES FORMDATA -> NO TOCAR CONTENT-TYPE
-          if (req.body instanceof FormData) {
+    if (tokenExp) {
+      // console.log('token expirado');
+      localStorage.removeItem('authUser');
+      return next.handle(req);
+    }
 
-            const formDataReq = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${dataLogin.accessToken}`,
-              }
-            });
+    const token = user.accessToken;
 
-            return next.handle(formDataReq);
-          }
-
-          const clonedReq = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${dataLogin.accessToken}`,
-              'Content-Type': 'application/json'
-            }
-          });
-
-
-          return next.handle(clonedReq);
+    if (req.body instanceof FormData) {
+      const formDataReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
         }
+      });
 
-        return next.handle(req);
-      })
-    );
+      return next.handle(formDataReq);
+    }
+
+    const request = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    return next.handle(request);
   }
 
 
