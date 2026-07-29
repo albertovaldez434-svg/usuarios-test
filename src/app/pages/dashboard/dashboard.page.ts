@@ -134,7 +134,7 @@ export class DashboardPage implements OnInit {
     if (IdUser) {
       if (IdUser == 999) {
         this.tareasService.cargarTareasTest();
-        const demoData = this.usuarioService.demoTasks$();
+        const demoData = this.tareasService.tasks$();
         if (!demoData) return;
         this.allTasks.set(demoData);
       } else {
