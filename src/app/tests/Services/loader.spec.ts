@@ -1,35 +1,31 @@
 /// <reference types="jasmine" />
 
-import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { fakeAsync, flushMicrotasks, TestBed, tick } from "@angular/core/testing";
 import { LoaderService } from "src/app/services/loader"
 import { LoadingController } from "@ionic/angular";
 import { inject } from "@angular/core";
 
 describe('Loader Test', () => {
-    let loadingElementSpy: jasmine.SpyObj<HTMLIonLoadingElement>;
+    let loadingElementSpy = jasmine.createSpyObj<HTMLIonLoadingElement>(
+        'HTMLIonLoadingElement',
+        [
+            'present',
+            'dismiss'
+        ]
+    );
 
-    let loaderControllerSpy: jasmine.SpyObj<LoadingController>;
+    let loaderControllerSpy = jasmine.createSpyObj<LoadingController>(
+        'LoadingController',
+        [
+            'create'
+        ]
+    );
 
     let loaderService: LoaderService;
 
+    loaderControllerSpy.create.and.resolveTo(loadingElementSpy);
+
     beforeEach(() => {
-        loaderControllerSpy = jasmine.createSpyObj<LoadingController>(
-            'LoadingController',
-            [
-                'create'
-            ]
-        );
-
-        loadingElementSpy = jasmine.createSpyObj<HTMLIonLoadingElement>(
-            'HTMLIonLoadingElement',
-            [
-                'present',
-                'dismiss'
-            ]
-        );
-
-        loaderControllerSpy.create.and.resolveTo(loadingElementSpy);
-
         TestBed.configureTestingModule({
             providers: [
                 LoaderService,
@@ -60,6 +56,8 @@ describe('Loader Test', () => {
 
         tick(300);
 
+        flushMicrotasks();
+
         expect(loadingElementSpy.present).toHaveBeenCalled();
     }));
 
@@ -68,11 +66,15 @@ describe('Loader Test', () => {
 
         tick(300);
 
+        flushMicrotasks();
+
         expect(loadingElementSpy.present).toHaveBeenCalled();
 
         loaderService.hide();
 
         tick(100);
+
+        flushMicrotasks();
 
         expect(loadingElementSpy.dismiss).toHaveBeenCalled();
     }));
