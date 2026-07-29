@@ -1,11 +1,10 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, from, map, switchMap, tap } from 'rxjs';
+import { from, map, switchMap, tap } from 'rxjs';
 import { Users, UsuariosResponse } from '../models/users';
 import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
 import { SecureStorageService } from './securestorage-service';
-import { UserTasks } from '../models/task';
 import { ImagenesUsuarios } from '../models/imagenesusuario';
 import { loginResponseDTO } from '../models/loginDTO';
 
@@ -24,9 +23,6 @@ export class UsuariosService {
 
   private loggedData = signal<loginResponseDTO | null>(null);
   loggedData$ = this.loggedData.asReadonly();
-
-  private demoTasks = signal<UserTasks[] | null>(null);
-  demoTasks$ = this.demoTasks.asReadonly();
 
   async setLoginData(data: loginResponseDTO | null) {
     this.loggedData.set(data);
@@ -99,7 +95,7 @@ export class UsuariosService {
   UpdatePsw(psw: string) {
     const url = `${environment.URL_API}/api/Usuarios/UpdatePassword`;
 
-    return this.http.post<UserTasks>(url, psw);
+    return this.http.post(url, psw);
   }
 
   editUser(user: Users) {

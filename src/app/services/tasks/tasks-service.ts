@@ -43,6 +43,12 @@ export class TasksService {
     return this.http.post<UserTasks>(url, task);
   }
 
+  eliminaTarea(idTarea: number) {
+    const url = `${environment.URL_API}/api/Tasks/DeleteTarea/${idTarea}`
+
+    return this.http.delete(url);
+  }
+
   cargarTareasTest() {
     const tarea1: UserTasks = {
       id: 1,

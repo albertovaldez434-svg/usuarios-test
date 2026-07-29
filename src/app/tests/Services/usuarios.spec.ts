@@ -15,7 +15,7 @@ import { environment } from "src/environments/environment";
 
 
 //describimos el test
-describe('Usuarios Service Test', () => {
+describe('UsuariosService Test', () => {
 
     //mockup objeto login
     const loginData = {
@@ -160,17 +160,15 @@ describe('Usuarios Service Test', () => {
 
     // PRUEBAS HTTP
     it('Deberia de obtener Usuarios', () => {
-        service.getUsers();
-
-        const response = service.users$();
-            
-        expect(response).toEqual(userResponseMock);
+        service.getUsers().subscribe();
 
         const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios`);
 
         expect(req.request.method).toBe('GET');
 
         req.flush(userResponseMock);
+            
+        expect(service.users$()).toEqual(userResponseMock);
     });
 
     it('Deberia de Inciar Sesión', () => {
