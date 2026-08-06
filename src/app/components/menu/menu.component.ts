@@ -51,6 +51,7 @@ export class MenuComponent implements OnInit {
 
   async logout() {
     this.usuarioService.closeSesion();
+    this.ConfirmationService.setConfirmed(false);
     this.route.navigate(['/login']);
   }
 

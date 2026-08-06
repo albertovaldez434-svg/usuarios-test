@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
 import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
 import { Users } from 'src/app/models/users';
+import { Confirmation } from 'src/app/services/helpers/confirmation';
 import { UsuariosService } from 'src/app/services/usuarios';
 
 @Component({
@@ -24,11 +25,13 @@ export class UsuariosPage implements OnInit {
 
   signupForm: FormGroup;
   searchValue = signal('');
+  idUserSignal = signal<number>(0);
 
   constructor(
     private usersService: UsuariosService,
     private modalCtrl: ModalController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private confirmationService: Confirmation
   ) {
     this.signupForm = this.formBuilder.group({
       Nombre: [''],
@@ -40,10 +43,16 @@ export class UsuariosPage implements OnInit {
 
     effect(() => {
       const usersData = this.usersService.users$();
+      const result = this.confirmationService.confirmed();
+
       if (usersData) {
         this.usuarios.set(usersData);
       }
-    }) 
+
+      if (result === true) {
+        this.EliminarUsuario(this.idUserSignal());
+      }
+    })
   }
 
   ngOnInit() {
@@ -207,7 +216,13 @@ export class UsuariosPage implements OnInit {
 
   }
 
+  ElimiarUsrEvent(idUser: number) {
+    this.idUserSignal.set(idUser);
+    this.confirmationService.openConfirmationSheet('Eliminar Usuario', 'Va a eliminar a este usuarios, ¿Desea continuar?');
+  }
+
   EliminarUsuario(idUser: number) {
+
     if (this.usersService.loggedData$()?.idRol === 999) {
       this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
       //this.usersService.setUsers(this.usuarios);
@@ -220,6 +235,8 @@ export class UsuariosPage implements OnInit {
         this.openModalFunc('Usuario eliminado');
         this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
         //this.usersService.setUsers(this.usuarios);
+        this.idUserSignal.set(0);
+        this.confirmationService.setConfirmed(false);
       },
       error: (error) => {
         console.log(error);
