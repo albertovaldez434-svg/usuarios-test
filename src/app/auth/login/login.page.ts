@@ -80,7 +80,7 @@ export class LoginPage implements OnInit {
       )
     ).subscribe({
       next: () => {
-        console.log(this.UserService.loggedData$());
+        //console.log(this.UserService.loggedData$());
         this.route.navigate(['/dashboard']);
       }
     });

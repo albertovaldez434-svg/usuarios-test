@@ -11,14 +11,15 @@ export class Confirmation {
 
   confirmed = signal<boolean | null>(null);
 
-  async openConfirmationSheet(title: string, message: string) {
+  async openConfirmationSheet(title: string, message: string, message2?: string) {
     const actionSheet = await this.ModalCtrl.create({
       component: ActionModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
       initialBreakpoint: 0.5,
       componentProps: {
         title: title,
-        msj: message
+        msj: message,
+        msj2: message2
       },
     });
 

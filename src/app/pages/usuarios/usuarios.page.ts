@@ -26,6 +26,9 @@ export class UsuariosPage implements OnInit {
   signupForm: FormGroup;
   searchValue = signal('');
   idUserSignal = signal<number>(0);
+  selectedUser = computed<Users | undefined>(() => 
+    this.usuarios().find(usr => usr.idUser == this.idUserSignal())
+  );
 
   constructor(
     private usersService: UsuariosService,
@@ -60,10 +63,10 @@ export class UsuariosPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    if (!this.loaded) {
-      this.obtenerUsuarios();
-      this.loaded = true;
-    }
+    // if (!this.loaded) {
+    //   this.obtenerUsuarios();
+    //   this.loaded = true;
+    // }
 
   }
 
@@ -101,16 +104,16 @@ export class UsuariosPage implements OnInit {
       return;
     }
 
-    // this.usersService.getUsers().subscribe({
-    //   next: (usuarios) => {
-    //     this.usersService.clearUsers();
-    //     this.usuarios.set(usuarios);
-    //     this.usersService.setUsers(this.usuarios());
-    //   },
-    //   error: () => {
-    //     this.openModalFunc('No se pudo cargar la informacion de usuarios');
-    //   }
-    // });
+    this.usersService.getUsers().subscribe({
+      next: (usuarios) => {
+        this.usersService.clearUsers();
+        this.usuarios.set(usuarios);
+        this.usersService.setUsers(this.usuarios());
+      },
+      error: () => {
+        this.openModalFunc('No se pudo cargar la informacion de usuarios');
+      }
+    });
   }
 
   signupFunc() {
@@ -195,7 +198,7 @@ export class UsuariosPage implements OnInit {
 
     if (this.usersService.loggedData$()?.idRol == 999) {
       this.usersService.setUsers(this.usuarios());
-      console.log(this.usuarios());
+      //console.log(this.usuarios());
       this.modalSignUp.dismiss();
       this.openModalFunc('Usuario registrado exitosamente');
       this.signupForm.reset();
@@ -218,7 +221,13 @@ export class UsuariosPage implements OnInit {
 
   ElimiarUsrEvent(idUser: number) {
     this.idUserSignal.set(idUser);
-    this.confirmationService.openConfirmationSheet('Eliminar Usuario', 'Va a eliminar a este usuarios, ¿Desea continuar?');
+    const data = this.selectedUser();
+    if (!data) {
+      this.openModalFunc('No se selecciono un usuario.');
+      return;
+    }
+    this.confirmationService.openConfirmationSheet('Eliminar Usuario', 'Va a eliminar a este usuario, ¿Desea continuar?',
+      '' + data?.nombre + ' ' + data.apellidos);
   }
 
   EliminarUsuario(idUser: number) {

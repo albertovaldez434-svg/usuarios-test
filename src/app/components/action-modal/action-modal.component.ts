@@ -12,6 +12,7 @@ import { Confirmation } from 'src/app/services/helpers/confirmation';
 export class ActionModalComponent {
   @Input() title: string = '';
   @Input() msj: string = '';
+  @Input() msj2?: string | undefined;
 
   private ModalCtrl = inject(ModalController);
   private confirmationService = inject(Confirmation);
