@@ -1,5 +1,19 @@
-import { Component, computed, effect, ElementRef, OnInit, signal, viewChild, ViewChild } from '@angular/core';
-import { CdkDragDrop, CdkDragEnter, CdkDragMove, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  OnInit,
+  signal,
+  ViewChild
+} from '@angular/core';
+
+import {
+  CdkDragDrop,
+  CdkDragEnter,
+  CdkDragMove
+} from '@angular/cdk/drag-drop';
+
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
@@ -15,106 +29,133 @@ import { TasksService } from 'src/app/services/tasks/tasks-service';
   standalone: false
 })
 export class DashboardPage implements OnInit {
+
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLElement>;
+  @ViewChild('scrollContainer')
+  scrollContainer!: ElementRef<HTMLElement>;
 
-  toggleSearch: boolean = false;
-  playSAnimation: boolean = false;
-  searchValue: string = '';
+  toggleSearch = false;
+  playSAnimation = false;
+  searchValue = '';
+
   loggedUser!: loginResponseDTO | null;
 
-  imgSrc: string = '';
-  isDragging: boolean = false;
+  imgSrc = '';
+  isDragging = false;
+
   usuarios = signal<Users[]>([]);
-
   allTasks = signal<UserTasks[]>([]);
+
+  /*
+   * Las listas se generan a partir de allTasks.
+   * No debemos modificar directamente estos arrays.
+   */
   todoArr = computed(() =>
-    this.allTasks().filter(task => task.status === 1)
-  );
-  doingArr = computed(() =>
-    this.allTasks().filter(task => task.status === 2)
-  );
-  doneArr = computed(() =>
-    this.allTasks().filter(task => task.status === 3)
+    this.allTasks().filter(task => Number(task.status) === 1)
   );
 
-  private edgeThreshold = 120;
-  private maxScrollSpeed = 40;
+  doingArr = computed(() =>
+    this.allTasks().filter(task => Number(task.status) === 2)
+  );
+
+  doneArr = computed(() =>
+    this.allTasks().filter(task => Number(task.status) === 3)
+  );
+
+  /*
+   * Distancia desde el borde para activar el auto-scroll.
+   */
+  private readonly edgeThreshold = 100;
+
+  /*
+   * Evita que se disparen varios scrolls mientras
+   * el navegador todavía está realizando el anterior.
+   */
+  private autoScrollCooldown = false;
 
   selectedTask = signal<UserTasks | null>(null);
   editableTask = signal<UserTasks | null>(null);
   editableTaskPrevValue = signal<UserTasks | null>(null);
 
-  titleKeyActive: boolean = false;
-  descKeyActive: boolean = false;
+  titleKeyActive = false;
+  descKeyActive = false;
 
-  newTaskTitle: string = '';
-  newTaskDesc: string = '';
-  newTaskStatus: number = 0;
-
-  //usersSub!: Subscription;
+  newTaskTitle = '';
+  newTaskDesc = '';
+  newTaskStatus = 0;
 
   constructor(
     private usuarioService: UsuariosService,
     private tareasService: TasksService,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {
+
     const imgData = localStorage.getItem('myImage');
+
     if (imgData) {
       this.imgSrc = imgData;
     }
 
     this.loggedUser = this.usuarioService.loggedData$();
+
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
     }
 
     const tareas = this.tareasService.tasks$();
-    if (tareas) this.allTasks.set(tareas);
+
+    if (tareas) {
+      this.allTasks.set(tareas);
+    }
 
     effect(() => {
       const users = this.usuarioService.users$();
       const tareas = this.tareasService.tasks$();
 
-      if (users) this.usuarios.set(users);
-      if (tareas) this.allTasks.set(tareas);
+      if (users) {
+        this.usuarios.set(users);
+      }
+
+      if (tareas) {
+        this.allTasks.set(tareas);
+      }
     });
   }
 
   ngOnInit() {
-    //console.log('deberia de ejecutarse 1 vez');
   }
 
-  // ionViewDidEnter() {
-
-  // }
-
-  // ionViewWillLeave() {
-
-  // }
-
   setSearchToggle() {
+
     if (!this.toggleSearch) {
-      this.toggleSearch = true
+
+      this.toggleSearch = true;
       this.playSAnimation = true;
+
     } else {
+
       this.playSAnimation = false;
+
       setTimeout(() => {
-        this.toggleSearch = false
+        this.toggleSearch = false;
       }, 300);
     }
   }
 
   handleRefresh(event: RefresherCustomEvent) {
+
     setTimeout(() => {
-      // Any calls to load data go here
+
       this.cargarTareas();
+
       event.target.complete();
+
     }, 2000);
   }
 
   async openModalFunc(mensaje: string) {
+
     const modal = this.modalCtrl.create({
       component: IonModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
@@ -129,161 +170,401 @@ export class DashboardPage implements OnInit {
   }
 
   cargarTareas() {
+
     const IdUser = this.usuarioService.loggedData$()?.idUser;
 
-    if (IdUser) {
-      if (IdUser == 999) {
-        this.tareasService.cargarTareasTest();
-        const demoData = this.tareasService.tasks$();
-        if (!demoData) return;
-        this.allTasks.set(demoData);
-      } else {
-        this.tareasService.cargarTareasUsuario(IdUser).subscribe({
-          next: (data) => {
-            this.allTasks.set(data);
-          }
-        });
-      }
+    if (!IdUser) {
+      return;
     }
+
+    if (IdUser === 999) {
+
+      this.tareasService.cargarTareasTest();
+
+      const demoData = this.tareasService.tasks$();
+
+      if (!demoData) {
+        return;
+      }
+
+      this.allTasks.set(demoData);
+
+      return;
+    }
+
+    this.tareasService.cargarTareasUsuario(IdUser).subscribe({
+      next: (data) => {
+        this.allTasks.set(data);
+      }
+    });
   }
 
+  /*
+   * ============================================================
+   * DRAG & DROP
+   * ============================================================
+   */
+
   drop(event: CdkDragDrop<UserTasks[]>) {
+
     document.body.classList.remove('grabbing');
 
-    const selectedTask: UserTasks = event.item.data;
-    const targetListId = event.container.id;
+    const task = event.item.data as UserTasks;
 
+    /*
+     * Si se soltó dentro de la misma lista no necesitamos
+     * cambiar el status.
+     *
+     * Actualmente tu modelo UserTasks no tiene una propiedad
+     * de orden, por lo que no podemos persistir un orden
+     * personalizado en backend.
+     */
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
 
-      this.updateTaskStatus(selectedTask, targetListId);
+      this.isDragging = false;
+
+      return;
     }
+
+    const newStatus = this.getStatusFromListId(event.container.id);
+
+    if (newStatus === null) {
+
+      this.isDragging = false;
+
+      return;
+    }
+
+    /*
+     * Actualizamos la fuente REAL de datos.
+     *
+     * NO hacemos transferArrayItem() porque todoArr(),
+     * doingArr() y doneArr() son resultados de computed().
+     */
+    this.allTasks.update(tasks =>
+      tasks.map(currentTask =>
+        currentTask.id === task.id
+          ? {
+            ...currentTask,
+            status: newStatus
+          }
+          : currentTask
+      )
+    );
+
+    /*
+     * Actualizamos también el objeto que se envía al backend.
+     */
+    const updatedTask: UserTasks = {
+      ...task,
+      status: newStatus
+    };
+
+    this.updateTaskStatus(updatedTask);
 
     this.isDragging = false;
   }
 
+  /*
+   * Detecta cuando el cursor se acerca a los extremos
+   * izquierdo o derecho del Kanban.
+   */
   onDragMoved(event: CdkDragMove) {
+
     this.isDragging = true;
+
     document.body.classList.add('grabbing');
-    const container = this.scrollContainer.nativeElement;
+
+    const container = this.scrollContainer?.nativeElement;
+
+    if (!container) {
+      return;
+    }
+
     const rect = container.getBoundingClientRect();
+
     const pointerX = event.pointerPosition.x;
 
-    let scrollAmount = 0;
+    const distanceFromLeft = pointerX - rect.left;
+    const distanceFromRight = rect.right - pointerX;
 
-    // izquierda
-    const leftDistance = pointerX - rect.left;
-    if (leftDistance < this.edgeThreshold) {
-      scrollAmount = -this.calculateSpeed(leftDistance);
+    /*
+     * Borde izquierdo
+     */
+    if (distanceFromLeft <= this.edgeThreshold) {
+
+      this.scrollToAdjacentList(-1);
+
+      return;
     }
 
-    // derecha
-    const rightDistance = rect.right - pointerX;
-    if (rightDistance < this.edgeThreshold) {
-      scrollAmount = this.calculateSpeed(rightDistance);
+    /*
+     * Borde derecho
+     */
+    if (distanceFromRight <= this.edgeThreshold) {
+
+      this.scrollToAdjacentList(1);
+
+      return;
+    }
+  }
+
+  /*
+   * direction:
+   *
+   * -1 = columna anterior
+   *  1 = columna siguiente
+   */
+  private scrollToAdjacentList(direction: -1 | 1) {
+
+    if (this.autoScrollCooldown) {
+      return;
     }
 
-    container.scrollLeft += scrollAmount;
-  }
+    const container = this.scrollContainer?.nativeElement;
 
-  private calculateSpeed(distance: number): number {
-    const ratio = (this.edgeThreshold - distance) / this.edgeThreshold;
-    return ratio * this.maxScrollSpeed;
-  }
-
-  onListEntered(event: CdkDragEnter<any>) {
-    const element = event.container.element.nativeElement;
-
-    element.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-      block: 'nearest'
-    });
-  }
-
-  updateTaskStatus(Task: UserTasks, newListId: string) {
-
-    switch (newListId) {
-      case 'todo':
-        Task.status = 1;
-        break;
-      case 'doing':
-        Task.status = 2;
-        break;
-      case 'done':
-        Task.status = 3;
-        break;
+    if (!container) {
+      return;
     }
 
-    this.tareasService.actualizarTarea(Task).subscribe({
-      next: () => {
-        this.openModalFunc('Tarea actualizada correctamente');
-      },
-      error: (err) => {
-        //console.error('Error al actualizar la tarea:', err);
-        this.openModalFunc('Error al actualizar la tarea');
+    const lists = Array.from(
+      container.querySelectorAll<HTMLElement>('.myDropList')
+    );
+
+    if (lists.length === 0) {
+      return;
+    }
+
+    /*
+     * Encontramos la columna que actualmente está más cerca
+     * del inicio visible del container.
+     */
+    const currentScrollLeft = container.scrollLeft;
+
+    let currentIndex = 0;
+    let smallestDistance = Infinity;
+
+    lists.forEach((list, index) => {
+
+      const distance = Math.abs(
+        list.offsetLeft - currentScrollLeft
+      );
+
+      if (distance < smallestDistance) {
+
+        smallestDistance = distance;
+        currentIndex = index;
       }
     });
 
+    const targetIndex = currentIndex + direction;
+
+    /*
+     * Ya estamos en la primera o última columna.
+     */
+    if (
+      targetIndex < 0 ||
+      targetIndex >= lists.length
+    ) {
+      return;
+    }
+
+    const targetList = lists[targetIndex];
+
+    /*
+     * Centramos aproximadamente la columna destino.
+     */
+    const targetLeft =
+      targetList.offsetLeft -
+      (container.clientWidth - targetList.offsetWidth) / 2;
+
+    const maxScrollLeft =
+      container.scrollWidth - container.clientWidth;
+
+    const finalLeft = Math.max(
+      0,
+      Math.min(targetLeft, maxScrollLeft)
+    );
+
+    this.autoScrollCooldown = true;
+
+    container.scrollTo({
+      left: finalLeft,
+      behavior: 'smooth'
+    });
+
+    /*
+     * Mientras este cooldown esté activo no volvemos
+     * a disparar otro movimiento.
+     */
+    setTimeout(() => {
+
+      this.autoScrollCooldown = false;
+
+    }, 450);
   }
 
+  /*
+   * Cuando CDK detecta que entramos a otra lista,
+   * hacemos que esa columna quede visible.
+   *
+   * NO usamos scrollIntoView() porque puede hacer scroll
+   * vertical de toda la página.
+   */
+  onListEntered(event: CdkDragEnter<UserTasks[]>) {
+
+    const container = this.scrollContainer?.nativeElement;
+
+    if (!container) {
+      return;
+    }
+
+    const list =
+      event.container.element.nativeElement as HTMLElement;
+
+    const maxScrollLeft =
+      container.scrollWidth - container.clientWidth;
+
+    const targetLeft =
+      list.offsetLeft -
+      (container.clientWidth - list.offsetWidth) / 2;
+
+    const finalLeft = Math.max(
+      0,
+      Math.min(targetLeft, maxScrollLeft)
+    );
+
+    container.scrollTo({
+      left: finalLeft,
+      behavior: 'smooth'
+    });
+  }
+
+  private getStatusFromListId(listId: string): number | null {
+
+    switch (listId) {
+
+      case 'todo':
+        return 1;
+
+      case 'doing':
+        return 2;
+
+      case 'done':
+        return 3;
+
+      default:
+        return null;
+    }
+  }
+
+  updateTaskStatus(task: UserTasks) {
+
+    this.tareasService.actualizarTarea(task).subscribe({
+
+      next: () => {
+
+        this.openModalFunc(
+          'Tarea actualizada correctamente'
+        );
+      },
+
+      error: () => {
+
+        this.openModalFunc(
+          'Error al actualizar la tarea'
+        );
+      }
+
+    });
+  }
+
+  /*
+   * ============================================================
+   * TASK DETAILS
+   * ============================================================
+   */
+
   showTaskDetails(data: UserTasks) {
-    if (this.isDragging) return;
-    // console.log(data);
+
+    if (this.isDragging) {
+      return;
+    }
+
     this.selectedTask.set(data);
 
-    // editable clone
-    this.editableTask.set(structuredClone(data));
-    this.editableTaskPrevValue.set(structuredClone(data));
+    this.editableTask.set(
+      structuredClone(data)
+    );
+
+    this.editableTaskPrevValue.set(
+      structuredClone(data)
+    );
 
     this.modalTaskDetail.present();
   }
 
   EditField(key: string) {
+
     switch (key) {
+
       case 'title':
+
         if (this.titleKeyActive) {
+
           this.titleKeyActive = false;
+
           return;
         }
+
         this.titleKeyActive = true;
         this.descKeyActive = false;
+
         break;
+
       case 'description':
+
         if (this.descKeyActive) {
+
           this.descKeyActive = false;
+
           return;
         }
+
         this.titleKeyActive = false;
         this.descKeyActive = true;
+
         break;
+
       default:
+
         this.titleKeyActive = false;
         this.descKeyActive = false;
+
         break;
     }
   }
 
   changeTaskUser(idUser: number) {
+
     console.log(idUser);
   }
 
   cancelTaskEdit() {
+
     this.titleKeyActive = false;
     this.descKeyActive = false;
-    this.editableTask.set(this.editableTaskPrevValue());
+
+    this.editableTask.set(
+      this.editableTaskPrevValue()
+    );
   }
 
   cleanTaskFlow() {
+
     this.titleKeyActive = false;
     this.descKeyActive = false;
+
     this.newTaskDesc = '';
     this.newTaskStatus = 0;
     this.newTaskTitle = '';
@@ -294,19 +575,30 @@ export class DashboardPage implements OnInit {
   }
 
   changeTaskStatus(idStatus: number) {
+
     this.selectedTask.update(task =>
       task
-        ? { ...task, status: idStatus }
+        ? {
+          ...task,
+          status: idStatus
+        }
         : null
     );
   }
 
   saveTaskChanges() {
+
     const edited = this.editableTask();
 
-    if (!edited) return;
+    if (!edited) {
+      return;
+    }
 
-    // update signal list ONCE
+    edited.status = Number(edited.status);
+
+    /*
+     * Actualizamos allTasks, que es la fuente principal.
+     */
     this.allTasks.update(tasks =>
       tasks.map(task =>
         task.id === edited.id
@@ -315,69 +607,98 @@ export class DashboardPage implements OnInit {
       )
     );
 
-    // update selectedTask
-    edited.status = Number(edited.status);
     this.selectedTask.set(edited);
 
-    // API call ONCE
     this.tareasService.actualizarTarea(edited).subscribe({
+
       next: () => {
-        this.openModalFunc('Tarea actualizada correctamente');
+
+        this.openModalFunc(
+          'Tarea actualizada correctamente'
+        );
+
         this.cleanTaskFlow();
       },
+
       error: () => {
-        this.openModalFunc('Error al actualizar la tarea');
+
+        this.openModalFunc(
+          'Error al actualizar la tarea'
+        );
       }
+
     });
   }
 
+  /*
+   * ============================================================
+   * CREATE TASK
+   * ============================================================
+   */
+
   addTarea() {
-    const loggedId = this.usuarioService.loggedData$()?.idUser;
 
-    if (!loggedId) return;
+    const loggedId =
+      this.usuarioService.loggedData$()?.idUser;
 
-    let newTarea: UserTasks = {
+    if (!loggedId) {
+      return;
+    }
+
+    const newTarea: UserTasks = {
+
       title: this.newTaskTitle,
+
       description: this.newTaskDesc,
+
       id: 0,
+
       idUser: loggedId,
+
       status: this.newTaskStatus
+
     };
 
     this.tareasService.agregarTarea(newTarea).subscribe({
+
       next: (task) => {
+
         this.addTaskHelper(task);
-        this.openModalFunc('Se creo la tarea correctamente.');
-      }, error: (err) => {
-        this.openModalFunc('Hubo un problema al crear la tarea');
+
+        this.openModalFunc(
+          'Se creo la tarea correctamente.'
+        );
       },
+
+      error: () => {
+
+        this.openModalFunc(
+          'Hubo un problema al crear la tarea'
+        );
+      }
+
     });
   }
 
+  /*
+   * Agregamos la tarea a allTasks.
+   *
+   * NO usamos:
+   *
+   * this.todoArr().push()
+   *
+   * porque todoArr() es un computed().
+   */
+  addTaskHelper(task: UserTasks) {
+
+    this.allTasks.update(tasks => [
+      ...tasks,
+      task
+    ]);
+  }
+
   eliminarTarea() {
+
     console.log(this.selectedTask());
   }
-
-  addTaskHelper(task: UserTasks) {
-    switch (task.status) {
-      case 1:
-        this.todoArr().push(task);
-        break;
-      case 2:
-        this.doingArr().push(task);
-        break;
-      case 3:
-        this.doneArr().push(task);
-        break;
-      default:
-        break;
-    }
-  }
-
-
 }
-
-
-
-
-

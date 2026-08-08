@@ -38,7 +38,6 @@ ion-item {
     border-radius: 15px;
 }
 
-
 ion-icon {
     font-size: 20px;
 }
@@ -54,111 +53,217 @@ ion-icon {
     margin-bottom: 10px;
 }
 
+/*
+ * ============================================================
+ * ANGULAR CDK DRAG
+ * ============================================================
+ */
+
 .cdk-drag-preview {
     border-radius: 10px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 
-    /* Fluidez */
     will-change: transform;
-    //transform: scale(1.03);
 
-    /* Evita animaciones pesadas */
     transition: none;
 
-    /* Mejora render */
     pointer-events: none;
+
     cursor: grabbing;
+
     transform: scale(1.04) rotate(1deg);
 }
 
 .cdk-drag-placeholder {
     opacity: 0.2;
+
     transform: scale(0.98);
 
-    /* Nada de animaciones complejas */
-    transition: opacity 150ms ease, transform 150ms ease;
+    transition:
+        opacity 150ms ease,
+        transform 150ms ease;
 }
 
 .cdk-drop-list-dragging .cdk-drag {
-    transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+    transition:
+        transform 200ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0.2, 0, 0, 1);
+    transition:
+        transform 250ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-.myDropList {
-    // flex: 0 0 100%;
-
-    width: 100%;
-    height: 100%;
-
-    scroll-snap-align: start;
-
-    overflow-y: auto;
-    padding: 12px;
-    box-sizing: border-box;
-
-
-    background: var(--ion-cont-bg);
-    border-radius: 15px;
-    scroll-snap-align: start;
-    scrollbar-width: none;
-}
+/*
+ * ============================================================
+ * KANBAN HORIZONTAL CONTAINER
+ * ============================================================
+ */
 
 .listContainer {
     display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
+
+    flex-direction: row;
 
     width: 100%;
     max-width: 1300px;
-    height: 100%;
+    height: calc(90vh - 50px);
 
-    scroll-snap-type: x mandatory;
+    gap: 20px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    /*
+     * El scroll horizontal lo controla exclusivamente
+     * este elemento.
+     */
     scroll-behavior: smooth;
 
+    /*
+     * Snap para que cada columna quede bien posicionada.
+     */
+    scroll-snap-type: x mandatory;
+
+    /*
+     * Evita que el navegador intente hacer overscroll
+     * horizontal fuera del Kanban.
+     */
+    overscroll-behavior-x: contain;
+
     -webkit-overflow-scrolling: touch;
+
+    /*
+     * Firefox
+     */
+    scrollbar-width: none;
 }
 
 .listContainer::-webkit-scrollbar {
     display: none;
 }
 
-.tasks-container {
-    height: 68vh;
-    overflow-y: scroll;
+/*
+ * ============================================================
+ * KANBAN COLUMN
+ * ============================================================
+ */
+
+.myDropList {
+
+    /*
+     * IMPORTANTE:
+     *
+     * La columna NO debe encogerse.
+     */
+    flex: 0 0 100%;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background: var(--ion-cont-bg);
+
+    border-radius: 15px;
+
+    // overflow-y: auto;
+    // overflow-x: hidden;
+
     scrollbar-width: none;
+
+    scroll-snap-align: start;
+
+    /*
+     * Permite que CDK detecte correctamente
+     * el área de DropList.
+     */
+    touch-action: pan-y;
+}
+
+.myDropList::-webkit-scrollbar {
+    display: none;
+}
+
+/*
+ * ============================================================
+ * TASKS
+ * ============================================================
+ */
+
+.tasks-container {
+
+    height: 76%;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+
     background: var(--ion-background-color);
+
     border-radius: 12px;
+
     margin: 8px 0;
 }
+
+.tasks-container::-webkit-scrollbar {
+    display: none;
+}
+
+/*
+ * ============================================================
+ * DRAG ITEM
+ * ============================================================
+ */
 
 .divDrag {
     position: relative;
 
-    :hover {
+    &:hover {
         cursor: pointer;
+    }
+
+    &:hover ion-card {
         opacity: 0.7;
         transform: scale(1.01);
     }
 }
 
+/*
+ * ============================================================
+ * TASK DETAILS
+ * ============================================================
+ */
+
 .task-details {
     display: flex;
+
     flex-direction: column;
+
     gap: 10px;
+
     justify-content: center;
+
     margin: 8px auto;
+
     padding: 8px;
 }
 
 .task-actions,
 .changes-actions {
     display: flex;
+
     flex-direction: row;
+
     justify-content: end;
+
     gap: 12px;
+
     width: 95%;
 }
 
@@ -168,21 +273,28 @@ ion-icon {
 
 .radio-group-horizontal {
     display: flex;
+
     width: 100%;
+
     justify-content: space-between;
+
     align-items: center;
 }
 
 .status-container {
     display: flex;
+
     flex-direction: row;
+
     gap: 10px;
+
     justify-content: start;
 }
 
 .status-icon {
     width: 15px;
     height: 15px;
+
     border-radius: 50%;
 
     &.todo {
@@ -200,53 +312,82 @@ ion-icon {
 
 .card-footer {
     display: flex;
+
     flex-direction: row;
+
     justify-content: space-between;
+
     align-items: center;
+
     color: var(--ion-txt-color);
 }
 
 .small-user-ico {
     width: 25px;
     height: auto;
+
     border-radius: 50%;
+
     border: 1px solid var(--ion-color-primary);
 }
 
+/*
+ * ============================================================
+ * ADD TASK
+ * ============================================================
+ */
+
 .add-task {
     display: flex;
+
     position: relative;
+
     justify-content: center;
+
     align-items: center;
+
     color: var(--ion-stxt-color);
+
     border-radius: 12px;
+
     width: 80%;
     height: 30px;
+
     margin-top: 15px;
 }
 
 .add-task:hover {
     cursor: pointer;
+
     opacity: 0.5;
+
     background-color: rgb(43, 42, 42);
 }
 
+/*
+ * ============================================================
+ * DROPDOWN
+ * ============================================================
+ */
+
 .dropdown_menu {
     animation: growDown 300ms ease-in-out forwards;
+
     transform-origin: top center;
 }
 
 @keyframes growDown {
+
     0% {
-        transform: scaleY(0)
+        transform: scaleY(0);
     }
 
     80% {
-        transform: scaleY(1.1)
+        transform: scaleY(1.1);
     }
 
     100% {
-        transform: scaleY(1)
+        transform: scaleY(1);
     }
 }
 
@@ -256,12 +397,15 @@ ion-icon {
 
 .dropdown_menu_close {
     animation: shrinkUp 300ms ease-in-out forwards;
+
     transform-origin: top center;
 }
 
 @keyframes shrinkUp {
+
     0% {
         opacity: 1;
+
         transform: scaleY(1);
     }
 
@@ -271,16 +415,27 @@ ion-icon {
 
     100% {
         opacity: 0;
+
         transform: scaleY(0);
     }
 }
 
+/*
+ * ============================================================
+ * HEADER
+ * ============================================================
+ */
 
 .header-controls {
+
     display: flex;
+
     flex-direction: row;
+
     justify-content: space-between;
+
     width: 95%;
+
     margin: auto;
 
     @media (min-width: 767px) {
@@ -288,20 +443,39 @@ ion-icon {
     }
 }
 
-/* Responsive Design for Tablet and Desktop */
+/*
+ * ============================================================
+ * TABLET / DESKTOP
+ * ============================================================
+ */
+
 @media (min-width: 768px) {
+
     .listContainer {
-        //width: 90%;
+
         margin: 0 auto;
-        overflow-x: auto;
-        gap: 20px;
+
+        /*
+         * Las columnas tienen un ancho fijo.
+         */
+        padding: 0 10px;
     }
 
     .myDropList {
-        margin-top: 12px;
+
+        /*
+         * MUY IMPORTANTE:
+         *
+         * Cada columna ocupa exactamente 420px.
+         * No puede reducirse.
+         */
+        flex: 0 0 420px;
+
         width: 420px;
+
         height: 85vh;
-        overflow-y: scroll;
+
+        margin-top: 12px;
     }
 
     .add-task {
@@ -309,32 +483,45 @@ ion-icon {
     }
 }
 
-/* Responsive Design for Mobile */
+/*
+ * ============================================================
+ * MOBILE
+ * ============================================================
+ */
+
 @media (max-width: 767px) {
+
     .listContainer {
+
         gap: 24px;
+
         padding: 16px;
     }
 
     .myDropList {
-        flex: 0 0 100%;
-        width: 100%;
+
+        /*
+         * Una columna completa por pantalla.
+         */
+        flex: 0 0 calc(100% - 32px);
+
+        width: calc(100% - 32px);
+
         padding: 8px;
+
         border-radius: 15px;
+
         min-height: 80vh;
     }
 
     ion-card {
-        //width: 300px;
         padding: 8px;
     }
 
-    // .divDrag {
-    //     width: 90%;
-    // }
-
     .add-task {
+
         width: 98%;
+
         margin: 12px auto auto;
     }
 }
