@@ -154,7 +154,7 @@ export class DashboardPage implements OnInit {
     }, 2000);
   }
 
-  async openModalFunc(mensaje: string) {
+  async openModalFunc(titulo: string, mensaje: string) {
 
     const modal = this.modalCtrl.create({
       component: IonModalComponent,
@@ -162,6 +162,7 @@ export class DashboardPage implements OnInit {
       initialBreakpoint: 0.5,
       cssClass: 'custom-modal',
       componentProps: {
+        titulo: titulo,
         mensaje: mensaje
       }
     });
@@ -465,6 +466,7 @@ export class DashboardPage implements OnInit {
       next: () => {
 
         this.openModalFunc(
+          'Exito',
           'Tarea actualizada correctamente'
         );
       },
@@ -472,6 +474,7 @@ export class DashboardPage implements OnInit {
       error: () => {
 
         this.openModalFunc(
+          'Error',
           'Error al actualizar la tarea'
         );
       }
@@ -614,6 +617,7 @@ export class DashboardPage implements OnInit {
       next: () => {
 
         this.openModalFunc(
+          'Éxito',
           'Tarea actualizada correctamente'
         );
 
@@ -623,6 +627,7 @@ export class DashboardPage implements OnInit {
       error: () => {
 
         this.openModalFunc(
+          'Error',
           'Error al actualizar la tarea'
         );
       }
@@ -666,6 +671,7 @@ export class DashboardPage implements OnInit {
         this.addTaskHelper(task);
 
         this.openModalFunc(
+          'Éxito',
           'Se creo la tarea correctamente.'
         );
       },
@@ -673,6 +679,7 @@ export class DashboardPage implements OnInit {
       error: () => {
 
         this.openModalFunc(
+          'Error',
           'Hubo un problema al crear la tarea'
         );
       }
