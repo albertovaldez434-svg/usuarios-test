@@ -73,8 +73,7 @@ export class UsuariosService {
     return this.http.post<loginResponseDTO>(url, request).pipe(
       switchMap(user =>
         from(this.setLoginData(user)).pipe(
-          
-          map(() => user, console.log(user))
+          map(() => user)
         )
       )
     );

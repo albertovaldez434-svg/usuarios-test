@@ -11,7 +11,7 @@ export const usersGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const jwtHelper = new JwtHelperService;
 
-  //console.log(authService.loggedData$());
+  //// console.log(authService.loggedData$());
   const requiredRole = route.data['idRol'];
   const token = authService.loggedData$()?.accessToken;
   const user = authService.loggedData$();
@@ -21,7 +21,7 @@ export const usersGuard: CanActivateFn = (route, state) => {
   }
 
   if (!token || jwtHelper.isTokenExpired(token)) {
-    //console.log('token expired or missing');
+    //// console.log('token expired or missing');
     secureSService.clear();
 
     return router.createUrlTree(

@@ -198,7 +198,7 @@ export class UsuariosPage implements OnInit {
 
     if (this.usersService.loggedData$()?.idRol == 999) {
       this.usersService.setUsers(this.usuarios());
-      //console.log(this.usuarios());
+      //// console.log(this.usuarios());
       this.modalSignUp.dismiss();
       this.openModalFunc('Usuario registrado exitosamente');
       this.signupForm.reset();
@@ -212,7 +212,7 @@ export class UsuariosPage implements OnInit {
         this.editandoUsuario = false;
       },
       error: (error) => {
-        console.log(error);
+        // console.log(error);
         this.openModalFunc('Error al editar el usuario');
       }
     });
@@ -248,7 +248,7 @@ export class UsuariosPage implements OnInit {
         this.confirmationService.setConfirmed(false);
       },
       error: (error) => {
-        console.log(error);
+        // console.log(error);
         this.openModalFunc('Error al eliminar usuario');
       }
     });

@@ -47,7 +47,7 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('inicia pagina');
+    // // console.log('inicia pagina');
   }
 
   ionViewDidEnter() {
@@ -120,8 +120,8 @@ export class ProfilePage implements OnInit {
         this.imgSrc = result.webPath;
       }
 
-      console.log('Format:', result.metadata?.format);
-      console.log('Resolution:', result.metadata?.resolution);
+      // console.log('Format:', result.metadata?.format);
+      // console.log('Resolution:', result.metadata?.resolution);
     } catch (e) {
       const error = e as any;
       const message = error.code ? `[${error.code}] ${error.message}` : error.message;
@@ -147,13 +147,13 @@ export class ProfilePage implements OnInit {
         const data = await this.compressWEBP(file);
 
         if (data) {
-          console.log(data);
+          // console.log(data);
           this.uploadImage(data);
         }
       }
 
-      // console.log('Format:', result.metadata?.format);
-      // console.log('Resolution:', result.metadata?.resolution);
+      // // console.log('Format:', result.metadata?.format);
+      // // console.log('Resolution:', result.metadata?.resolution);
     } catch (e) {
       const error = e as any;
       const message = error.code ? `[${error.code}] ${error.message}` : error.message;
@@ -188,10 +188,10 @@ export class ProfilePage implements OnInit {
 
     this.userService.cargarImagen(formData).subscribe({
       next: (value) => {
-        console.log(value);
+        // console.log(value);
         this.imgSrc = value.URLPublica;
       }, error: (err) => {
-        console.log(err);
+        // console.log(err);
       },
     });
   }

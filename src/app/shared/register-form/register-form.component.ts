@@ -29,11 +29,11 @@ export class RegisterFormComponent implements OnInit {
 
   ngOnInit() {
     // Component initialization
-    // console.log(this.userData);
+    // // console.log(this.userData);
     if (this.userData) {
       this.isEditingData = true;
     }
-    // console.log('editando perfil: ', this.isEditingData);
+    // // console.log('editando perfil: ', this.isEditingData);
 
     this.registerForm = this.formBuilder.group({
       firstName: [this.userData?.nombre || '', [Validators.required, Validators.minLength(2)]],
@@ -44,7 +44,7 @@ export class RegisterFormComponent implements OnInit {
       mobileNumber: [this.userData?.telefono || '', [Validators.required, Validators.pattern(/^[\d\s\-\+\(\)]{10,}$/)]],
     });
 
-    //console.log(this.Title);
+    //// console.log(this.Title);
   }
 
   get f() {
@@ -64,7 +64,7 @@ export class RegisterFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.registerForm.valid) {
-      console.log('Form Value:', this.registerForm.value);
+      // console.log('Form Value:', this.registerForm.value);
 
       let formData: Users = {
         idUser: 0, // Asignar un ID temporal o manejarlo según tu lógica

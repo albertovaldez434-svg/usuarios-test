@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const tokenExp = this.checkTokenExpired(user.accessToken);
 
     if (tokenExp) {
-      // console.log('token expirado');
+      // // console.log('token expirado');
       localStorage.removeItem('authUser');
       return next.handle(req);
     }

@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
   }
 
   loginFunction() {
-    //console.log('Iniciando Login')
+    //// console.log('Iniciando Login')
     const Mail = this.loginForm.value.Email;
     const Password = this.loginForm.value.Password;
 
@@ -81,7 +81,7 @@ export class LoginPage implements OnInit {
       )
     ).subscribe({
       next: () => {
-        //console.log(this.UserService.loggedData$());
+        //// console.log(this.UserService.loggedData$());
         this.route.navigate(['/dashboard']);
       }
     });

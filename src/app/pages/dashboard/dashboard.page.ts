@@ -550,7 +550,7 @@ export class DashboardPage implements OnInit {
 
   changeTaskUser(idUser: number) {
 
-    console.log(idUser);
+    // console.log(idUser);
   }
 
   cancelTaskEdit() {
@@ -706,6 +706,6 @@ export class DashboardPage implements OnInit {
 
   eliminarTarea() {
 
-    console.log(this.selectedTask());
+    // console.log(this.selectedTask());
   }
 }
