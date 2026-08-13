@@ -38,25 +38,31 @@
 
               <!-- User Information Section -->
               <div class="user-info-section ion-margin-top">
+
                 <ion-item>
                   <!-- <ion-label position="stacked">Nombre</ion-label> -->
                   <ion-label position="" class="userInfo">{{currentUser?.nombre || 'Nombre'}}</ion-label>
+                  <ion-icon name="person-outline" slot="start"></ion-icon>
                 </ion-item>
                 <ion-item>
                   <!-- <ion-label position="stacked">Apellidos</ion-label> -->
                   <ion-label position="" class="userInfo">{{currentUser?.apellidos || 'Apellido'}}</ion-label>
+                  <ion-icon name="person-outline" slot="start"></ion-icon>
                 </ion-item>
                 <ion-item>
                   <!-- <ion-label position="stacked">Email</ion-label> -->
                   <ion-label position="" class="userInfo">{{currentUser?.email ||
                     'nombre@correo.com'}}</ion-label>
+                  <ion-icon name="mail-outline" slot="start"></ion-icon>
                 </ion-item>
                 <ion-item>
                   <!-- <ion-label position="stacked">Telefono</ion-label> -->
                   <ion-label position="" class="userInfo">
                     {{currentUser?.telefono || 'Ej: +52644123456'}}
                   </ion-label>
+                  <ion-icon name="call-outline" slot="start"></ion-icon>
                 </ion-item>
+
               </div>
               <br>
               <div class="button-section">
@@ -64,8 +70,8 @@
                    <ion-icon slot="start" name="create-outline"></ion-icon>
                   Editar Perfil
                 </ion-button> -->
-                <app-custom-button [type]="'primary'" [text]="'Editar Perfil'"
-                  [iconName]="'create-outline'" [slot]="'start'" (clicked)="editProfile()">
+                <app-custom-button [type]="'primary'" [text]="'Editar Perfil'" [iconName]="'create-outline'"
+                  [slot]="'start'" (clicked)="editProfile()">
                 </app-custom-button>
                 <!-- por ahora desactivo el tema claro -->
                 <!-- <app-theme-toggle></app-theme-toggle> -->

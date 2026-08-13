@@ -20,7 +20,7 @@
       <div class="controls-header">
         <div class="ion-activable">
           <ion-ripple-effect></ion-ripple-effect>
-          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [ngModel]="searchValue()"
+          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000" [ngModel]="searchValue()"
             (ngModelChange)="searchValue.set($event)">
           </ion-searchbar>
         </div>

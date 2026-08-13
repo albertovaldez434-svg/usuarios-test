@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ActionModalComponent } from 'src/app/components/action-modal/action-modal.component';
+import { ActionModalComponent } from 'src/app/shared/action-modal/action-modal.component';
 
 @Injectable({
   providedIn: 'root',

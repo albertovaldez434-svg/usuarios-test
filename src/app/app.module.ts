@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy, IonRippleEffect } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { MenuComponent } from './components/menu/menu.component';
-import { IonModalComponent } from './components/ion-modal/ion-modal.component';
+import { MenuComponent } from './shared/menu/menu.component';
+import { IonModalComponent } from './shared/ion-modal/ion-modal.component';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterFormComponent } from './components/register-form/register-form.component';
-import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
+import { RegisterFormComponent } from './shared/register-form/register-form.component';
+import { ThemeToggleComponent } from './shared/theme-toggle/theme-toggle.component';
 import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
-import { ActionModalComponent } from "./components/action-modal/action-modal.component";
+import { ActionModalComponent } from "./shared/action-modal/action-modal.component";
 import { ErrorsInterceptor } from './interceptors/errors-interceptor';
 import { timeoutInterceptor } from './interceptors/timeout-interceptor';
 
@@ -33,6 +33,7 @@ import { timeoutInterceptor } from './interceptors/timeout-interceptor';
     }),
     AppRoutingModule,
     ReactiveFormsModule,
+    
     RegisterFormComponent,
     ThemeToggleComponent,
     CdkDragPlaceholder,

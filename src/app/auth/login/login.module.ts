@@ -7,10 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
-import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
-import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
-import { ThemeToggleComponent } from "src/app/components/theme-toggle/theme-toggle.component";
-import { RestorePswComponent } from "src/app/components/restore-psw/restore-psw.component";
+import { RegisterFormComponent } from "src/app/shared/register-form/register-form.component";
+import { CustomButtonComponent } from "src/app/shared/custom-button/custom-button.component";
+import { ThemeToggleComponent } from "src/app/shared/theme-toggle/theme-toggle.component";
+import { RestorePswComponent } from "src/app/shared/restore-psw/restore-psw.component";
 
 @NgModule({
   imports: [

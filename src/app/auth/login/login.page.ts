@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Login } from 'src/app/models/login';
 import { IonModal, ModalController } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
-import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
+import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
+import { RegisterFormComponent } from 'src/app/shared/register-form/register-form.component';
 import { AuthUser, Users } from 'src/app/models/users';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
-import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
+import { RestorePswComponent } from 'src/app/shared/restore-psw/restore-psw.component';
 import { TasksService } from 'src/app/services/tasks/tasks-service';
 import { forkJoin, switchMap } from 'rxjs';
 
@@ -41,13 +41,14 @@ export class LoginPage implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  async openModalFunc(mensaje: string) {
+  async openModalFunc(titulo: string, mensaje: string) {
     const modal = this.modalCtrl.create({
       component: IonModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
       initialBreakpoint: 0.5,
       cssClass: 'custom-modal',
       componentProps: {
+        titulo: titulo,
         mensaje: mensaje
       }
 
@@ -62,7 +63,7 @@ export class LoginPage implements OnInit {
     const Password = this.loginForm.value.Password;
 
     if (Mail == null || Mail == '' || Password == null || Password == '') {
-      this.openModalFunc('Datos incorrectos, por favor ingrese un usuario y contraseña válidos');
+      this.openModalFunc('Error', 'Datos incorrectos, por favor ingrese un usuario y contraseña válidos');
       return;
     }
 
@@ -106,10 +107,10 @@ export class LoginPage implements OnInit {
       this.UserService.signUpNewUser(data).subscribe({
         next: (response) => {
           this.modalCtrl.dismiss();
-          this.openModalFunc('Utilize sus credenciales para iniciar sesión');
+          this.openModalFunc('Error', 'Utilize sus credenciales para iniciar sesión');
         },
         error: (err) => {
-          this.openModalFunc('Error al Registrarse, por favor intente nuevamente');
+          this.openModalFunc('Error', 'Error al Registrarse, por favor intente nuevamente');
         }
       });
       this.modalCtrl.dismiss();
@@ -139,7 +140,7 @@ export class LoginPage implements OnInit {
     }
 
     this.UserService.setLoginData(invitadoAuth);
-    this.openModalFunc('Sesion iniciada');
+    this.openModalFunc('Alerta', 'Sesion iniciada');
     this.route.navigate(['/profile']);
   }
 
@@ -147,10 +148,10 @@ export class LoginPage implements OnInit {
     this.UserService.UpdatePsw(data).subscribe({
       next: () => {
         this.modalCtrl.dismiss();
-        this.openModalFunc('Utilize sus nuevas credenciales para iniciar sesión');
+        this.openModalFunc('Alerta', 'Utilize sus nuevas credenciales para iniciar sesión');
       },
       error: (err) => {
-        this.openModalFunc('Error al restaurar su contraseña, por favor intente nuevamente');
+        this.openModalFunc('Error', 'Error al restaurar su contraseña, por favor intente nuevamente');
       }
     });
   }

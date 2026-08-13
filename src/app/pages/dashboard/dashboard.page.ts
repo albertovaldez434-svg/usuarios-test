@@ -17,7 +17,7 @@ import {
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
+import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
 import { TasksService } from 'src/app/services/tasks/tasks-service';

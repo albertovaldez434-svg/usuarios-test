@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class IonModalComponent implements OnInit {
   @Output() openModal = new EventEmitter<void>();
+  @Input() titulo: string = 'Titulo Modal';
   @Input() mensaje: string = 'Hola, soy un modal de Ionic';
 
   constructor(

@@ -9,8 +9,8 @@ import { UsuariosPageRoutingModule } from './usuarios-routing.module';
 import { UsuariosPage } from './usuarios.page';
 
 import { SearchPipe } from '../../search-pipe'
-import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
-import { RegisterFormComponent } from "src/app/components/register-form/register-form.component";
+import { CustomButtonComponent } from "src/app/shared/custom-button/custom-button.component";
+import { RegisterFormComponent } from "src/app/shared/register-form/register-form.component";
 import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 
 @NgModule({

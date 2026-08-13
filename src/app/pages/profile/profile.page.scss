@@ -5,6 +5,7 @@ ion-label.userInfo {
 
 ion-card {
   background: var(--ion-cont-bg);
+  border: 1px solid var(--ion-border-color);
 }
 
 ion-card-title {
@@ -14,6 +15,14 @@ ion-card-title {
 ion-item {
   --background: var(--ion-background-color);
   --color: var(--ion-txt-color);
+}
+
+ion-toolbar {
+    --background: var(--ion-cont-bg);
+}
+
+ion-content {
+    --background: #05061c;
 }
 
 :host {
@@ -31,7 +40,7 @@ ion-item {
   justify-content: center;
   align-items: center;
   background: var(--ion-background-color);
-  max-width: 1300px;
+  max-width: 600px;
   margin: auto;
 }
 

@@ -2,7 +2,6 @@ import { Component, effect, OnInit } from '@angular/core';
 import { UsuariosService } from './services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
 import { SecureStorageService } from './services/securestorage-service';
-import { AuthUser } from './models/users';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { loginResponseDTO } from './models/loginDTO';

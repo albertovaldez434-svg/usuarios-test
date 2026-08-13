@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, effect, OnInit, signal, V
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
 import { of } from 'rxjs';
-import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
-import { RestorePswComponent } from 'src/app/components/restore-psw/restore-psw.component';
+import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
+import { RestorePswComponent } from 'src/app/shared/restore-psw/restore-psw.component';
 import { Users } from 'src/app/models/users';
 import { Confirmation } from 'src/app/services/helpers/confirmation';
 import { UsuariosService } from 'src/app/services/usuarios';

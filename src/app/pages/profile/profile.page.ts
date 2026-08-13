@@ -3,7 +3,7 @@ import { Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Camera } from '@capacitor/camera';
 import { ActionSheetController, IonModal, ModalController } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/components/ion-modal/ion-modal.component';
+import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
 
 import imageCompression from 'browser-image-compression';
 import { loginResponseDTO } from 'src/app/models/loginDTO';

@@ -1,12 +1,15 @@
 :host {
   display: block;
-  background-color: var(--ion-background-color);
+  background-color: #05061c;
 }
 
-ion-header {
-  background-color: var(--ion-background-color);
-  background: var(--ion-background-color);
+ion-toolbar {
+  --background: var(--ion-cont-bg);
 }
+
+// ion-content {
+//   --background: var(--ion-background-color);
+// }
 
 .login-content {
   --padding-top: 0;
@@ -19,6 +22,7 @@ ion-header {
   padding: 30px 24px;
   border-radius: 24px;
   background: var(--ion-cont-bg);
+  border: 1px solid var(--ion-border-color);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
@@ -28,7 +32,7 @@ ion-header {
 
 ion-item {
   --border-radius: 14px;
-  --background: var(--ion-background-color);
+  --background: #05061c;
 }
 
 ion-button {
@@ -36,9 +40,6 @@ ion-button {
   --border-radius: 14px;
 }
 
-@media (min-width: 1024px) {
-}
+@media (min-width: 1024px) {}
 
-@media (min-width: 768px) {
-
-}
+@media (min-width: 768px) {}

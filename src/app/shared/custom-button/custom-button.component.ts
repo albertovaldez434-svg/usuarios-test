@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IonicModule } from "@ionic/angular";
+import { IonicModule, IonRippleEffect } from "@ionic/angular";
 import { IonButton } from "@ionic/angular/standalone";
 import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-custom-button',
   templateUrl: './custom-button.component.html',
-  imports: [IonicModule],
   styleUrls: ['./custom-button.component.scss'],
+  imports: [IonicModule],
 })
 export class CustomButtonComponent implements OnInit {
   @Input() text: string = '';

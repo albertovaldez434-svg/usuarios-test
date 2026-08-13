@@ -1,3 +1,11 @@
+ion-toolbar {
+    --background: var(--ion-cont-bg);
+}
+
+ion-content  {
+    --background: #05061c;
+}
+
 .btn-container {
     display: flex;
     flex-direction: row;

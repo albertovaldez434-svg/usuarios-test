@@ -32,3 +32,10 @@ ion-button.btn-secondary {
     --padding-start: 1.5rem;
     --padding-end: 1.5rem;
 }
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 15px;
+}

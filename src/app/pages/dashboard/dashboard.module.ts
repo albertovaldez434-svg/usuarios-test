@@ -9,7 +9,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 import { DashboardPage } from './dashboard.page';
 import { CdkDrag, CdkDropList, CdkDropListGroup, DragDropModule } from '@angular/cdk/drag-drop';
 import { SearchPipe } from 'src/app/search-pipe';
-import { CustomButtonComponent } from "src/app/components/custom-button/custom-button.component";
+import { CustomButtonComponent } from "src/app/shared/custom-button/custom-button.component";
 
 @NgModule({
   imports: [

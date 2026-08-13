@@ -5,7 +5,7 @@
       <!-- <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
         class="ion-margin-end" (click)="setSearchToggle()">
       </ion-icon> -->
-      <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
+      <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000" [value]="searchValue"
         [(ngModel)]="searchValue"></ion-searchbar>
       <app-custom-button (clicked)="modalNewTask.present(); newTaskStatus = 0" [text]="'Agregar'"
         [iconName]="'add-outline'" [size]="'default'">
@@ -453,7 +453,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title slot="center">
+        <ion-title class="ion-text-center">
           Detalles Tarea
         </ion-title>
         <ion-buttons slot="end">
@@ -484,11 +484,13 @@
         <ion-item>
           <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid"
             [(ngModel)]="editableTask()!.title" (click)="EditField('title')"></ion-input>
+            <ion-icon slot="start" name="ribbon-outline"></ion-icon>
         </ion-item>
         <ion-item>
           <ion-textarea #inpDesc label="Descripcion" label-placement="floating" fill="solid"
             [(ngModel)]="editableTask()!.description" (click)="EditField('description')">
           </ion-textarea>
+          <ion-icon slot="start" name="document-text-outline"></ion-icon>
         </ion-item>
         <ion-item>
           <ion-select #taskUserAssign label="Asignado" placeholder="Usuario asignado" [(ngModel)]="loggedUser!.idUser"
@@ -497,6 +499,7 @@
             <ion-select-option [value]="user.idUser">{{user.nombre}} {{user.apellidos}}</ion-select-option>
             }
           </ion-select>
+          <ion-icon slot="start" name="person-add-outline"></ion-icon>
         </ion-item>
         <!-- </div> -->
         @if (titleKeyActive || descKeyActive) {
@@ -539,7 +542,7 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <ion-title>
+        <ion-title class="ion-text-center">
           Nueva Tarea
         </ion-title>
         <ion-buttons slot="end">
@@ -551,14 +554,15 @@
     </ion-header>
     <ion-content>
       <div class="signUpfrm">
-
         <ion-item>
           <ion-input #inpNewTitle label="Titulo" label-placement="floating" fill="solid"
             [(ngModel)]="newTaskTitle"></ion-input>
+            <ion-icon slot="start" name="ribbon-outline"></ion-icon>
         </ion-item>
         <ion-item>
           <ion-input #inpNewDesc label="Descripcion" label-placement="floating" fill="solid"
             [(ngModel)]="newTaskDesc"></ion-input>
+            <ion-icon slot="start" name="document-text-outline"></ion-icon>
         </ion-item>
         <ion-item>
           <ion-select label="Status" placeholder="Seleccione" [value]="newTaskStatus">
@@ -566,6 +570,7 @@
             <ion-select-option [value]="2">En Curso</ion-select-option>
             <ion-select-option [value]="3">Terminado</ion-select-option>
           </ion-select>
+          <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
         </ion-item>
 
         <div class="changes-actions">
@@ -573,7 +578,7 @@
             [slot]="'start'" [text]="'Cancelar'"
             (clicked)="cleanTaskFlow(); this.modalTaskDetail.dismiss();"></app-custom-button>
           <app-custom-button [type]="'primary'" [size]="'default'" [expand]="'block'" [iconName]="'add-outline'"
-            [slot]="'start'" [text]="'Guardar'" (clicked)="addTarea()"></app-custom-button>
+            [slot]="'start'" [text]="'Agregar'" (clicked)="addTarea()"></app-custom-button>
         </div>
       </div>
     </ion-content>

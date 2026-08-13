@@ -12,6 +12,7 @@ ion-card {
     margin: 10px !important;
     padding: 10px;
 
+    border: 1px solid var(--ion-border-color);
     &.todo {
         border-left: 5px solid blue;
     }
@@ -40,6 +41,20 @@ ion-item {
 
 ion-icon {
     font-size: 20px;
+}
+
+ion-toolbar {
+    --background: var(--ion-cont-bg);
+}
+
+ion-content {
+    --background: #05061c;
+}
+
+ion-searchbar {
+    padding: 0;
+    right: 15px;
+    --border-radius: 15px;
 }
 
 .card-title {
@@ -102,8 +117,8 @@ ion-icon {
 
 .listContainer {
     display: flex;
-
     flex-direction: row;
+    align-items: center;
 
     width: 100%;
     max-width: 1300px;
@@ -170,6 +185,8 @@ ion-icon {
     background: var(--ion-cont-bg);
 
     border-radius: 15px;
+
+    border: 1px solid var(--ion-border-color);
 
     // overflow-y: auto;
     // overflow-x: hidden;
@@ -473,7 +490,7 @@ ion-icon {
 
         width: 420px;
 
-        height: 85vh;
+        height: 82vh;
 
         margin-top: 12px;
     }
