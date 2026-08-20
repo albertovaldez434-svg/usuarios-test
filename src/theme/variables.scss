@@ -1,0 +1,20 @@
+/*Border Radius Variables*/
+$border-radius-desktop: 16px;
+$border-radius-mobile: 8px;
+
+/*Border Radius Variables*/
+$button-radius: 25px;
+
+/*Media Query Breakpoint*/
+$breakpoint-tablet: 768px;
+
+/*Usage: Apply different border radius based on device*/
+@mixin border-radius-responsive {
+  @media (max-width: ($breakpoint-tablet - 1px)) {
+    border-radius: $border-radius-mobile;
+  }
+  
+  @media (min-width: $breakpoint-tablet) {
+    border-radius: $border-radius-desktop;
+  }
+}

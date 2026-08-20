@@ -12,18 +12,18 @@ import { SearchPipe } from 'src/app/search-pipe';
 import { CustomButtonComponent } from "src/app/shared/custom-button/custom-button.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DashboardPageRoutingModule,
-    CdkDropListGroup,
-    CdkDropList,
-    CdkDrag,
-    DragDropModule,
-    SearchPipe,
-    CustomButtonComponent
-],
-  declarations: [DashboardPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        DashboardPageRoutingModule,
+        CdkDropListGroup,
+        CdkDropList,
+        CdkDrag,
+        DragDropModule,
+        SearchPipe,
+        CustomButtonComponent,
+        DashboardPage
+    ],
 })
 export class DashboardPageModule { }

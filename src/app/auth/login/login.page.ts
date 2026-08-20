@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Login } from 'src/app/models/login';
-import { IonModal, ModalController } from '@ionic/angular';
+import { IonModal, ModalController, IonicModule } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
 import { RegisterFormComponent } from 'src/app/shared/register-form/register-form.component';
 import { AuthUser, Users } from 'src/app/models/users';
@@ -11,12 +11,13 @@ import { loginResponseDTO } from 'src/app/models/loginDTO';
 import { RestorePswComponent } from 'src/app/shared/restore-psw/restore-psw.component';
 import { TasksService } from 'src/app/services/tasks/tasks-service';
 import { forkJoin, switchMap } from 'rxjs';
+import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  standalone: false
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
+    imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent]
 })
 export class LoginPage implements OnInit {
   @ViewChild('restorePswMdl') restorePswMdl!: IonModal;

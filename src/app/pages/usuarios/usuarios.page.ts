@@ -1,19 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, effect, OnInit, signal, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
 import { of } from 'rxjs';
 import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
 import { RestorePswComponent } from 'src/app/shared/restore-psw/restore-psw.component';
 import { Users } from 'src/app/models/users';
 import { Confirmation } from 'src/app/services/helpers/confirmation';
 import { UsuariosService } from 'src/app/services/usuarios';
+import { RegisterFormComponent } from '../../shared/register-form/register-form.component';
+import { SearchPipe } from '../../search-pipe';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.page.html',
-  styleUrls: ['./usuarios.page.scss'],
-  standalone: false,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-usuarios',
+    templateUrl: './usuarios.page.html',
+    styleUrls: ['./usuarios.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonicModule, FormsModule, RegisterFormComponent, SearchPipe]
 })
 export class UsuariosPage implements OnInit {
   private loaded = false;

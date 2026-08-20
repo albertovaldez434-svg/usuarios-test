@@ -2,18 +2,20 @@ import { Component, effect, OnInit, ViewChild } from '@angular/core';
 import { Users } from 'src/app/models/users';
 import { UsuariosService } from 'src/app/services/usuarios';
 import { Camera } from '@capacitor/camera';
-import { ActionSheetController, IonModal, ModalController } from '@ionic/angular';
+import { ActionSheetController, IonModal, ModalController, IonicModule } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
 
 import imageCompression from 'browser-image-compression';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
+import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
+import { RegisterFormComponent } from '../../shared/register-form/register-form.component';
 
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
-  standalone: false
+    selector: 'app-profile',
+    templateUrl: './profile.page.html',
+    styleUrls: ['./profile.page.scss'],
+    imports: [IonicModule, CustomButtonComponent, RegisterFormComponent]
 })
 export class ProfilePage implements OnInit {
   @ViewChild('modalEditInfo') ModalEditInfo!: IonModal;

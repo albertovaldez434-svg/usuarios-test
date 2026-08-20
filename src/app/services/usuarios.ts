@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { SecureStorageService } from './securestorage-service';
 import { ImagenesUsuarios } from '../models/imagenesusuario';
 import { loginResponseDTO } from '../models/loginDTO';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -107,6 +108,23 @@ export class UsuariosService {
     const url = `${environment.URL_API}/api/Usuarios/${idUser}`;
 
     return this.http.delete(url);
+  }
+
+  // sin uso practico, testing de maps.
+  searchTerm(userTerm: string) {
+    //const url = `${environment.URL_API}/api/searchUsuarios/${userTerm}`;
+
+    // return this.http.get<string>(url).pipe(
+    //   switchMap(term => {
+    //     this.http.get<string>(`${environment.URL_API}/api/searchUsuarios/${term}`)
+    //   })
+    // );
+
+    const searchControl = new FormControl();
+
+    searchControl.valueChanges.pipe(
+      switchMap(term => this.http.get<string[]>(`${environment.URL_API}/api/searchUsuarios/${term}`))
+    );
   }
 
   // extras

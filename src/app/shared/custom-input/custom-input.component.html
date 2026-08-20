@@ -1,0 +1,6 @@
+<ion-item>
+  <!-- <ion-label position="{{labelSlot}}">{{labelText}}</ion-label> -->
+  <ion-input type="{{inputType}}" placeholder="{{placeholderText}}" (ionInput)="onInput($event)"
+  (ionBlur)="handleBlur()"></ion-input>
+  <ion-icon name="{{iconName}}" slot="{{iconSlot}}"></ion-icon>
+</ion-item>

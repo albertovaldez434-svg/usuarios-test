@@ -5,12 +5,14 @@ import { SecureStorageService } from './services/securestorage-service';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { loginResponseDTO } from './models/loginDTO';
+import { IonicModule } from '@ionic/angular';
+import { MenuComponent } from './shared/menu/menu.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
-  standalone: false,
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    imports: [IonicModule, MenuComponent],
 })
 export class AppComponent implements OnInit {
   isLogged: boolean = false;

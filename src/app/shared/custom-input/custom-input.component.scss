@@ -1,0 +1,9 @@
+@use '../../../theme/variables.scss' as *;
+
+ion-item {
+  --background: #05061c;
+  
+  border-radius: $border-radius-desktop;
+  font-size: 18px;
+  
+}

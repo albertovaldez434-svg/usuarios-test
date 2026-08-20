@@ -9,9 +9,8 @@ describe('CustomButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomButtonComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), CustomButtonComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(CustomButtonComponent);
     component = fixture.componentInstance;

@@ -14,17 +14,17 @@ import { RegisterFormComponent } from "src/app/shared/register-form/register-for
 import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    UsuariosPageRoutingModule,
-    ReactiveFormsModule,
-    SearchPipe,
-    CustomButtonComponent,
-    RegisterFormComponent,
-    CdkDragPlaceholder
-],
-  declarations: [UsuariosPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        UsuariosPageRoutingModule,
+        ReactiveFormsModule,
+        SearchPipe,
+        CustomButtonComponent,
+        RegisterFormComponent,
+        CdkDragPlaceholder,
+        UsuariosPage
+    ]
 })
 export class UsuariosPageModule {}

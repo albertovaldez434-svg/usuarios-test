@@ -13,17 +13,17 @@ import { ThemeToggleComponent } from "src/app/shared/theme-toggle/theme-toggle.c
 import { RestorePswComponent } from "src/app/shared/restore-psw/restore-psw.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ReactiveFormsModule,
-    LoginPageRoutingModule,
-    RegisterFormComponent,
-    CustomButtonComponent,
-    ThemeToggleComponent,
-    RestorePswComponent
-],
-  declarations: [LoginPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ReactiveFormsModule,
+        LoginPageRoutingModule,
+        RegisterFormComponent,
+        CustomButtonComponent,
+        ThemeToggleComponent,
+        RestorePswComponent,
+        LoginPage
+    ]
 })
 export class LoginPageModule {}

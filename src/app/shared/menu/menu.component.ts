@@ -1,16 +1,17 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { UsuariosService } from '../../services/usuarios';
-import { Router } from '@angular/router';
+import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { PermisoPagina } from 'src/app/models/pages';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
 import { Confirmation } from 'src/app/services/helpers/confirmation';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
-  standalone: false,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonicModule, RouterLinkActive, RouterLink]
 })
 export class MenuComponent implements OnInit {
   user!: loginResponseDTO | null;

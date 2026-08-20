@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NoPreloading, PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NoPreloading, RouterModule, Routes } from '@angular/router';
 import { usersGuard } from './users-guard';
 
 const routes: Routes = [

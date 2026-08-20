@@ -40,15 +40,14 @@ describe('LoginPage', () => {
 
         // configure testing module
         await TestBed.configureTestingModule({
-            declarations: [LoginPage],
-            imports: [IonicModule.forRoot(), ReactiveFormsModule],
-            providers: [
-                { provide: UsuariosService, useValue: userServiceMock },
-                { provide: Router, useValue: routerMock },
-                { provide: ModalController, useValue: {} },
-                { provide: SecureStorageService, useValue: {} }
-            ]
-        }).compileComponents();
+    imports: [IonicModule.forRoot(), ReactiveFormsModule, LoginPage],
+    providers: [
+        { provide: UsuariosService, useValue: userServiceMock },
+        { provide: Router, useValue: routerMock },
+        { provide: ModalController, useValue: {} },
+        { provide: SecureStorageService, useValue: {} }
+    ]
+}).compileComponents();
 
         // create component
         fixture = TestBed.createComponent(LoginPage);

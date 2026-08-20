@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { Users } from 'src/app/models/users';
+import { CustomInputComponent } from "../custom-input/custom-input.component";
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IonicModule],
+  imports: [CommonModule, ReactiveFormsModule, IonicModule, CustomInputComponent]
 })
 export class RegisterFormComponent implements OnInit {
   @Input() Title?: string;
@@ -63,37 +64,39 @@ export class RegisterFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    if (this.registerForm.valid) {
-      // console.log('Form Value:', this.registerForm.value);
+    console.log(this.registerForm);
+    return;
+    // if (this.registerForm.valid) {
+    //   // console.log('Form Value:', this.registerForm.value);
 
-      let formData: Users = {
-        idUser: 0, // Asignar un ID temporal o manejarlo según tu lógica
-        nombre: this.registerForm.value.firstName,
-        apellidos: this.registerForm.value.lastName,
-        email: this.registerForm.value.email,
-        telefono: this.registerForm.value.mobileNumber,
-        password: this.registerForm.value.password,
-      };
+    //   let formData: Users = {
+    //     idUser: 0, // Asignar un ID temporal o manejarlo según tu lógica
+    //     nombre: this.registerForm.value.firstName,
+    //     apellidos: this.registerForm.value.lastName,
+    //     email: this.registerForm.value.email,
+    //     telefono: this.registerForm.value.mobileNumber,
+    //     password: this.registerForm.value.password,
+    //   };
 
-      if (this.userData?.idUser === 999) {
-        formData.idUser = 999, formData.idRol = 999;
-        this.formSubmit.emit(formData);
-        this.submitted = false;
-        this.isEditingData = false;
-        return;
-      }
+    //   if (this.userData?.idUser === 999) {
+    //     formData.idUser = 999, formData.idRol = 999;
+    //     this.formSubmit.emit(formData);
+    //     this.submitted = false;
+    //     this.isEditingData = false;
+    //     return;
+    //   }
 
-      if (this.isEditingData && this.userData) {
-        formData.idUser = this.userData.idUser; // Mantener el mismo ID para edición
-        this.formSubmit.emit(formData);
-        this.submitted = false;
-        this.isEditingData = false;
-      } else {
-        this.formSubmit.emit(null);
-        this.submitted = false;
-        this.isEditingData = false;
-      }
-    }
+    //   if (this.isEditingData && this.userData) {
+    //     formData.idUser = this.userData.idUser; // Mantener el mismo ID para edición
+    //     this.formSubmit.emit(formData);
+    //     this.submitted = false;
+    //     this.isEditingData = false;
+    //   } else {
+    //     this.formSubmit.emit(null);
+    //     this.submitted = false;
+    //     this.isEditingData = false;
+    //   }
+    // }
   }
 
 

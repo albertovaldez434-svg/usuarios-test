@@ -9,9 +9,8 @@ describe('RestorePswComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RestorePswComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), RestorePswComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(RestorePswComponent);
     component = fixture.componentInstance;

@@ -10,13 +10,13 @@ import { RegistroPage } from './registro.page';
 import { RegisterFormComponent } from "src/app/shared/register-form/register-form.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RegistroPageRoutingModule,
-    RegisterFormComponent
-],
-  declarations: [RegistroPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RegistroPageRoutingModule,
+        RegisterFormComponent,
+        RegistroPage
+    ],
 })
 export class RegistroPageModule {}

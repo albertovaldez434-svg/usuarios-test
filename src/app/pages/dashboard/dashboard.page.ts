@@ -8,25 +8,24 @@ import {
   ViewChild
 } from '@angular/core';
 
-import {
-  CdkDragDrop,
-  CdkDragEnter,
-  CdkDragMove
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
 
 import { UserTasks } from 'src/app/models/task';
 import { UsuariosService } from 'src/app/services/usuarios';
-import { IonModal, ModalController, RefresherCustomEvent } from '@ionic/angular';
+import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
 import { Users } from 'src/app/models/users';
 import { loginResponseDTO } from 'src/app/models/loginDTO';
 import { TasksService } from 'src/app/services/tasks/tasks-service';
+import { FormsModule } from '@angular/forms';
+import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
+import { SearchPipe } from '../../search-pipe';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
-  standalone: false
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.page.html',
+    styleUrls: ['./dashboard.page.scss'],
+    imports: [IonicModule, FormsModule, CustomButtonComponent, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, SearchPipe]
 })
 export class DashboardPage implements OnInit {
 

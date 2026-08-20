@@ -8,14 +8,14 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [
-        IonicModule.forRoot()
-      ],
-      providers: [
+    imports: [
+        IonicModule.forRoot(),
+        AppComponent
+    ],
+    providers: [
         provideHttpClient()
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
   });
 
   it('should create the app', () => {

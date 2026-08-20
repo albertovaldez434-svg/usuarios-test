@@ -1,5 +1,29 @@
+@use '../../../theme/variables.scss' as *;
+
+ion-button {
+    border-radius: $button-radius;
+
+    // &.btn-primary {
+    //     border-radius: $button-radius;
+    //     --border-radius: $button-radius;
+
+    //     border-radius: 12px;
+    //     --border-radius: 12px;
+
+    //     --font-size: 14px;
+    //     --color: white;
+    //     --background: var(--primary-btn-bg);
+
+    //     cursor: pointer;
+
+    //     :hover {
+    //         opacity: 0.5;
+    //     }
+    // }
+}
+
 ion-button.btn-primary {
-    --border-radius: 15px;
+    --border-radius: 25px;
     --font-size: 14px;
     --color: white;
     --background: var(--primary-btn-bg);
@@ -12,12 +36,10 @@ ion-button.btn-primary {
 }
 
 ion-button.btn-secondary {
-    border-radius: 15px;
     border: 1px solid var(--secondary-btn-color);
     --font-size: 14px;
     --color: var(--secondary-btn-color);
     --background: var(--secondary-btn-bg);
-    --border-radius: 15px;
 
     cursor: pointer;
 
@@ -34,8 +56,6 @@ ion-button.btn-secondary {
 }
 
 .ripple-parent {
-  position: relative;
-  overflow: hidden;
-
-  border-radius: 15px;
+    position: relative;
+    overflow: hidden;
 }
