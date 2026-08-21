@@ -1,13 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  OnInit,
-  signal,
-  ViewChild
-} from '@angular/core';
-
+import { Component, computed, effect, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
 
 import { UserTasks } from 'src/app/models/task';
@@ -22,10 +13,10 @@ import { CustomButtonComponent } from '../../shared/custom-button/custom-button.
 import { SearchPipe } from '../../search-pipe';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.page.html',
-    styleUrls: ['./dashboard.page.scss'],
-    imports: [IonicModule, FormsModule, CustomButtonComponent, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, SearchPipe]
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.page.html',
+  styleUrls: ['./dashboard.page.scss'],
+  imports: [IonicModule, FormsModule, CustomButtonComponent, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, SearchPipe]
 })
 export class DashboardPage implements OnInit {
 

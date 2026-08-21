@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
   ) {
     this.pages = [
       { title: 'Dashboard', url: '/dashboard', icon: 'document-text-outline', roles: [1, 2, 999] },
-      { title: 'Usuarios', url: '/usuarios', icon: 'list-circle-outline', roles: [1, 999] },
+      { title: 'Usuarios', url: '/users', icon: 'list-circle-outline', roles: [1, 999] },
       { title: 'Perfil', url: '/profile', icon: 'person-outline', roles: [1, 2, 999] }
     ];
 

@@ -1,0 +1,29 @@
+import { Routes } from '@angular/router';
+
+export const routes: Routes = [
+    {
+        path: 'dashboard',
+        loadComponent: () => import('./app/pages/dashboard/dashboard.page').then(m => m.DashboardPage)
+    },
+
+    {
+        path: 'users',
+        loadComponent: () => import('./app/pages/usuarios/usuarios.page').then(m => m.UsuariosPage)
+    },
+
+    {
+        path: 'profile',
+        loadComponent: () => import('./app/pages/profile/profile.page').then(m => m.ProfilePage)
+    },
+
+    {
+        path: 'login',
+        loadComponent: () => import('./app/auth/login/login.page').then(m => m.LoginPage)
+    },
+
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    }
+];
