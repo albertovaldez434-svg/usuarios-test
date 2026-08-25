@@ -1,0 +1,2 @@
+git --no-pager log > log.txt
+// genere un log de todos los commits hechos de la branch seleccionada a un archivo .txt (creo que el nombre puede ser preferencial no solo log.txt)

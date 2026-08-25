@@ -57,6 +57,7 @@ export class RestorePswComponent implements OnInit {
     this.pswMatch = true;
     this.verPsw = false;
     this.verPswConf = false;
+    this.modalCtrl.dismiss();
   }
 
   close() {

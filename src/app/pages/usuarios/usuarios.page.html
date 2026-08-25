@@ -69,7 +69,7 @@
         </table>
       </div>
       } @else {
-      <h4>No hay información disponible</h4>
+      <h4 class="ion-text-center">No hay información disponible</h4>
       }
     </ion-grid>
 
@@ -77,10 +77,3 @@
   </div>
 
 </ion-content>
-
-<ion-modal #modalSignUp class="custom-modal" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
-  <ng-template>
-    <app-register-form [Title]="'Registrar'" [userData]="usuarioToEdit"
-      (formSubmit)="beginSignup($event)"></app-register-form>
-  </ng-template>
-</ion-modal>

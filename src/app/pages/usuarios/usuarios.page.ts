@@ -7,15 +7,15 @@ import { RestorePswComponent } from 'src/app/shared/restore-psw/restore-psw.comp
 import { Users } from 'src/app/models/users';
 import { Confirmation } from 'src/app/services/helpers/confirmation';
 import { UsuariosService } from 'src/app/services/usuarios';
-import { RegisterFormComponent } from '../../shared/register-form/register-form.component';
 import { SearchPipe } from '../../search-pipe';
+import { RegisterFormComponent } from 'src/app/shared/register-form/register-form.component';
 
 @Component({
-    selector: 'app-usuarios',
-    templateUrl: './usuarios.page.html',
-    styleUrls: ['./usuarios.page.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonicModule, FormsModule, RegisterFormComponent, SearchPipe]
+  selector: 'app-usuarios',
+  templateUrl: './usuarios.page.html',
+  styleUrls: ['./usuarios.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [IonicModule, FormsModule, SearchPipe]
 })
 export class UsuariosPage implements OnInit {
   private loaded = false;
@@ -28,7 +28,7 @@ export class UsuariosPage implements OnInit {
   signupForm: FormGroup;
   searchValue = signal('');
   idUserSignal = signal<number>(0);
-  selectedUser = computed<Users | undefined>(() => 
+  selectedUser = computed<Users | undefined>(() =>
     this.usuarios().find(usr => usr.idUser == this.idUserSignal())
   );
 
@@ -82,19 +82,48 @@ export class UsuariosPage implements OnInit {
 
   readonly hasUsers = computed(() => this.usuarios().length > 0);
 
-  async openModalFunc(mensaje: string) {
+  async openModalFunc(mTitulo: string, mensaje: string) {
     const modal = this.modalCtrl.create({
       component: IonModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
       initialBreakpoint: 0.5,
       cssClass: 'custom-modal',
       componentProps: {
+        titulo: mTitulo,
         mensaje: mensaje
       }
-
     });
 
     (await modal).present();
+  }
+
+  async OpenRegisterModal(title: string) {
+    const modal = this.modalCtrl.create({
+      component: RegisterFormComponent,
+      breakpoints: [0, 0.25, 0.5, 0.75],
+      initialBreakpoint: 0.75,
+      cssClass: 'custom-modal',
+      componentProps: {
+        Title: title,
+      }
+    });
+
+    (await modal).present();
+  }
+
+  async editarPsw() {
+    const pswModal = this.modalCtrl.create({
+      component: RestorePswComponent,
+      breakpoints: [0, 0.25, 0.5, 0.75],
+      initialBreakpoint: 0.75,
+      cssClass: 'custom-modal',
+      componentProps: {
+        title: 'Editar contraseña',
+        warning: true
+      }
+    });
+
+    (await pswModal).present();
   }
 
   obtenerUsuarios = () => {
@@ -113,14 +142,14 @@ export class UsuariosPage implements OnInit {
         this.usersService.setUsers(this.usuarios());
       },
       error: () => {
-        this.openModalFunc('No se pudo cargar la informacion de usuarios');
+        this.openModalFunc('Error', 'No se pudo cargar la informacion de usuarios');
       }
     });
   }
 
   signupFunc() {
     this.editandoUsuario = false;
-    this.modalSignUp.present();
+    this.OpenRegisterModal('Nuevo usuario');
   }
 
   async beginSignup(data: Users | null) {
@@ -147,7 +176,7 @@ export class UsuariosPage implements OnInit {
 
       this.usuarios.update(usuarios => [...usuarios, newUser]);
       this.usersService.setUsers(this.usuarios());
-      this.openModalFunc('Usuario registrado exitosamente');
+      this.openModalFunc('Éxito', 'Usuario registrado exitosamente');
       this.signupForm.reset();
       return;
     }
@@ -158,10 +187,10 @@ export class UsuariosPage implements OnInit {
         //this.usuarios.push(response);
         this.usuarios.update(usuarios => [...usuarios, response]);
         this.usersService.setUsers(this.usuarios());
-        this.openModalFunc('Usuario registrado exitosamente');
+        this.openModalFunc('Éxito', 'Usuario registrado exitosamente');
         this.signupForm.reset();
       }, error: () => {
-        this.openModalFunc('Error al registrar el usuario');
+        this.openModalFunc('Error', 'Error al registrar el usuario');
         return of([]);
       }
     });
@@ -185,7 +214,7 @@ export class UsuariosPage implements OnInit {
     //   idRol: this.usuarioToEdit.idRol
     // };
 
-    this.modalSignUp.present();
+    this.OpenRegisterModal('Editar usuario');
   }
 
   guardarCambiosUsuario() {
@@ -195,14 +224,14 @@ export class UsuariosPage implements OnInit {
       this.usuarioToEdit.apellidos = formData.Apellidos;
       this.usuarioToEdit.email = formData.Email;
       this.usuarioToEdit.telefono = formData.Telefono;
-      this.usuarioToEdit.idRol = parseInt(formData.Rol)
+      this.usuarioToEdit.idRol = parseInt(formData.Rol);
     }
 
     if (this.usersService.loggedData$()?.idRol == 999) {
       this.usersService.setUsers(this.usuarios());
       //// console.log(this.usuarios());
       this.modalSignUp.dismiss();
-      this.openModalFunc('Usuario registrado exitosamente');
+      this.openModalFunc('Éxito', 'Usuario registrado exitosamente');
       this.signupForm.reset();
       this.editandoUsuario = false;
       return;
@@ -215,7 +244,7 @@ export class UsuariosPage implements OnInit {
       },
       error: (error) => {
         // console.log(error);
-        this.openModalFunc('Error al editar el usuario');
+        this.openModalFunc('Error', 'Error al editar el usuario');
       }
     });
 
@@ -225,7 +254,7 @@ export class UsuariosPage implements OnInit {
     this.idUserSignal.set(idUser);
     const data = this.selectedUser();
     if (!data) {
-      this.openModalFunc('No se selecciono un usuario.');
+      this.openModalFunc('Error', 'No se selecciono un usuario.');
       return;
     }
     this.confirmationService.openConfirmationSheet('Eliminar Usuario', 'Va a eliminar a este usuario, ¿Desea continuar?',
@@ -237,13 +266,13 @@ export class UsuariosPage implements OnInit {
     if (this.usersService.loggedData$()?.idRol === 999) {
       this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
       //this.usersService.setUsers(this.usuarios);
-      this.openModalFunc('Usuario eliminado');
+      this.openModalFunc('Éxito', 'Usuario eliminado');
       return;
     }
 
     this.usersService.deleteUsuario(idUser).subscribe({
       next: () => {
-        this.openModalFunc('Usuario eliminado');
+        this.openModalFunc('Éxito', 'Usuario eliminado');
         this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
         //this.usersService.setUsers(this.usuarios);
         this.idUserSignal.set(0);
@@ -251,23 +280,9 @@ export class UsuariosPage implements OnInit {
       },
       error: (error) => {
         // console.log(error);
-        this.openModalFunc('Error al eliminar usuario');
+        this.openModalFunc('Error', 'Error al eliminar usuario');
       }
     });
-  }
-
-  async editarPsw() {
-    const pswModal = this.modalCtrl.create({
-      component: RestorePswComponent,
-      breakpoints: [0, 0.25, 0.5, 0.75],
-      initialBreakpoint: 0.75,
-      componentProps: {
-        title: 'Editar Psw',
-        warning: true
-      }
-    });
-
-    (await pswModal).present();
   }
 
 }

@@ -122,8 +122,8 @@ ion-modal.custom-modal {
     --border-top-right-radius: 25px;
 
 
-    --color: black;
-    --background: white;
+    --color: var(--ion-txt-color);
+    --background: var(--ion-background-color);
 
 
 }

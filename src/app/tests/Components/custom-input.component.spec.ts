@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CustomInputComponent } from './custom-input.component';
+import { CustomInputComponent } from '../../shared/custom-input/custom-input.component';
 
 describe('CustomInputComponent', () => {
   let component: CustomInputComponent;

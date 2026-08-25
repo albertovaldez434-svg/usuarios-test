@@ -1,12 +1,24 @@
+:host {
+  display: block;
+  background-color: #05061c;
+}
+
+ion-toolbar {
+  --background: var(--ion-cont-bg);
+}
+
 .ion-page {
   height: 0;
 }
-.signUpfrm ion-item {
-  margin-bottom: 16px;
-  border-radius: 15px;
-  --background: var(--ion-background-color);
-  --color: var(--ion-txt-color);
-  font-size: 18px;
+
+ion-item {
+  --border-radius: 14px;
+  --background: #05061c;
+}
+
+ion-button {
+  min-height: 48px;
+  --border-radius: 14px;
 }
 
 ion-icon {
