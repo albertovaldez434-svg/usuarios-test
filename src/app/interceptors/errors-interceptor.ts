@@ -6,7 +6,7 @@ import { NotificationService } from '../services/notifications/notification-serv
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-    private notifService = inject(NotificationService)
+  private notifService = inject(NotificationService)
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -15,11 +15,11 @@ export class ErrorsInterceptor implements HttpInterceptor {
         switch (error.status) {
           case 0:
             // Network error or server unavailable
-            this.notifService.showNotificationToast('Error de conexión: ' + error);
+            this.notifService.showNotificationToast('Error de conexión');
             break;
 
           case 400:
-            this.notifService.showNotificationToast('Solicitud Inválida ' + error.error);
+            this.notifService.showNotificationToast('Solicitud Inválida');
             break;
 
           case 401:
@@ -36,11 +36,11 @@ export class ErrorsInterceptor implements HttpInterceptor {
             break;
 
           case 500:
-            this.notifService.showNotificationToast('Error de Servidor');
+            this.notifService.showNotificationToast('Error del Servidor');
             break;
 
           default:
-            this.notifService.showNotificationToast('Error Inesperado: ' + error);
+            this.notifService.showNotificationToast('Error Inesperado');
 
         }
         return throwError(() => error);
