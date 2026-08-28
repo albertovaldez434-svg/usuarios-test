@@ -11,12 +11,13 @@ import { loginResponseDTO } from 'src/app/models/loginDTO';
 import { TasksService } from 'src/app/services/tasks/tasks-service';
 import { forkJoin, switchMap } from 'rxjs';
 import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
+import { CustomInputComponent } from "src/app/shared/custom-input/custom-input.component";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
-    imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent]
+    imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent]
 })
 export class LoginPage implements OnInit {
   @ViewChild('restorePswMdl') restorePswMdl!: IonModal;

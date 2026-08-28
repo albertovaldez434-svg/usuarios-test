@@ -568,19 +568,38 @@ export class DashboardPage implements OnInit {
   }
 
   changeTaskStatus(idStatus: number) {
+    const selected = this.selectedTask();
 
-    this.selectedTask.update(task =>
-      task
-        ? {
-          ...task,
-          status: idStatus
-        }
-        : null
-    );
+    if (!selected) return;
+
+    // actualmente aunque esto funcione, no es adecuado/recomendado
+    // tengo 2 fuentes de verdad (selectedTask & alltasks)
+    // deberia de ser 1 sola, filstrando por alltasks
+    // ya que aqui debo actualizar tanto el signal del selectedtask como alltasks.
+
+    // this.selectedTask.update(task => task ? { ...task, status: idStatus } : null);
+
+    // this.allTasks.update(tasks =>
+    //   tasks.map(task =>
+    //     task.id === selected.id ? { ...task, status: idStatus } : task
+    //   )
+    // );
+
+    // lo recomendado:
+
+    // this.allTasks.update(tasks =>
+    //   tasks.map(task =>
+    //     task.id === selected.id ? { ...task, status: idStatus } : task
+    //   )
+    // );
+
+    // esto seria, considerando que refactorizo el selectedtask a un selectedtaskid
+    // ya que solo necesitaria el id y no el task completo.
+    // pendiente.
+
   }
 
   saveTaskChanges() {
-
     const edited = this.editableTask();
 
     if (!edited) {
@@ -593,35 +612,26 @@ export class DashboardPage implements OnInit {
      * Actualizamos allTasks, que es la fuente principal.
      */
     this.allTasks.update(tasks =>
-      tasks.map(task =>
-        task.id === edited.id
-          ? edited
-          : task
-      )
+      tasks.map(task => task.id === edited.id ? edited : task)
     );
 
     this.selectedTask.set(edited);
 
     this.tareasService.actualizarTarea(edited).subscribe({
-
       next: () => {
-
+        this.modalCtrl.dismiss();
         this.openModalFunc(
           'Éxito',
           'Tarea actualizada correctamente'
         );
-
         this.cleanTaskFlow();
       },
-
       error: () => {
-
         this.openModalFunc(
           'Error',
           'Error al actualizar la tarea'
         );
       }
-
     });
   }
 
@@ -641,39 +651,29 @@ export class DashboardPage implements OnInit {
     }
 
     const newTarea: UserTasks = {
-
       title: this.newTaskTitle,
-
       description: this.newTaskDesc,
-
       id: 0,
-
       idUser: loggedId,
-
       status: this.newTaskStatus
-
     };
 
     this.tareasService.agregarTarea(newTarea).subscribe({
-
       next: (task) => {
-
         this.addTaskHelper(task);
-
+        this.modalCtrl.dismiss();
         this.openModalFunc(
           'Éxito',
           'Se creo la tarea correctamente.'
         );
+        this.cleanTaskFlow();
       },
-
       error: () => {
-
         this.openModalFunc(
           'Error',
           'Hubo un problema al crear la tarea'
         );
       }
-
     });
   }
 

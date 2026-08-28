@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { IonicModule, IonRippleEffect } from "@ionic/angular";
 import { IonButton } from "@ionic/angular/standalone";
 import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
@@ -17,6 +17,7 @@ export class CustomButtonComponent implements OnInit {
   @Input() slot: 'start' | 'end' = 'start';
   @Input() size: 'large' | 'default' | 'small' = 'default';
   @Input() class: string = '';
+  @Input() disabled: boolean = false;
 
   @Output() clicked = new EventEmitter<void>();
 

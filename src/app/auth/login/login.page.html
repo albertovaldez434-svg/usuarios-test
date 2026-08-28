@@ -7,23 +7,27 @@
       </div>
 
       <div class="inputs-container" [formGroup]="loginForm">
-        <ion-item lines="none" class="input-item">
+        <!-- <ion-item lines="none" class="input-item">
           <ion-icon name="mail-outline" slot="start" class="ion-margin-end"></ion-icon>
           <ion-input placeholder="Email" formControlName="Email" type="text"></ion-input>
-        </ion-item>
-        <ion-item lines="none" class="input-item">
+        </ion-item> -->
+        <app-custom-input iconSlot="start" iconName="mail-outline"
+          placeholderText="mail@example.com" inputType="email" formControlName="Email" />
+        <!-- <ion-item lines="none" class="input-item">
           <ion-icon name="lock-closed-outline" slot="start" class="ion-margin-end"></ion-icon>
           <ion-input placeholder="Contraseña" formControlName="Password" type="password"></ion-input>
-        </ion-item>
+        </ion-item> -->
+        <app-custom-input iconSlot="start" iconName="lock-closed-outline"
+          placeholderText="Contraseña" inputType="password" formControlName="Password" />
       </div>
 
       <div class="buttons-container">
         <app-custom-button [text]="'Ingresar'" [type]="'primary'" [iconName]="'log-in-outline'" [expand]="'block'"
-          (clicked)="loginFunction()"></app-custom-button>
+          (clicked)="loginFunction()" />
         <app-custom-button [text]="'Registrarse'" [type]="'primary'" [iconName]="'person-add-outline'"
-          (clicked)="registerFunction()"></app-custom-button>
+          (clicked)="registerFunction()" />
         <app-custom-button [text]="'Modo demostración'" [type]="'secondary'" [iconName]="'flask-outline'"
-          (clicked)="logginInvitado()"></app-custom-button>
+          (clicked)="logginInvitado()" />
 
         <!-- <a class="link-psw" (click)="restorePswMdl.present()">¿Olvidaste tu contraseña?</a> -->
       </div>

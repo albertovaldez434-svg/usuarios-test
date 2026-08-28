@@ -4,22 +4,24 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, NG_VALUE_ACCES
 import { IonicModule, ModalController } from '@ionic/angular';
 import { Users } from 'src/app/models/users';
 import { CustomInputComponent } from "../custom-input/custom-input.component";
+import { CustomButtonComponent } from "../custom-button/custom-button.component";
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, IonicModule, CustomInputComponent]
+  imports: [CommonModule, ReactiveFormsModule, IonicModule, CustomInputComponent, CustomButtonComponent]
 })
 export class RegisterFormComponent implements OnInit {
   @Input() Title?: string;
   @Input() userData?: Users;
   @Output() formSubmit = new EventEmitter<Users | null>();
-  
+
   registerForm!: FormGroup;
   submitted = false;
   passwordVisible = false;
+  confPwsVisible = false;
   isEditingData: boolean = false;
 
   constructor(
@@ -56,6 +58,10 @@ export class RegisterFormComponent implements OnInit {
     this.passwordVisible = !this.passwordVisible;
   }
 
+  toggleConfPswVisibility() {
+    this.confPwsVisible = !this.confPwsVisible;
+  }
+
   closeModal() {
     this.resetForm();
     this.modalCtrl.dismiss();
@@ -64,8 +70,13 @@ export class RegisterFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.registerForm);
-    return;
+
+    if (this.registerForm.invalid) {
+      console.log(this.registerForm.controls);
+      return;
+    }
+
+    //return;
     // if (this.registerForm.valid) {
     //   // console.log('Form Value:', this.registerForm.value);
 
@@ -106,6 +117,7 @@ export class RegisterFormComponent implements OnInit {
       this.formSubmit.emit(null);
       this.modalCtrl.dismiss();
     }
+
     this.submitted = false;
     this.registerForm.reset();
   }

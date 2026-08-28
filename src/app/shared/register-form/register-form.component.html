@@ -14,15 +14,8 @@
     <!-- First Name -->
     <ion-col size="12" size-md="6">
       <!-- custom input component -->
-      <app-custom-input
-        [labelSlot]="'stacked'"
-        [labelText]="'Tu Nombre'"
-        [iconName]="'person-outline'"
-        [iconSlot]="'start'"
-        [inputType]="'text'"
-        [placeholderText]="'Ej: Alberto'"
-        formControlName="firstName"
-      ></app-custom-input>
+      <app-custom-input [iconName]="'person-outline'" [iconSlot]="'start'" [inputType]="'text'"
+        [placeholderText]="'Ej: Alberto'" formControlName="firstName" />
       <!-- custom input component -->
       @if (submitted && f['firstName'].invalid) {
       <div class="error-message">
@@ -38,15 +31,8 @@
 
     <!-- Last Name -->
     <ion-col size="12" size-md="6">
-      <app-custom-input
-        [labelSlot]="'stacked'"
-        [labelText]="'Tu Apellido'"
-        [iconName]="'person-outline'"
-        [iconSlot]="'start'"
-        [inputType]="'text'"
-        [placeholderText]="'Ej: Valdez López'"
-        formControlName="lastName"
-      ></app-custom-input>
+      <app-custom-input [iconName]="'person-outline'" [iconSlot]="'start'" [inputType]="'text'"
+        [placeholderText]="'Ej: Valdez López'" formControlName="lastName" />
       @if (submitted && f['lastName'].invalid) {
       <div class="error-message">
         @if (f['lastName'].errors?.['required']) {
@@ -61,15 +47,8 @@
 
     <!-- Email -->
     <ion-col size="12">
-      <app-custom-input
-        [labelSlot]="'stacked'"
-        [labelText]="'Tu Correo'"
-        [iconName]="'mail-outline'"
-        [iconSlot]="'start'"
-        [inputType]="'email'"
-        [placeholderText]="'Email@example.com'"
-        formControlName="email"
-      ></app-custom-input>
+      <app-custom-input [iconName]="'mail-outline'" [iconSlot]="'start'" [inputType]="'email'"
+        [placeholderText]="'Email@example.com'" formControlName="email" />
       @if (submitted && f['email'].invalid) {
       <div class="error-message">
         @if (f['email'].errors?.['required']) {
@@ -84,15 +63,8 @@
 
     <!-- Mobile Number -->
     <ion-col size="12" size-md="6">
-      <app-custom-input
-        [labelSlot]="'stacked'"
-        [labelText]="'Telefono'"
-        [iconName]="'call-outline'"
-        [iconSlot]="'start'"
-        [inputType]="'tel'"
-        [placeholderText]="'(+52) 6441727482'"
-        formControlName="mobileNumber"
-      ></app-custom-input>
+      <app-custom-input [iconName]="'call-outline'" [iconSlot]="'start'" [inputType]="'tel'"
+        [placeholderText]="'(+52) 6441727482'" formControlName="mobileNumber" />
       @if (submitted && f['mobileNumber'].invalid) {
       <div class="error-message">
         @if (f['mobileNumber'].errors?.['required']) {
@@ -107,21 +79,9 @@
 
     <!-- Password -->
     <ion-col size="12" size-md="6">
-      <!-- <ion-item>
-        <ion-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
-          placeholder="Contraseña segura"></ion-input>
-        <ion-icon slot="end" [name]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
-          (click)="togglePasswordVisibility()" class="password-toggle"></ion-icon>
-      </ion-item> -->
-      <app-custom-input
-        [labelSlot]="'stacked'"
-        [labelText]="'Contraseña'"
-        [iconName]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
-        [iconSlot]="'end'"
-        [inputType]="passwordVisible ? 'text' : 'password'"
-        [placeholderText]="'Contraseña'"
-        formControlName="confirmPassword"
-      ></app-custom-input>
+      <app-custom-input [iconName]="passwordVisible ? 'eye-off-outline' : 'eye-outline'" [iconSlot]="'end'"
+        [inputType]="passwordVisible ? 'text' : 'password'" [placeholderText]="'Contraseña'"
+        (Clicked)="togglePasswordVisibility()" formControlName="confirmPassword" />
       @if (submitted && f['password'].invalid) {
       <div class="error-message">
         @if (f['password'].errors?.['required']) {
@@ -136,21 +96,9 @@
 
     <!-- Confirm Password -->
     <ion-col size="12" size-md="6">
-      <!-- <ion-item>
-        <ion-input [type]="passwordVisible ? 'text' : 'password'" formControlName="confirmPassword"
-          placeholder="Confirma tu contraseña"></ion-input>
-        <ion-icon slot="end" [name]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
-          (click)="togglePasswordVisibility()" class="password-toggle"></ion-icon>
-      </ion-item> -->
-      <app-custom-input
-        [labelSlot]="'stacked'"
-        [labelText]="'Contraseña'"
-        [iconName]="passwordVisible ? 'eye-off-outline' : 'eye-outline'"
-        [iconSlot]="'end'"
-        [inputType]="passwordVisible ? 'text' : 'password'"
-        [placeholderText]="'Confirma tu contraseña'"
-        formControlName="confirmPassword"
-      ></app-custom-input>
+      <app-custom-input [iconName]="confPwsVisible ? 'eye-off-outline' : 'eye-outline'" [iconSlot]="'end'"
+        [inputType]="confPwsVisible ? 'text' : 'password'" [placeholderText]="'Confirma tu contraseña'"
+        formControlName="confirmPassword" (Clicked)="toggleConfPswVisibility()" />
       @if (submitted && f['confirmPassword'].invalid) {
       <div class="error-message">
         @if (f['confirmPassword'].errors?.['required']) {
@@ -163,30 +111,30 @@
     <!-- Buttons -->
     <ion-row>
       <ion-col size="12" size-md="6">
-        @if (isEditingData) {
-        <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
-          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
-          Cancelar
-        </ion-button>
+        @if (!isEditingData) {
+        <app-custom-button [text]="'Cancelar'" [iconName]="'close-circle-outline'" [type]="'secondary'"
+          [expand]="'block'" [slot]="'start'" (clicked)="closeModal()" />
         } @else {
-        <ion-button expand="block" shape="round" fill="outline" type="button" (click)="resetForm()">
-          <ion-icon slot="start" name="refresh-circle"></ion-icon>
-          Limpiar
-        </ion-button>
+        <app-custom-button [text]="'Limpiar'" [iconName]="'refresh-circle'" [type]="'secondary'" [expand]="'block'"
+          [slot]="'start'" (clicked)="resetForm()" />
         }
-      </ion-col>
-      <ion-col size="12" size-md="6">
-        <ion-button expand="block" shape="round" type="submit" [disabled]="!registerForm.valid && submitted">
-          @if (isEditingData) {
-          <ion-icon slot="start" name="save-outline"></ion-icon>
-          Guardar Cambios
-          } @else {
-          <ion-icon slot="start" name="checkmark-circle"></ion-icon>
-          Registrarse
-          }
-        </ion-button>
+        <app-custom-button (clicked)="onSubmit()" [iconName]="'close-circle-outline'" [expand]="'block'" [slot]="'start'"
+          [text]="isEditingData ? 'Guardar Cambios' : 'Registrarse'"
+          [iconName]="isEditingData ? 'save-outline' : 'checkmark-circle'"
+          [disabled]="!registerForm.invalid && submitted"
+          />
       </ion-col>
     </ion-row>
 
   </ion-grid>
 </form>
+
+<!-- [disabled]="!registerForm.invalid && submitted" -->
+
+<!-- 
+tareas pendientes 27/08/2026
+1. estoy tratando de usar el custom-button como un type submit pero no esta funcionando, probablemente no funcionando
+sin algo como el controlvalueaccess.
+2. algun modo offline a largo plazo, tarea de baja prioridad pero debo crearla. 
+3. hecha: separar el toggle de visibilidad del campo de contraseñas
+-->

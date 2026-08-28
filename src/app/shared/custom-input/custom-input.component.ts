@@ -18,16 +18,19 @@ import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, ControlValueAccess
   ]
 })
 export class CustomInputComponent implements ControlValueAccessor {
-  @Input() labelSlot: 'fixed' | "floating" | "stacked" | 'undefined' = 'undefined';
+  // @Input() labelText: string = '';
+  // @Input() labelSlot: 'fixed' | 'floating' | 'stacked' | 'undefined' = 'undefined';
+
   @Input() iconSlot: 'start' | 'end' = 'start';
   @Input() iconName: string = '';
-  @Input() labelText: string = '';
   @Input() placeholderText: string = '';
   @Input() inputType: 'text' | 'email' | 'tel' | 'password' = 'text';
+  
   // como el template ahora se usa el ControlValueAccessor, ya no hay que poner directamente el formcontrolname
   // @Input() formCtrlName: string = '';
 
   @Output() valueChange = new EventEmitter<string>();
+  @Output() Clicked = new EventEmitter<void>();
 
   value = '';
 
@@ -67,6 +70,10 @@ export class CustomInputComponent implements ControlValueAccessor {
     this.onChange(value);
 
     this.valueChange.emit(value);
+  }
+
+  iconClicked(): void{ 
+    this.Clicked.emit();
   }
 
 }
