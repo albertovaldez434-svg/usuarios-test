@@ -118,7 +118,7 @@
         <app-custom-button [text]="'Limpiar'" [iconName]="'refresh-circle'" [type]="'secondary'" [expand]="'block'"
           [slot]="'start'" (clicked)="resetForm()" />
         }
-        <app-custom-button (clicked)="onSubmit()" [iconName]="'close-circle-outline'" [expand]="'block'" [slot]="'start'"
+        <app-custom-button [type]="'submit'" [iconName]="'close-circle-outline'" [expand]="'block'" [slot]="'start'"
           [text]="isEditingData ? 'Guardar Cambios' : 'Registrarse'"
           [iconName]="isEditingData ? 'save-outline' : 'checkmark-circle'"
           [disabled]="!registerForm.invalid && submitted"

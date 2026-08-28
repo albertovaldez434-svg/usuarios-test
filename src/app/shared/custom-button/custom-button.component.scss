@@ -1,29 +1,11 @@
 @use '../../../theme/variables.scss' as *;
 
 ion-button {
-    border-radius: $button-radius;
-
-    // &.btn-primary {
-    //     border-radius: $button-radius;
-    //     --border-radius: $button-radius;
-
-    //     border-radius: 12px;
-    //     --border-radius: 12px;
-
-    //     --font-size: 14px;
-    //     --color: white;
-    //     --background: var(--primary-btn-bg);
-
-    //     cursor: pointer;
-
-    //     :hover {
-    //         opacity: 0.5;
-    //     }
-    // }
+    border-radius: $button-radius; //aqui si funciona la variable
+    --border-radius: 25px; // aqui si se ocupa directo el valor
 }
 
 ion-button.btn-primary {
-    --border-radius: 25px;
     --font-size: 14px;
     --color: white;
     --background: var(--primary-btn-bg);
