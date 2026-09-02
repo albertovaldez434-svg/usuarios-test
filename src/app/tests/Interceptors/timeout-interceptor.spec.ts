@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpInterceptorFn } from '@angular/common/http';
 
-import { timeoutInterceptor } from 'src/app/interceptors/timeout-interceptor';
+import { timeoutInterceptor } from 'src/app/core/interceptors/timeout-interceptor';
 
 describe('timeoutInterceptor', () => {
   const interceptor: HttpInterceptorFn = (req, next) => 

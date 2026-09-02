@@ -1,16 +1,16 @@
 import { Component, computed, effect, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
 
-import { UserTasks } from 'src/app/models/task';
-import { UsuariosService } from 'src/app/services/usuarios';
+import { UserTasks } from 'src/app/core/models/task';
+import { UsuariosService } from 'src/app/core/services/usuarios';
 import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
-import { Users } from 'src/app/models/users';
-import { loginResponseDTO } from 'src/app/models/loginDTO';
-import { TasksService } from 'src/app/services/tasks/tasks-service';
+import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
+import { Users } from 'src/app/core/models/users';
+import { loginResponseDTO } from 'src/app/core/models/loginDTO';
+import { TasksService } from 'src/app/features/tasks/services/tasks-service';
 import { FormsModule } from '@angular/forms';
-import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
-import { SearchPipe } from '../../search-pipe';
+import { CustomButtonComponent } from '../../shared/components/custom-button/custom-button.component';
+import { SearchPipe } from '../../shared/pipes/search-pipe';
 
 @Component({
   selector: 'app-dashboard',

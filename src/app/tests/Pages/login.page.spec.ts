@@ -3,12 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'
 import { of } from 'rxjs';
 
-import { LoginPage } from 'src/app/auth/login/login.page';
-import { UsuariosService } from 'src/app/services/usuarios';
+import { LoginPage } from 'src/app/features/auth/login/login.page';
+import { UsuariosService } from 'src/app/core/services/usuarios';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { SecureStorageService } from 'src/app/services/securestorage-service';
-import { AuthUser } from 'src/app/models/users';
+import { SecureStorageService } from 'src/app/core/services/securestorage-service';
+import { AuthUser } from 'src/app/core/models/users';
 
 // describe('nombre_de_prueba')
 describe('LoginPage', () => {

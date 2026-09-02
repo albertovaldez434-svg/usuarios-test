@@ -11,10 +11,10 @@ import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
 import { AppComponent } from './app/app.component';
 import { routes } from './app.routes';
 
-import { timeoutInterceptor } from './app/interceptors/timeout-interceptor';
-import { AuthInterceptor } from './app/interceptors/auth-interceptor';
-import { LoadingInterceptor } from './app/interceptors/loading-interceptor';
-import { ErrorsInterceptor } from './app/interceptors/errors-interceptor';
+import { timeoutInterceptor } from './app/core/interceptors/timeout-interceptor';
+import { AuthInterceptor } from './app/core/interceptors/auth-interceptor';
+import { LoadingInterceptor } from './app/core/interceptors/loading-interceptor';
+import { ErrorsInterceptor } from './app/core/interceptors/errors-interceptor';
 
 
 bootstrapApplication(AppComponent, {

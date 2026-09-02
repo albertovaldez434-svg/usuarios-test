@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, effect, OnInit, signal, V
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
 import { of } from 'rxjs';
-import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
-import { RestorePswComponent } from 'src/app/shared/restore-psw/restore-psw.component';
-import { Users } from 'src/app/models/users';
-import { Confirmation } from 'src/app/services/helpers/confirmation';
-import { UsuariosService } from 'src/app/services/usuarios';
-import { SearchPipe } from '../../search-pipe';
-import { RegisterFormComponent } from 'src/app/shared/register-form/register-form.component';
+import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
+import { RestorePswComponent } from 'src/app/shared/components/restore-psw/restore-psw.component';
+import { Users } from 'src/app/core/models/users';
+import { Confirmation } from 'src/app/core/services/helpers/confirmation';
+import { UsuariosService } from 'src/app/core/services/usuarios';
+import { SearchPipe } from '../../shared/pipes/search-pipe';
+import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
 
 @Component({
   selector: 'app-usuarios',

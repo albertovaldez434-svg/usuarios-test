@@ -105,15 +105,16 @@ src
 │
 ├── features
 │   ├── auth
+│   │   └── login
 │   ├── dashboard
-│   ├── tasks
+│   ├── users
 │   ├── profile
-│   └── settings
+│   └── tasks
 │
 └── assets
 ```
 
-The application follows a modular architecture to improve scalability, maintainability and code organization.
+The application follows a feature-based architecture. Cross-cutting infrastructure lives in `core`, reusable UI and pipes live in `shared`, and user-facing functionality is grouped under `features`.
 
 ---
 

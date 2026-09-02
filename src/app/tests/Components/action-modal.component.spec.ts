@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ActionModalComponent } from 'src/app/shared/action-modal/action-modal.component';
+import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
 
 describe('ActionModalComponent', () => {
   let component: ActionModalComponent;

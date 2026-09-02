@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { UserTasks } from 'src/app/models/task';
+import { UserTasks } from 'src/app/core/models/task';
 import { environment } from 'src/environments/environment';
-import { SecureStorageService } from '../securestorage-service';
+import { SecureStorageService } from '../../../core/services/securestorage-service';
 import { tap } from 'rxjs';
 
 @Injectable({

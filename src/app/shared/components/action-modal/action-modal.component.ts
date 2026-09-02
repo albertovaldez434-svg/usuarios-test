@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
-import { Confirmation } from 'src/app/services/helpers/confirmation';
+import { Confirmation } from 'src/app/core/services/helpers/confirmation';
 
 @Component({
   selector: 'app-action-modal',

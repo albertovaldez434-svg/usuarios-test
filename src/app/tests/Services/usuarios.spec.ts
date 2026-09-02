@@ -8,9 +8,9 @@ import { TestBed } from "@angular/core/testing";
 //se importa los http testing controllers
 import { provideHttpClientTesting, HttpTestingController } from "@angular/common/http/testing"
 import { provideHttpClient } from "@angular/common/http";
-import { Login } from "src/app/models/login";
-import { SecureStorageService } from "src/app/services/securestorage-service";
-import { UsuariosService } from "src/app/services/usuarios";
+import { Login } from "src/app/core/models/login";
+import { SecureStorageService } from "src/app/core/services/securestorage-service";
+import { UsuariosService } from "src/app/core/services/usuarios";
 import { environment } from "src/environments/environment";
 
 

@@ -1,5 +1,5 @@
 import { TestBed } from "@angular/core/testing";
-import { Crypto } from "src/app/services/crypto"
+import { Crypto } from "src/app/core/services/crypto"
 
 describe('Crypto Test', () => {
     let cryptService: Crypto;

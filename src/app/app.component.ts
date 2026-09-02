@@ -1,12 +1,12 @@
 import { Component, effect, OnInit } from '@angular/core';
-import { UsuariosService } from './services/usuarios';
+import { UsuariosService } from './core/services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
-import { SecureStorageService } from './services/securestorage-service';
+import { SecureStorageService } from './core/services/securestorage-service';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { loginResponseDTO } from './models/loginDTO';
+import { loginResponseDTO } from './core/models/loginDTO';
 import { IonicModule } from '@ionic/angular';
-import { MenuComponent } from './shared/menu/menu.component';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 @Component({
     selector: 'app-root',

@@ -5,10 +5,9 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { UserTasks } from 'src/app/models/task';
-import { SecureStorageService } from 'src/app/services/securestorage-service';
-
-import { TasksService } from 'src/app/services/tasks/tasks-service';
+import { UserTasks } from 'src/app/core/models/task';
+import { SecureStorageService } from 'src/app/core/services/securestorage-service';
+import { TasksService } from 'src/app/features/tasks/services/tasks-service';
 import { environment } from 'src/environments/environment';
 
 

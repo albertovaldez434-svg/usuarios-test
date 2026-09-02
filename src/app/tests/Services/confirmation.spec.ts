@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
 
-import { Confirmation } from 'src/app/services/helpers/confirmation';
+import { Confirmation } from 'src/app/core/services/helpers/confirmation';
 
 describe('Confirmation', () => {
   const myTitle = 'Titulo modal';

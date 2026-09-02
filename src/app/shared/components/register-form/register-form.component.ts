@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { Users } from 'src/app/models/users';
+import { Users } from 'src/app/core/models/users';
 import { CustomInputComponent } from "../custom-input/custom-input.component";
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
 

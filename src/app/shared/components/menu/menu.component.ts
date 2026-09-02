@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
-import { UsuariosService } from '../../services/usuarios';
+import { UsuariosService } from '../../../core/services/usuarios';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
-import { PermisoPagina } from 'src/app/models/pages';
-import { loginResponseDTO } from 'src/app/models/loginDTO';
-import { Confirmation } from 'src/app/services/helpers/confirmation';
+import { PermisoPagina } from 'src/app/core/models/pages';
+import { loginResponseDTO } from 'src/app/core/models/loginDTO';
+import { Confirmation } from 'src/app/core/services/helpers/confirmation';
 import { IonicModule } from '@ionic/angular';
 
 @Component({

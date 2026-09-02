@@ -2,8 +2,6 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { inject, Injectable } from '@angular/core';
 import { from, Observable, switchMap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
-import { SecureStorageService } from '../services/securestorage-service';
-import { loginResponseDTO } from '../models/loginDTO';
 import { UsuariosService } from '../services/usuarios';
 
 @Injectable()

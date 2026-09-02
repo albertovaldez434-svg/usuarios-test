@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuariosService } from 'src/app/services/usuarios';
-import { Login } from 'src/app/models/login';
+import { UsuariosService } from 'src/app/core/services/usuarios';
+import { Login } from 'src/app/core/models/login';
 import { IonModal, ModalController, IonicModule } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/shared/ion-modal/ion-modal.component';
-import { RegisterFormComponent } from 'src/app/shared/register-form/register-form.component';
-import { Users } from 'src/app/models/users';
-import { loginResponseDTO } from 'src/app/models/loginDTO';
-import { TasksService } from 'src/app/services/tasks/tasks-service';
+import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
+import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
+import { Users } from 'src/app/core/models/users';
+import { loginResponseDTO } from 'src/app/core/models/loginDTO';
+import { TasksService } from 'src/app/features/tasks/services/tasks-service';
 import { forkJoin, switchMap } from 'rxjs';
-import { CustomButtonComponent } from '../../shared/custom-button/custom-button.component';
-import { CustomInputComponent } from "src/app/shared/custom-input/custom-input.component";
+import { CustomButtonComponent } from '../../../shared/components/custom-button/custom-button.component';
+import { CustomInputComponent } from "src/app/shared/components/custom-input/custom-input.component";
 
 @Component({
     selector: 'app-login',

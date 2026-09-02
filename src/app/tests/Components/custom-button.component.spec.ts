@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CustomButtonComponent } from 'src/app/shared/custom-button/custom-button.component';
+import { CustomButtonComponent } from 'src/app/shared/components/custom-button/custom-button.component';
 
 describe('CustomButtonComponent', () => {
   let component: CustomButtonComponent;

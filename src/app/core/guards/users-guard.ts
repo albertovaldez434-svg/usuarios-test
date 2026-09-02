@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { UsuariosService } from './services/usuarios';
-import { SecureStorageService } from './services/securestorage-service';
+import { UsuariosService } from '../services/usuarios';
+import { SecureStorageService } from '../services/securestorage-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 export const usersGuard: CanActivateFn = (route, state) => {
