@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 
 @Component({
     selector: 'app-ion-modal',
     templateUrl: './ion-modal.component.html',
     styleUrls: ['./ion-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [IonicModule]
 })
 export class IonModalComponent implements OnInit {

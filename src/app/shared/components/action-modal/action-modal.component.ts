@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
 import { Confirmation } from 'src/app/core/services/helpers/confirmation';
@@ -7,6 +7,7 @@ import { Confirmation } from 'src/app/core/services/helpers/confirmation';
   selector: 'app-action-modal',
   templateUrl: './action-modal.component.html',
   styleUrls: ['./action-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, CustomButtonComponent]
 })
 export class ActionModalComponent {

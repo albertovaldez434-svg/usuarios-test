@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-theme-toggle',
   templateUrl: './theme-toggle.component.html',
   styleUrls: ['./theme-toggle.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule],
 })
 export class ThemeToggleComponent implements OnInit {

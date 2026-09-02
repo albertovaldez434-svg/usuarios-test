@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, ViewChild } from '@angular/core';
 import { Users } from 'src/app/features/users/models/users';
 import { UsuariosService } from 'src/app/features/users/services/usuarios';
 import { Camera } from '@capacitor/camera';
@@ -15,6 +15,7 @@ import { AuthService } from '../../auth/services/auth-service';
     selector: 'app-profile',
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [IonicModule, CustomButtonComponent, RegisterFormComponent]
 })
 export class ProfilePage implements OnInit {

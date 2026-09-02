@@ -4,7 +4,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
 
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { provideRouter, RouteReuseStrategy } from '@angular/router';
+import { PreloadAllModules, provideRouter, RouteReuseStrategy, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
 
 
@@ -19,7 +19,7 @@ import { ErrorsInterceptor } from './app/core/interceptors/errors-interceptor';
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideRouter(routes),
+        provideRouter(routes, withPreloading(PreloadAllModules)),
         importProvidersFrom(
             IonicModule.forRoot({ swipeBackEnabled: false })
         ),

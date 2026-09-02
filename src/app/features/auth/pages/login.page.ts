@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ViewChild } from "@angular/core";
+import { Component, OnInit, inject, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
 import { IonicModule, IonModal, ModalController } from "@ionic/angular";
@@ -18,6 +18,7 @@ import { AuthService } from "../services/auth-service";
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent]
 })
 export class LoginPage implements OnInit {

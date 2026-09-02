@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { IonItem } from "@ionic/angular/standalone";
 import { FormsModule } from "@angular/forms";
@@ -8,6 +8,7 @@ import { CustomButtonComponent } from "../custom-button/custom-button.component"
   selector: 'app-restore-psw',
   templateUrl: './restore-psw.component.html',
   styleUrls: ['./restore-psw.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonicModule, FormsModule, CustomButtonComponent]
 })
 export class RestorePswComponent implements OnInit {

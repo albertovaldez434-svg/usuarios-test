@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
@@ -10,7 +10,7 @@ import { CustomButtonComponent } from "../custom-button/custom-button.component"
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, ReactiveFormsModule, IonicModule, CustomInputComponent, CustomButtonComponent]
 })
 export class RegisterFormComponent implements OnInit {
