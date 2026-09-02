@@ -8,23 +8,15 @@ import { TestBed } from "@angular/core/testing";
 //se importa los http testing controllers
 import { provideHttpClientTesting, HttpTestingController } from "@angular/common/http/testing"
 import { provideHttpClient } from "@angular/common/http";
-import { Login } from "src/app/core/models/login";
 import { SecureStorageService } from "src/app/core/services/securestorage-service";
-import { UsuariosService } from "src/app/core/services/usuarios";
+import { UsuariosService } from "src/app/features/users/services/usuarios";
 import { environment } from "src/environments/environment";
 
 
 //describimos el test
 describe('UsuariosService Test', () => {
 
-    //mockup objeto login
-    const loginData = {
-        idUser: 19,
-        nombre: 'Alberto',
-        apellidos: 'Valdez Lopez',
-        email: 'albertovaldez434@gmail.com',
-        accessToken: '123_mytoken_test'
-    } as any;
+
 
     // mockup de lista de usuarios
     const usersMock = [
@@ -104,32 +96,7 @@ describe('UsuariosService Test', () => {
         expect(service).toBeTruthy();
     });
 
-    it('Primera Prueba: Deberia de guardar la informacion del login y actualizar el signal', () => {
-        // llamamos el service
-        service.setLoginData(loginData);
 
-        // esperamos que los datos en el signal sean equivalentes al mockup
-        expect(service.loggedData$()).toEqual(loginData);
-    });
-
-    it('Segunda Prueba: Deberia de poder recuperar la informacion del localStorage', () => {
-        service.setLoginData(loginData);
-
-        expect(service.loggedData$()).toEqual(loginData);
-
-        expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
-    });
-
-    it('Tercera Prueba: Deberia de eliminar el loginData del signal', () => {
-        //primero guardamos los datos
-        service.setLoginData(loginData);
-
-        // luego removemos los datos
-        service.clearLoginData();
-
-        //se espera que el signal ya este limpio
-        expect(service.loggedData$()).toBeNull();
-    });
 
     it('Cuarta Prueba: Deberia de dar el set de Usuarios', async () => {
         await service.setUsers(usersMock);
@@ -167,27 +134,8 @@ describe('UsuariosService Test', () => {
         expect(req.request.method).toBe('GET');
 
         req.flush(userResponseMock);
-            
+
         expect(service.users$()).toEqual(userResponseMock);
-    });
-
-    it('Deberia de Inciar Sesión', () => {
-        const loginRequest = {
-            Email: 'albertovaldez434@gmail.com',
-            Password: 'myP4ssw0rd123$'
-        } as Login
-
-        service.Login(loginRequest).subscribe(resp => {
-            expect(resp).toEqual(loginData);
-        });
-
-        const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/Login`);
-
-        expect(req.request.method).toBe('POST');
-
-        expect(req.request.body).toEqual(loginRequest);
-
-        req.flush(loginData);
     });
 
     it('Deberia de crear un nuevo usuario', () => {

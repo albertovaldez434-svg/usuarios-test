@@ -1,33 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UsuariosService } from 'src/app/core/services/usuarios';
-import { Login } from 'src/app/core/models/login';
-import { IonModal, ModalController, IonicModule } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
-import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
-import { Users } from 'src/app/core/models/users';
-import { loginResponseDTO } from 'src/app/core/models/loginDTO';
-import { TasksService } from 'src/app/features/tasks/services/tasks-service';
-import { forkJoin, switchMap } from 'rxjs';
-import { CustomButtonComponent } from '../../../shared/components/custom-button/custom-button.component';
+import { Component, OnInit, inject, ViewChild } from "@angular/core";
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from "@angular/forms";
+import { Router } from "@angular/router";
+import { IonicModule, IonModal, ModalController } from "@ionic/angular";
+import { switchMap, forkJoin } from "rxjs";
+import { Users } from "src/app/features/users/models/users";
+import { UsuariosService } from "src/app/features/users/services/usuarios";
+import { CustomButtonComponent } from "src/app/shared/components/custom-button/custom-button.component";
 import { CustomInputComponent } from "src/app/shared/components/custom-input/custom-input.component";
+import { IonModalComponent } from "src/app/shared/components/ion-modal/ion-modal.component";
+import { RegisterFormComponent } from "src/app/shared/components/register-form/register-form.component";
+import { TasksService } from "../../dashboard/services/tasks-service";
+import { Login } from "../models/login";
+import { loginResponseDTO } from "../models/loginDTO";
+import { AuthService } from "../services/auth-service";
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
-    imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent]
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
+  imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent]
 })
 export class LoginPage implements OnInit {
+  private authService = inject(AuthService);
+  private UserService = inject(UsuariosService);
+  private TasksService = inject(TasksService);
+
   @ViewChild('restorePswMdl') restorePswMdl!: IonModal;
   loginForm: FormGroup;
   valid: boolean = true;
 
   constructor(
     private builder: FormBuilder,
-    private UserService: UsuariosService,
-    private TasksService: TasksService,
     private route: Router,
     private modalCtrl: ModalController
   ) {
@@ -73,7 +76,7 @@ export class LoginPage implements OnInit {
       Password: Password
     };
 
-    this.UserService.Login(loginRrquest).pipe(
+    this.authService.Login(loginRrquest).pipe(
       switchMap(user =>
         forkJoin({
           users: this.UserService.getUsers(),
@@ -140,7 +143,7 @@ export class LoginPage implements OnInit {
       avatar: ''
     }
 
-    this.UserService.setLoginData(invitadoAuth);
+    this.authService.setLoginData(invitadoAuth);
     this.openModalFunc('Alerta', 'Sesion iniciada');
     this.route.navigate(['/profile']);
   }

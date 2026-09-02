@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
-import { UsuariosService } from '../../../core/services/usuarios';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import { PermisoPagina } from 'src/app/core/models/pages';
-import { loginResponseDTO } from 'src/app/core/models/loginDTO';
+import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
 import { Confirmation } from 'src/app/core/services/helpers/confirmation';
 import { IonicModule } from '@ionic/angular';
+import { AuthService } from 'src/app/features/auth/services/auth-service';
 
 @Component({
     selector: 'app-menu',
@@ -14,13 +14,15 @@ import { IonicModule } from '@ionic/angular';
     imports: [IonicModule, RouterLinkActive, RouterLink]
 })
 export class MenuComponent implements OnInit {
+  private authService = inject(AuthService);
+
   user!: loginResponseDTO | null;
   pages!: PermisoPagina[];
 
   private ConfirmationService = inject(Confirmation);
 
   constructor(
-    private usuarioService: UsuariosService,
+    
     private route: Router,
   ) {
     this.pages = [
@@ -39,7 +41,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.usuarioService.loggedData$();
+    this.user = this.authService.loggedData$();
   }
 
   canView(page: PermisoPagina) {
@@ -51,7 +53,7 @@ export class MenuComponent implements OnInit {
   }
 
   async logout() {
-    this.usuarioService.closeSesion();
+    this.authService.closeSesion();
     this.ConfirmationService.setConfirmed(false);
     this.route.navigate(['/login']);
   }

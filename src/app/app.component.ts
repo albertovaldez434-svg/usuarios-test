@@ -1,12 +1,13 @@
-import { Component, effect, OnInit } from '@angular/core';
-import { UsuariosService } from './core/services/usuarios';
+import { Component, effect, inject, OnInit } from '@angular/core';
+import { UsuariosService } from './features/users/services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
 import { SecureStorageService } from './core/services/securestorage-service';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { loginResponseDTO } from './core/models/loginDTO';
+import { loginResponseDTO } from './features/auth/models/loginDTO';
 import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from './shared/components/menu/menu.component';
+import { AuthService } from './features/auth/services/auth-service';
 
 @Component({
     selector: 'app-root',
@@ -15,17 +16,20 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     imports: [IonicModule, MenuComponent],
 })
 export class AppComponent implements OnInit {
+  private authService = inject(AuthService);
+  private userService = inject(UsuariosService);
+
   isLogged: boolean = false;
 
   jwtHelper = new JwtHelperService;
 
   constructor(
-    private userService: UsuariosService,
+    
     private route: Router,
     private secureStorage: SecureStorageService
   ) {
     effect(() => {
-      const user = this.userService.loggedData$();
+      const user = this.authService.loggedData$();
       if (user) {
         this.isLogged = true;
       } else {
@@ -56,7 +60,7 @@ export class AppComponent implements OnInit {
 
         if (dataLogin.idUser === 999) {
           const storedLogin = dataLogin;
-          this.userService.setLoginData(storedLogin);
+          this.authService.setLoginData(storedLogin);
           this.isLogged = true;
           this.route.navigate(['/dashboard']);
           return;
@@ -69,7 +73,7 @@ export class AppComponent implements OnInit {
           return;
         }
         const storedLogin = dataLogin;
-        this.userService.setLoginData(storedLogin);
+        this.authService.setLoginData(storedLogin);
         this.isLogged = true;
         //this.route.navigate(['/dashboard']);
         this.restoreLastPage();

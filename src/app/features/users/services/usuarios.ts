@@ -1,13 +1,10 @@
 import { Injectable, signal } from '@angular/core';
-import { from, map, switchMap, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { Users, UsuariosResponse } from '../models/users';
 import { HttpClient } from '@angular/common/http';
-import { Login } from '../models/login';
 import { environment } from 'src/environments/environment';
-import { SecureStorageService } from './securestorage-service';
-import { ImagenesUsuarios } from '../models/imagenesusuario';
-import { loginResponseDTO } from '../models/loginDTO';
-import { FormControl } from '@angular/forms';
+import { SecureStorageService } from '../../../core/services/securestorage-service';
+import { ImagenesUsuarios } from '../../../core/models/imagenesusuario';
 
 @Injectable({
   providedIn: 'root',
@@ -21,19 +18,6 @@ export class UsuariosService {
 
   private users = signal<Users[] | null>(null);
   users$ = this.users.asReadonly();
-
-  private loggedData = signal<loginResponseDTO | null>(null);
-  loggedData$ = this.loggedData.asReadonly();
-
-  async setLoginData(data: loginResponseDTO | null) {
-    this.loggedData.set(data);
-    await this.secureStorage.setItem('authUser', data);
-  }
-
-  clearLoginData() {
-    this.loggedData.set(null);
-    this.secureStorage.clear();
-  }
 
   async setUsers(usrData: Users[]) {
     this.users.set(usrData);
@@ -54,29 +38,12 @@ export class UsuariosService {
     localStorage.removeItem('users');
   }
 
-  closeSesion(): void {
-    this.clearLoginData();
-    this.clearUsers();
-  }
-
   //apis
   getUsers() {
     const url = `${environment.URL_API}/api/Usuarios`;
 
     return this.http.get<UsuariosResponse[]>(url).pipe(
       tap(users => this.setUsers(users))
-    );
-  }
-
-  Login(request: Login) {
-    const url = `${environment.URL_API}/api/Usuarios/Login`;
-
-    return this.http.post<loginResponseDTO>(url, request).pipe(
-      switchMap(user =>
-        from(this.setLoginData(user)).pipe(
-          map(() => user)
-        )
-      )
     );
   }
 

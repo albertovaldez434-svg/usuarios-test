@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, effect, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
 import { of } from 'rxjs';
 import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
 import { RestorePswComponent } from 'src/app/shared/components/restore-psw/restore-psw.component';
-import { Users } from 'src/app/core/models/users';
+import { Users } from 'src/app/features/users/models/users';
 import { Confirmation } from 'src/app/core/services/helpers/confirmation';
-import { UsuariosService } from 'src/app/core/services/usuarios';
-import { SearchPipe } from '../../shared/pipes/search-pipe';
+import { UsuariosService } from 'src/app/features/users/services/usuarios';
+import { SearchPipe } from '../../../shared/pipes/search-pipe';
 import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
+import { AuthService } from '../../auth/services/auth-service';
 
 @Component({
   selector: 'app-usuarios',
@@ -18,7 +19,10 @@ import { RegisterFormComponent } from 'src/app/shared/components/register-form/r
   imports: [IonicModule, FormsModule, SearchPipe]
 })
 export class UsuariosPage implements OnInit {
+  private authService = inject(AuthService);
+  private usersService = inject(UsuariosService);
   private loaded = false;
+
   @ViewChild('modalSignUp') modalSignUp!: IonModal;
   editandoUsuario: boolean = false;
   usuarioToEdit!: Users;
@@ -33,7 +37,6 @@ export class UsuariosPage implements OnInit {
   );
 
   constructor(
-    private usersService: UsuariosService,
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
     private confirmationService: Confirmation
@@ -128,7 +131,7 @@ export class UsuariosPage implements OnInit {
 
   obtenerUsuarios = () => {
 
-    if (this.usersService.loggedData$()?.idUser === 999) {
+    if (this.authService.loggedData$()?.idUser === 999) {
       this.usersService.clearUsers();
       this.usersService.obtenerUsuariosTest();
       this.usersService.setUsers(this.usuarios());
@@ -164,7 +167,7 @@ export class UsuariosPage implements OnInit {
       idRol: (data.idRol) ? data.idRol : 0,
     }
 
-    if (this.usersService.loggedData$()?.idRol == 999) {
+    if (this.authService.loggedData$()?.idRol == 999) {
       let newUser: Users = {
         idUser: Math.random(),
         nombre: data.nombre,
@@ -227,7 +230,7 @@ export class UsuariosPage implements OnInit {
       this.usuarioToEdit.idRol = parseInt(formData.Rol);
     }
 
-    if (this.usersService.loggedData$()?.idRol == 999) {
+    if (this.authService.loggedData$()?.idRol == 999) {
       this.usersService.setUsers(this.usuarios());
       //// console.log(this.usuarios());
       this.modalSignUp.dismiss();
@@ -263,7 +266,7 @@ export class UsuariosPage implements OnInit {
 
   EliminarUsuario(idUser: number) {
 
-    if (this.usersService.loggedData$()?.idRol === 999) {
+    if (this.authService.loggedData$()?.idRol === 999) {
       this.usuarios.update(usr => usr.filter(u => u.idUser !== idUser));
       //this.usersService.setUsers(this.usuarios);
       this.openModalFunc('Éxito', 'Usuario eliminado');

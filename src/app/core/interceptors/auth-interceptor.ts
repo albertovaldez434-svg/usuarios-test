@@ -1,13 +1,13 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { from, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
-import { UsuariosService } from '../services/usuarios';
+import { AuthService } from 'src/app/features/auth/services/auth-service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private jwtHelper = new JwtHelperService;
-  private UsuarioService = inject(UsuariosService);
+  private authService = inject(AuthService);
 
   checkTokenExpired(tokenString: string): boolean {
     return this.jwtHelper.isTokenExpired(tokenString);
@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const user = this.UsuarioService.loggedData$();
+    const user = this.authService.loggedData$();
 
     if (!user?.accessToken) {
       return next.handle(req);

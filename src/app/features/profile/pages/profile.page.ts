@@ -1,15 +1,15 @@
-import { Component, effect, OnInit, ViewChild } from '@angular/core';
-import { Users } from 'src/app/core/models/users';
-import { UsuariosService } from 'src/app/core/services/usuarios';
+import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import { Users } from 'src/app/features/users/models/users';
+import { UsuariosService } from 'src/app/features/users/services/usuarios';
 import { Camera } from '@capacitor/camera';
 import { ActionSheetController, IonModal, ModalController, IonicModule } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
 
 import imageCompression from 'browser-image-compression';
-import { loginResponseDTO } from 'src/app/core/models/loginDTO';
-import { CustomButtonComponent } from '../../shared/components/custom-button/custom-button.component';
-import { RegisterFormComponent } from '../../shared/components/register-form/register-form.component';
-
+import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
+import { CustomButtonComponent } from 'src/app/shared/components/custom-button/custom-button.component';
+import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
+import { AuthService } from '../../auth/services/auth-service';
 
 @Component({
     selector: 'app-profile',
@@ -18,6 +18,9 @@ import { RegisterFormComponent } from '../../shared/components/register-form/reg
     imports: [IonicModule, CustomButtonComponent, RegisterFormComponent]
 })
 export class ProfilePage implements OnInit {
+  private authService = inject(AuthService);
+  private usuariosService = inject(UsuariosService);
+
   @ViewChild('modalEditInfo') ModalEditInfo!: IonModal;
   users!: Users[] | null;
   loggedUser!: loginResponseDTO | null;
@@ -26,7 +29,6 @@ export class ProfilePage implements OnInit {
   //editingUser: boolean = false;
 
   constructor(
-    private userService: UsuariosService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController
   ) {
@@ -35,13 +37,13 @@ export class ProfilePage implements OnInit {
       this.imgSrc = imgData;
     }
 
-    this.loggedUser = this.userService.loggedData$();
+    this.loggedUser = this.authService.loggedData$();
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
     }
 
     effect(() => {
-      this.users = this.userService.users$();
+      this.users = this.usuariosService.users$();
       if (this.users) {
         this.findLoggedUser();
       }
@@ -188,7 +190,7 @@ export class ProfilePage implements OnInit {
     formData.append('file', file);
     formData.append('IdUser', this.loggedUser?.idUser.toString());
 
-    this.userService.cargarImagen(formData).subscribe({
+    this.usuariosService.cargarImagen(formData).subscribe({
       next: (value) => {
         // console.log(value);
         this.imgSrc = value.URLPublica;
@@ -230,7 +232,7 @@ export class ProfilePage implements OnInit {
           this.users[userIndex] = this.currentUser;
         }
 
-        this.userService.setUsers(this.users);
+        this.usuariosService.setUsers(this.users);
         this.ModalEditInfo.dismiss();
         this.openModalFunc('Datos actualizados.');
         //this.editingUser = false;

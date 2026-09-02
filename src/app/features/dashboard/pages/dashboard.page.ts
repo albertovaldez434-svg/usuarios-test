@@ -1,24 +1,28 @@
-import { Component, computed, effect, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
 
-import { UserTasks } from 'src/app/core/models/task';
-import { UsuariosService } from 'src/app/core/services/usuarios';
+import { UserTasks } from 'src/app/features/dashboard/models/task';
+import { UsuariosService } from 'src/app/features/users/services/usuarios';
 import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
 import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
-import { Users } from 'src/app/core/models/users';
-import { loginResponseDTO } from 'src/app/core/models/loginDTO';
-import { TasksService } from 'src/app/features/tasks/services/tasks-service';
+import { Users } from 'src/app/features/users/models/users';
+import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
+import { TasksService } from 'src/app/features/dashboard/services/tasks-service';
 import { FormsModule } from '@angular/forms';
-import { CustomButtonComponent } from '../../shared/components/custom-button/custom-button.component';
-import { SearchPipe } from '../../shared/pipes/search-pipe';
+import { CustomButtonComponent } from 'src/app/shared/components/custom-button/custom-button.component';
+import { SearchPipe } from 'src/app/shared/pipes/search-pipe';
+import { AuthService } from '../../auth/services/auth-service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  imports: [IonicModule, FormsModule, CustomButtonComponent, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, SearchPipe]
+  imports: [IonicModule, FormsModule, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, CustomButtonComponent, SearchPipe]
 })
 export class DashboardPage implements OnInit {
+  private authService = inject(AuthService);
+  private usuariosService = inject(UsuariosService);
+  private tareasService = inject(TasksService);
 
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
@@ -76,8 +80,6 @@ export class DashboardPage implements OnInit {
   newTaskStatus = 0;
 
   constructor(
-    private usuarioService: UsuariosService,
-    private tareasService: TasksService,
     private modalCtrl: ModalController
   ) {
 
@@ -87,7 +89,7 @@ export class DashboardPage implements OnInit {
       this.imgSrc = imgData;
     }
 
-    this.loggedUser = this.usuarioService.loggedData$();
+    this.loggedUser = this.authService.loggedData$();
 
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
@@ -100,7 +102,7 @@ export class DashboardPage implements OnInit {
     }
 
     effect(() => {
-      const users = this.usuarioService.users$();
+      const users = this.usuariosService.users$();
       const tareas = this.tareasService.tasks$();
 
       if (users) {
@@ -162,7 +164,7 @@ export class DashboardPage implements OnInit {
 
   cargarTareas() {
 
-    const IdUser = this.usuarioService.loggedData$()?.idUser;
+    const IdUser = this.authService.loggedData$()?.idUser;
 
     if (!IdUser) {
       return;
@@ -644,7 +646,7 @@ export class DashboardPage implements OnInit {
   addTarea() {
 
     const loggedId =
-      this.usuarioService.loggedData$()?.idUser;
+      this.authService.loggedData$()?.idUser;
 
     if (!loggedId) {
       return;
