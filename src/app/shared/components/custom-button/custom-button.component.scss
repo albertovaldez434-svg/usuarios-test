@@ -5,9 +5,9 @@ ion-button {
     --border-radius: 25px; // aqui si se ocupa directo el valor
 }
 
-ion-button.btn-primary {
+.btn-primary {
     --font-size: 14px;
-    --color: white;
+    --color: var(--primary-btn-color);
     --background: var(--primary-btn-bg);
 
     cursor: pointer;
@@ -17,7 +17,7 @@ ion-button.btn-primary {
     }
 }
 
-ion-button.btn-secondary {
+.btn-secondary {
     border: 1px solid var(--secondary-btn-color);
     --font-size: 14px;
     --color: var(--secondary-btn-color);

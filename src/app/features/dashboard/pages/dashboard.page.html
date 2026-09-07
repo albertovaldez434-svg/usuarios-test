@@ -5,8 +5,8 @@
       <!-- <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
         class="ion-margin-end" (click)="setSearchToggle()">
       </ion-icon> -->
-      <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000" [value]="searchValue"
-        [(ngModel)]="searchValue"></ion-searchbar>
+      <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000"
+        [value]="searchValue" [(ngModel)]="searchValue"></ion-searchbar>
       <app-custom-button (clicked)="modalNewTask.present(); newTaskStatus = 0" [text]="'Agregar'"
         [iconName]="'add-outline'" [size]="'default'">
         <ion-ripple-effect></ion-ripple-effect>
@@ -28,8 +28,8 @@
   </ion-refresher>
 
   <div class="ion-hide-sm-up header-controls">
-    <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [value]="searchValue"
-      [(ngModel)]="searchValue"></ion-searchbar>
+    <ion-searchbar animated="true" show-clear-button="focus" placeholder="Buscar" [debounce]="1000"
+      [value]="searchValue" [(ngModel)]="searchValue"></ion-searchbar>
     <app-custom-button (clicked)="modalNewTask.present(); newTaskStatus = 0" [text]="'Agregar'"
       [iconName]="'add-outline'" [size]="'default'">
       <ion-ripple-effect></ion-ripple-effect>
@@ -477,17 +477,11 @@
           }
         </div>
 
-        <ion-item>
-          <ion-input #inpTitle label="Titulo" label-placement="floating" fill="solid"
-            [(ngModel)]="editableTask()!.title" (click)="EditField('title')"></ion-input>
-            <ion-icon slot="start" name="ribbon-outline"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-textarea #inpDesc label="Descripcion" label-placement="floating" fill="solid"
-            [(ngModel)]="editableTask()!.description" (click)="EditField('description')">
-          </ion-textarea>
-          <ion-icon slot="start" name="document-text-outline"></ion-icon>
-        </ion-item>
+        <app-custom-input #inpTitle [iconSlot]="'start'" [iconName]="'ribbon-outline'" [placeholderText]="'Titulo'"
+          [inputType]="'text'" (Clicked)="EditField('title')" [(ngModel)]="editableTask()!.title" />
+        <app-custom-input #inpDesc [iconSlot]="'start'" [iconName]="'document-text-outline'"
+          [placeholderText]="'Descripcion'" (Clicked)="EditField('description')"
+          [(ngModel)]="editableTask()!.description" />
         <ion-item>
           <ion-select #taskUserAssign label="Asignado" placeholder="Usuario asignado" [(ngModel)]="loggedUser!.idUser"
             (ionChange)="changeTaskUser(taskUserAssign.value)">
@@ -500,29 +494,23 @@
         <!-- </div> -->
         @if (titleKeyActive || descKeyActive) {
         <div class="changes-actions">
-          <ion-button class="btn-secondary" (click)="cancelTaskEdit()">
-            <ion-icon name="close-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-          <ion-button class="btn-primary" (click)="saveTaskChanges()">
-            <ion-icon name="save-outline" slot="icon-only"></ion-icon>
-          </ion-button>
+          <app-custom-button class="'btn-secondary'" [iconName]="'close-outline'" [slot]="'icon-only'"
+            (clicked)="cancelTaskEdit()" />
+          <app-custom-button [class]="'btn-primary'" [iconName]="'save-outline'" [slot]="'icon-only'"
+            (clicked)="saveTaskChanges()" />
         </div>
         } @else {
         <div class="task-actions">
-          <ion-button color="danger" (click)="eliminarTarea()">
-            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-          </ion-button>
+          <app-custom-button [color]="'danger'" [iconName]="'trash-outline'" [slot]="'icon-only'"
+            (clicked)="eliminarTarea()" />
           @if (editableTask()?.status === 1 || editableTask()?.status === 3) {
-          <ion-button color="primary" (click)="changeTaskStatus(2)">
-            <ion-icon name="play-outline" slot="icon-only"></ion-icon>
-          </ion-button>
+          <app-custom-button [color]="'primary'" [iconName]="'play-outline'" [slot]="'icon-only'"
+            (clicked)="changeTaskStatus(2)" />
           } @else if (editableTask()?.status === 2) {
-          <ion-button color="warning" (click)="changeTaskStatus(1)">
-            <ion-icon name="pause-outline" slot="icon-only"></ion-icon>
-          </ion-button>
-          <ion-button color="success" (click)="changeTaskStatus(3)">
-            <ion-icon name="checkmark-outline" slot="icon-only"></ion-icon>
-          </ion-button>
+          <app-custom-button [color]="'warning'" [iconName]="'pause-outline'" [slot]="'icon-only'"
+            (clicked)="changeTaskStatus(1)" />
+          <app-custom-button [color]="'success'" [iconName]="'checkmark-outline'" [slot]="'icon-only'"
+            (clicked)="changeTaskStatus(3)" />
           } @else if (editableTask()?.status === 3) {
           <!-- Tarea finalizada -->
           }
@@ -550,16 +538,11 @@
     </ion-header>
     <ion-content>
       <div class="signUpfrm">
-        <ion-item>
-          <ion-input #inpNewTitle label="Titulo" label-placement="floating" fill="solid"
-            [(ngModel)]="newTaskTitle"></ion-input>
-            <ion-icon slot="start" name="ribbon-outline"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-input #inpNewDesc label="Descripcion" label-placement="floating" fill="solid"
-            [(ngModel)]="newTaskDesc"></ion-input>
-            <ion-icon slot="start" name="document-text-outline"></ion-icon>
-        </ion-item>
+        <app-custom-input #inpNewTitle [(ngModel)]="newTaskTitle" [placeholderText]="'Titulo'"
+          [iconName]="'ribbon-outline'" [iconSlot]="'start'" />
+        <app-custom-input #inpNewDesc [(ngModel)]="newTaskDesc" [placeholderText]="'Descripcion'"
+          [iconName]="'document-text-outline'" [iconSlot]="'start'" />
+          
         <ion-item>
           <ion-select label="Status" placeholder="Seleccione" [value]="newTaskStatus">
             <ion-select-option [value]="1">Por Hacer</ion-select-option>
@@ -570,10 +553,10 @@
         </ion-item>
 
         <div class="changes-actions">
-          <app-custom-button [type]="'secondary'" [size]="'default'" [expand]="'block'" [iconName]="'close-outline'"
+          <app-custom-button [tipoBtn]="'secondary'" [size]="'default'" [expand]="'block'" [iconName]="'close-outline'"
             [slot]="'start'" [text]="'Cancelar'"
             (clicked)="cleanTaskFlow(); this.modalTaskDetail.dismiss();"></app-custom-button>
-          <app-custom-button [type]="'primary'" [size]="'default'" [expand]="'block'" [iconName]="'add-outline'"
+          <app-custom-button [tipoBtn]="'primary'" [size]="'default'" [expand]="'block'" [iconName]="'add-outline'"
             [slot]="'start'" [text]="'Agregar'" (clicked)="addTarea()"></app-custom-button>
         </div>
       </div>

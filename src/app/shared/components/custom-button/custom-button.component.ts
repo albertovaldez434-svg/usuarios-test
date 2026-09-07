@@ -13,12 +13,13 @@ import { CdkDragPlaceholder } from "@angular/cdk/drag-drop";
 export class CustomButtonComponent implements OnInit {
   @Input() text: string = '';
   @Input() iconName: string = '';
-  @Input() type: 'primary' | 'secondary' | 'submit' = 'primary';
+  @Input() tipoBtn: 'primary' | 'secondary' = 'primary';
+  @Input() type?: 'submit' = 'submit';
   @Input() expand?: 'block' | 'full' = 'block';
-  @Input() slot: 'start' | 'end' = 'start';
+  @Input() slot: 'start' | 'end' | 'icon-only' = 'start';
   @Input() size: 'large' | 'default' | 'small' = 'default';
-  @Input() class: string = '';
   @Input() disabled: boolean = false;
+  @Input() color?: 'danger' | 'primary' | 'warning' | 'success' | undefined = undefined;
 
   @Output() clicked = new EventEmitter<void>();
 

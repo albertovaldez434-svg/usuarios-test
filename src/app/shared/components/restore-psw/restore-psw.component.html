@@ -44,10 +44,10 @@
       <ion-label position="stacked" color="danger">Las contraseñas no coinciden</ion-label>
       }
     </ion-item>
-    <app-custom-button [type]="'secondary'" [iconName]="'close-outline'" [slot]="'start'" [text]="'Cancelar'"
+    <app-custom-button [tipoBtn]="'secondary'" [iconName]="'close-outline'" [slot]="'start'" [text]="'Cancelar'"
       [expand]="'block'" [size]="'default'" (clicked)="clean()">
     </app-custom-button>
-    <app-custom-button [type]="'primary'" [iconName]="'checkmark-outline'" [slot]="'start'" [text]="'Confirmar'"
+    <app-custom-button [tipoBtn]="'primary'" [iconName]="'checkmark-outline'" [slot]="'start'" [text]="'Confirmar'"
       [expand]="'block'" [size]="'default'" (clicked)="sendPswData()">
     </app-custom-button>
   </div>

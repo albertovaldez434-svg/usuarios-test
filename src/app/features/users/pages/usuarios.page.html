@@ -20,8 +20,8 @@
       <div class="controls-header">
         <div class="ion-activable">
           <ion-ripple-effect></ion-ripple-effect>
-          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000" [ngModel]="searchValue()"
-            (ngModelChange)="searchValue.set($event)">
+          <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000"
+            [ngModel]="searchValue()" (ngModelChange)="searchValue.set($event)">
           </ion-searchbar>
         </div>
         <div class="buttons-header">
@@ -53,15 +53,12 @@
               <td data-label="Email">{{ usuario.email }}</td>
               <td data-label="Telefono">{{ usuario.telefono }}</td>
               <td>
-                <ion-button expand="block" (click)="editarUsuario(usuario.idUser)">
-                  <ion-icon name="create-outline" slot="icon-only" size="default"></ion-icon>
-                </ion-button>
-                <ion-button expand="block" color="danger" (click)="ElimiarUsrEvent(usuario.idUser)">
-                  <ion-icon name="trash-outline" slot="icon-only" size="default"></ion-icon>
-                </ion-button>
-                <ion-button expand="block" color="secondary" (click)="editarPsw()">
-                  <ion-icon name="lock-closed-outline" slot="icon-only" size="default"></ion-icon>
-                </ion-button>
+                <app-custom-button [expand]="'block'" [tipoBtn]="'primary'" [iconName]="'create-outline'"
+                  [slot]="'icon-only'" [size]="'default'" (clicked)="editarUsuario(usuario.idUser)" />
+                <app-custom-button [expand]="'block'" [color]="'danger'" [iconName]="'trash-outline'"
+                  [slot]="'icon-only'" [size]="'default'" (clicked)="ElimiarUsrEvent(usuario.idUser)" />
+                <app-custom-button [expand]="'block'" [tipoBtn]="'secondary'" [iconName]="'lock-closed-outline'"
+                  [slot]="'icon-only'" [size]="'default'" (clicked)="editarPsw()" />
               </td>
             </tr>
             }

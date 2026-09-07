@@ -12,13 +12,14 @@ import { FormsModule } from '@angular/forms';
 import { CustomButtonComponent } from 'src/app/shared/components/custom-button/custom-button.component';
 import { SearchPipe } from 'src/app/shared/pipes/search-pipe';
 import { AuthService } from '../../auth/services/auth-service';
+import { CustomInputComponent } from "src/app/shared/components/custom-input/custom-input.component";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, CustomButtonComponent, SearchPipe]
+  imports: [IonicModule, FormsModule, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, CustomButtonComponent, SearchPipe, CustomInputComponent]
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
@@ -69,7 +70,7 @@ export class DashboardPage implements OnInit {
    */
   private autoScrollCooldown = false;
 
-  selectedTask = signal<UserTasks | null>(null);
+  selectedTaskId = signal<number | null>(null);
   editableTask = signal<UserTasks | null>(null);
   editableTaskPrevValue = signal<UserTasks | null>(null);
 
@@ -120,16 +121,11 @@ export class DashboardPage implements OnInit {
   }
 
   setSearchToggle() {
-
     if (!this.toggleSearch) {
-
       this.toggleSearch = true;
       this.playSAnimation = true;
-
     } else {
-
       this.playSAnimation = false;
-
       setTimeout(() => {
         this.toggleSearch = false;
       }, 300);
@@ -137,18 +133,13 @@ export class DashboardPage implements OnInit {
   }
 
   handleRefresh(event: RefresherCustomEvent) {
-
     setTimeout(() => {
-
       this.cargarTareas();
-
       event.target.complete();
-
     }, 2000);
   }
 
   async openModalFunc(titulo: string, mensaje: string) {
-
     const modal = this.modalCtrl.create({
       component: IonModalComponent,
       breakpoints: [0, 0.25, 0.5, 0.75],
@@ -164,7 +155,6 @@ export class DashboardPage implements OnInit {
   }
 
   cargarTareas() {
-
     const IdUser = this.authService.loggedData$()?.idUser;
 
     if (!IdUser) {
@@ -172,9 +162,7 @@ export class DashboardPage implements OnInit {
     }
 
     if (IdUser === 999) {
-
       this.tareasService.cargarTareasTest();
-
       const demoData = this.tareasService.tasks$();
 
       if (!demoData) {
@@ -182,7 +170,6 @@ export class DashboardPage implements OnInit {
       }
 
       this.allTasks.set(demoData);
-
       return;
     }
 
@@ -200,7 +187,6 @@ export class DashboardPage implements OnInit {
    */
 
   drop(event: CdkDragDrop<UserTasks[]>) {
-
     document.body.classList.remove('grabbing');
 
     const task = event.item.data as UserTasks;
@@ -214,18 +200,14 @@ export class DashboardPage implements OnInit {
      * personalizado en backend.
      */
     if (event.previousContainer === event.container) {
-
       this.isDragging = false;
-
       return;
     }
 
     const newStatus = this.getStatusFromListId(event.container.id);
 
     if (newStatus === null) {
-
       this.isDragging = false;
-
       return;
     }
 
@@ -237,13 +219,7 @@ export class DashboardPage implements OnInit {
      */
     this.allTasks.update(tasks =>
       tasks.map(currentTask =>
-        currentTask.id === task.id
-          ? {
-            ...currentTask,
-            status: newStatus
-          }
-          : currentTask
-      )
+        currentTask.id === task.id ? { ...currentTask, status: newStatus } : currentTask)
     );
 
     /*
@@ -435,7 +411,6 @@ export class DashboardPage implements OnInit {
   }
 
   private getStatusFromListId(listId: string): number | null {
-
     switch (listId) {
 
       case 'todo':
@@ -457,21 +432,11 @@ export class DashboardPage implements OnInit {
     this.tareasService.actualizarTarea(task).subscribe({
 
       next: () => {
-
-        this.openModalFunc(
-          'Exito',
-          'Tarea actualizada correctamente'
-        );
+        this.openModalFunc('Exito', 'Tarea actualizada correctamente');
       },
-
       error: () => {
-
-        this.openModalFunc(
-          'Error',
-          'Error al actualizar la tarea'
-        );
+        this.openModalFunc('Error', 'Error al actualizar la tarea');
       }
-
     });
   }
 
@@ -487,29 +452,21 @@ export class DashboardPage implements OnInit {
       return;
     }
 
-    this.selectedTask.set(data);
+    this.selectedTaskId.set(data.id);
 
-    this.editableTask.set(
-      structuredClone(data)
-    );
+    this.editableTask.set(structuredClone(data));
 
-    this.editableTaskPrevValue.set(
-      structuredClone(data)
-    );
+    this.editableTaskPrevValue.set(structuredClone(data));
 
     this.modalTaskDetail.present();
   }
 
   EditField(key: string) {
-
     switch (key) {
 
       case 'title':
-
         if (this.titleKeyActive) {
-
           this.titleKeyActive = false;
-
           return;
         }
 
@@ -517,13 +474,10 @@ export class DashboardPage implements OnInit {
         this.descKeyActive = false;
 
         break;
-
       case 'description':
 
         if (this.descKeyActive) {
-
           this.descKeyActive = false;
-
           return;
         }
 
@@ -531,9 +485,7 @@ export class DashboardPage implements OnInit {
         this.descKeyActive = true;
 
         break;
-
       default:
-
         this.titleKeyActive = false;
         this.descKeyActive = false;
 
@@ -565,41 +517,27 @@ export class DashboardPage implements OnInit {
     this.newTaskStatus = 0;
     this.newTaskTitle = '';
 
-    this.selectedTask.set(null);
+    this.selectedTaskId.set(null);
     this.editableTask.set(null);
     this.editableTaskPrevValue.set(null);
   }
 
   changeTaskStatus(idStatus: number) {
-    const selected = this.selectedTask();
+    const taskId = this.selectedTaskId();
 
-    if (!selected) return;
+    if (taskId == null) return;
 
-    // actualmente aunque esto funcione, no es adecuado/recomendado
-    // tengo 2 fuentes de verdad (selectedTask & alltasks)
-    // deberia de ser 1 sola, filstrando por alltasks
-    // ya que aqui debo actualizar tanto el signal del selectedtask como alltasks.
+    this.allTasks.update(tasks =>
+      tasks.map(task =>
+        task.id === taskId ? { ...task, status: idStatus } : task
+      )
+    );
 
-    // this.selectedTask.update(task => task ? { ...task, status: idStatus } : null);
+    this.editableTask.update(task =>
+      task ? { ...task, status: idStatus } : task
+    )
 
-    // this.allTasks.update(tasks =>
-    //   tasks.map(task =>
-    //     task.id === selected.id ? { ...task, status: idStatus } : task
-    //   )
-    // );
-
-    // lo recomendado:
-
-    // this.allTasks.update(tasks =>
-    //   tasks.map(task =>
-    //     task.id === selected.id ? { ...task, status: idStatus } : task
-    //   )
-    // );
-
-    // esto seria, considerando que refactorizo el selectedtask a un selectedtaskid
-    // ya que solo necesitaria el id y no el task completo.
-    // pendiente.
-
+    this.saveTaskChanges();
   }
 
   saveTaskChanges() {
@@ -609,7 +547,7 @@ export class DashboardPage implements OnInit {
       return;
     }
 
-    edited.status = Number(edited.status);
+    //edited.status = Number(edited.status);
 
     /*
      * Actualizamos allTasks, que es la fuente principal.
@@ -618,22 +556,16 @@ export class DashboardPage implements OnInit {
       tasks.map(task => task.id === edited.id ? edited : task)
     );
 
-    this.selectedTask.set(edited);
+    this.selectedTaskId.set(edited.id);
 
     this.tareasService.actualizarTarea(edited).subscribe({
       next: () => {
         this.modalCtrl.dismiss();
-        this.openModalFunc(
-          'Éxito',
-          'Tarea actualizada correctamente'
-        );
+        this.openModalFunc('Éxito', 'Tarea actualizada correctamente');
         this.cleanTaskFlow();
       },
       error: () => {
-        this.openModalFunc(
-          'Error',
-          'Error al actualizar la tarea'
-        );
+        this.openModalFunc('Error', 'Error al actualizar la tarea');
       }
     });
   }
@@ -645,9 +577,7 @@ export class DashboardPage implements OnInit {
    */
 
   addTarea() {
-
-    const loggedId =
-      this.authService.loggedData$()?.idUser;
+    const loggedId = this.authService.loggedData$()?.idUser;
 
     if (!loggedId) {
       return;
@@ -665,17 +595,11 @@ export class DashboardPage implements OnInit {
       next: (task) => {
         this.addTaskHelper(task);
         this.modalCtrl.dismiss();
-        this.openModalFunc(
-          'Éxito',
-          'Se creo la tarea correctamente.'
-        );
+        this.openModalFunc('Éxito', 'Se creo la tarea correctamente.');
         this.cleanTaskFlow();
       },
       error: () => {
-        this.openModalFunc(
-          'Error',
-          'Hubo un problema al crear la tarea'
-        );
+        this.openModalFunc('Error', 'Hubo un problema al crear la tarea');
       }
     });
   }
@@ -690,15 +614,23 @@ export class DashboardPage implements OnInit {
    * porque todoArr() es un computed().
    */
   addTaskHelper(task: UserTasks) {
-
-    this.allTasks.update(tasks => [
-      ...tasks,
-      task
-    ]);
+    this.allTasks.update(tasks => [...tasks, task]);
   }
 
   eliminarTarea() {
+    const taskId = this.selectedTaskId();
 
-    // console.log(this.selectedTask());
+    if (!taskId) return;
+
+    this.tareasService.eliminaTarea(taskId).subscribe({
+      next: () => {
+        this.openModalFunc('Éxito', 'Se elimino la tarea correctamente');
+      },
+      error: () => {
+        this.openModalFunc('Error', 'Hubo un problema al crear la tarea');
+      },
+    });
   }
+
+
 }

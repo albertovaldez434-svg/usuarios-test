@@ -112,10 +112,10 @@
     <ion-row>
       <ion-col size="12" size-md="6">
         @if (!isEditingData) {
-        <app-custom-button [text]="'Cancelar'" [iconName]="'close-circle-outline'" [type]="'secondary'"
+        <app-custom-button [text]="'Cancelar'" [iconName]="'close-circle-outline'" [tipoBtn]="'secondary'"
           [expand]="'block'" [slot]="'start'" (clicked)="closeModal()" />
         } @else {
-        <app-custom-button [text]="'Limpiar'" [iconName]="'refresh-circle'" [type]="'secondary'" [expand]="'block'"
+        <app-custom-button [text]="'Limpiar'" [iconName]="'refresh-circle'" [tipoBtn]="'secondary'" [expand]="'block'"
           [slot]="'start'" (clicked)="resetForm()" />
         }
         <app-custom-button [type]="'submit'" [iconName]="'close-circle-outline'" [expand]="'block'" [slot]="'start'"

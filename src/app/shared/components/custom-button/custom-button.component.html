@@ -1,8 +1,9 @@
 <div class="ion-activatable ripple-parent">
-  <ion-button [type]="type" [class.btn-primary]="type === 'primary' || type === 'submit'" [class.btn-secondary]="type === 'secondary'" [expand]="expand" 
-    [class]="class" [size]="size" (click)="onClick()" [disabled]="disabled">
+  <ion-button [type]="type" [color]="color" [class.btn-primary]="tipoBtn === 'primary' || type === 'submit'"
+    [class.btn-secondary]="tipoBtn === 'secondary'" [expand]="expand" [size]="size" (click)="onClick()"
+    [disabled]="disabled">
     @if (iconName) {
-    <ion-icon [slot]="slot" [name]="iconName"></ion-icon>
+      <ion-icon [slot]="slot" [name]="iconName"></ion-icon>
     }
     {{text}}
   </ion-button>

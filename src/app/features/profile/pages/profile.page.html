@@ -22,7 +22,7 @@
                   <div class="profile-picture-placeholder">
                     <ion-icon name="person-circle-outline"></ion-icon>
                   </div>
-                  <app-custom-button [type]="'primary'" [size]="'small'" [iconName]="'camera-outline'"
+                  <app-custom-button [tipoBtn]="'primary'" [size]="'small'" [iconName]="'camera-outline'"
                     [text]="'Agregar imagen'" [class]="'add-picture-btn'" [slot]="'start'"
                     (clicked)="showPictureSourceOptions()"></app-custom-button>
                   } @else {
@@ -62,7 +62,7 @@
               <br>
 
               <div class="button-section">
-                <app-custom-button [type]="'primary'" [text]="'Editar Perfil'" [iconName]="'create-outline'"
+                <app-custom-button [tipoBtn]="'primary'" [text]="'Editar Perfil'" [iconName]="'create-outline'"
                   [slot]="'start'" (clicked)="editProfile()">
                 </app-custom-button>
                 <!-- por ahora desactivo el tema claro -->

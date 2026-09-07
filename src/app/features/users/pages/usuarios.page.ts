@@ -10,13 +10,14 @@ import { UsuariosService } from 'src/app/features/users/services/usuarios';
 import { SearchPipe } from '../../../shared/pipes/search-pipe';
 import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
 import { AuthService } from '../../auth/services/auth-service';
+import { CustomButtonComponent } from "src/app/shared/components/custom-button/custom-button.component";
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.page.html',
   styleUrls: ['./usuarios.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, SearchPipe]
+  imports: [IonicModule, FormsModule, SearchPipe, CustomButtonComponent]
 })
 export class UsuariosPage implements OnInit {
   private authService = inject(AuthService);

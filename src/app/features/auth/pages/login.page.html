@@ -22,11 +22,11 @@
       </div>
 
       <div class="buttons-container">
-        <app-custom-button [text]="'Ingresar'" [type]="'primary'" [iconName]="'log-in-outline'" [expand]="'block'"
+        <app-custom-button [text]="'Ingresar'" [tipoBtn]="'primary'" [iconName]="'log-in-outline'" [expand]="'block'"
           (clicked)="loginFunction()" />
-        <app-custom-button [text]="'Registrarse'" [type]="'primary'" [iconName]="'person-add-outline'"
+        <app-custom-button [text]="'Registrarse'" [tipoBtn]="'primary'" [iconName]="'person-add-outline'"
           (clicked)="registerFunction()" />
-        <app-custom-button [text]="'Modo demostración'" [type]="'secondary'" [iconName]="'flask-outline'"
+        <app-custom-button [text]="'Modo demostración'" [tipoBtn]="'secondary'" [iconName]="'flask-outline'"
           (clicked)="logginInvitado()" />
 
         <!-- <a class="link-psw" (click)="restorePswMdl.present()">¿Olvidaste tu contraseña?</a> -->
