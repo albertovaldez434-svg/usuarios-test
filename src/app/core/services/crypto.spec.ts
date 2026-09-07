@@ -6,7 +6,7 @@ describe('Crypto Test', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [cryptService]
+            providers: [Crypto]
         })
 
         cryptService = TestBed.inject(Crypto);
@@ -17,12 +17,10 @@ describe('Crypto Test', () => {
     })
 
     it('Deberia de encriptar datos', async () => {
-        let text = 'Esto es un texto';
-        let password = 'MyP4ssw0rd@';
+        const text = 'Esto es un texto';
+        const password = 'MyP4ssw0rd@';
 
         const info = await cryptService.encrypt(text, password);
-
-        expect(cryptService.encrypt).toHaveBeenCalledWith(text,password);
 
         expect(info.data).toBeTruthy();
         expect(info.iv).toBeTruthy();
@@ -30,12 +28,10 @@ describe('Crypto Test', () => {
     });
 
     it('Deberia desencriptar datos', async () => {
-        let text = 'Esto es un texto';
-        let password = 'MyP4ssw0rd@';
+        const text = 'Esto es un texto';
+        const password = 'MyP4ssw0rd@';
 
         const info = await cryptService.encrypt(text, password);
-
-        expect(cryptService.encrypt).toHaveBeenCalledWith(text,password);
 
         expect(info.data).toBeTruthy();
         expect(info.iv).toBeTruthy();
@@ -43,19 +39,14 @@ describe('Crypto Test', () => {
 
         const decryptInfo = await cryptService.decrypt(info, password);
 
-        expect(cryptService.decrypt).toHaveBeenCalledWith(info, password);
-
-        expect(decryptInfo).toBeTruthy();
-        expect(decryptInfo).toBeGreaterThan(0);
+        expect(decryptInfo).toBe(text);
     });
 
     it('Deberia de generar una cryptokey', async() => {
-        let password = 'MyP4ssw0rd@';
+        const password = 'MyP4ssw0rd@';
         const saltArray = new Uint8Array([1, 2, 3, 4, 5]);
         
         const key = await cryptService.generarLlave(password, saltArray);
-
-        expect(cryptService.generarLlave).toHaveBeenCalledWith(password, saltArray);
 
         expect(key).toBeTruthy();
         expect(key.type).toBe('secret');

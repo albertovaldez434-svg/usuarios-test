@@ -9,8 +9,7 @@ describe('CustomInputComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomInputComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), CustomInputComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CustomInputComponent);

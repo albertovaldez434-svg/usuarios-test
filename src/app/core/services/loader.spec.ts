@@ -26,6 +26,10 @@ describe('Loader Test', () => {
     loaderControllerSpy.create.and.resolveTo(loadingElementSpy);
 
     beforeEach(() => {
+        loaderControllerSpy.create.calls.reset();
+        loadingElementSpy.present.calls.reset();
+        loadingElementSpy.dismiss.calls.reset();
+
         TestBed.configureTestingModule({
             providers: [
                 LoaderService,
@@ -79,15 +83,18 @@ describe('Loader Test', () => {
         expect(loadingElementSpy.dismiss).toHaveBeenCalled();
     }));
 
-    it('Multiples show crean solo 1 loader', () => {
+    it('Multiples show crean solo 1 loader', fakeAsync(() => {
         loaderService.show();
 
         loaderService.show();
 
         loaderService.show();
+
+        tick(300);
+        flushMicrotasks();
 
         expect(loaderControllerSpy.create).toHaveBeenCalledTimes(1);
-    });
+    }));
 
     it('Se cancelo la carga del loader', fakeAsync(() => {
         loaderService.show();

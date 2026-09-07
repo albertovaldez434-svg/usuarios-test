@@ -1,23 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthService } from './auth-service';
-import { HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { SecureStorageService } from 'src/app/core/services/securestorage-service';
+import { provideHttpClient } from '@angular/common/http';
 import { Login } from '../models/login';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth-service';
+import { loginResponseDTO } from '../models/loginDTO';
 import { environment } from 'src/environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   //mockup objeto login
-  const loginData = {
+  const loginData: loginResponseDTO = {
     idUser: 19,
+    idRol: 1,
     nombre: 'Alberto',
     apellidos: 'Valdez Lopez',
     email: 'albertovaldez434@gmail.com',
-    accessToken: '123_mytoken_test'
-  } as any;
+    accessToken: '123_mytoken_test',
+    tokenType: 'bearer',
+    avatar: ''
+  };
 
   // mock de los servicios
   let httpMock: HttpTestingController;
@@ -32,7 +36,13 @@ describe('AuthService', () => {
       'setItem', 'getItem', 'clear'
     ]);
 
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: SecureStorageService, useValue: storageSpy }
+      ]
+    });
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController)
   });
@@ -45,14 +55,20 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Deberia de Inciar Sesión', () => {
+  it('Deberia de Inciar Sesión', async () => {
     const loginRequest = {
       Email: 'albertovaldez434@gmail.com',
       Password: 'myP4ssw0rd123$'
     } as Login
 
-    service.Login(loginRequest).subscribe(resp => {
-      expect(resp).toEqual(loginData);
+    const responsePromise = new Promise<void>((resolve, reject) => {
+      service.Login(loginRequest).subscribe({
+        next: resp => {
+          expect(resp).toEqual(loginData);
+          resolve();
+        },
+        error: reject
+      });
     });
 
     const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/Login`);
@@ -62,32 +78,35 @@ describe('AuthService', () => {
     expect(req.request.body).toEqual(loginRequest);
 
     req.flush(loginData);
+    await responsePromise;
+    expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
   });
 
-  it('Primera Prueba: Deberia de guardar la informacion del login y actualizar el signal', () => {
+  it('Primera Prueba: Deberia de guardar la informacion del login y actualizar el signal', async () => {
     // llamamos el service
-    service.setLoginData(loginData);
+    await service.setLoginData(loginData);
 
     // esperamos que los datos en el signal sean equivalentes al mockup
     expect(service.loggedData$()).toEqual(loginData);
   });
 
-  it('Segunda Prueba: Deberia de poder recuperar la informacion del localStorage', () => {
-    service.setLoginData(loginData);
+  it('Segunda Prueba: Deberia de poder guardar la informacion en el storage', async () => {
+    await service.setLoginData(loginData);
 
     expect(service.loggedData$()).toEqual(loginData);
 
     expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
   });
 
-  it('Tercera Prueba: Deberia de eliminar el loginData del signal', () => {
+  it('Tercera Prueba: Deberia de eliminar el loginData del signal', async () => {
     //primero guardamos los datos
-    service.setLoginData(loginData);
+    await service.setLoginData(loginData);
 
     // luego removemos los datos
     service.clearLoginData();
 
     //se espera que el signal ya este limpio
     expect(service.loggedData$()).toBeNull();
+    expect(storageSpy.clear).toHaveBeenCalled();
   });
 });

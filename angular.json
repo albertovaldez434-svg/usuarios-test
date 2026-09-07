@@ -107,7 +107,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "include": [
-              "src/app/tests/**/*.spec.ts"
+              "src/**/*.spec.ts"
             ],
             "inlineStyleLanguage": "scss",
             "assets": [

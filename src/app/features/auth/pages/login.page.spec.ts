@@ -3,12 +3,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'
 import { of } from 'rxjs';
 
-import { LoginPage } from 'src/app/features/auth/login/login.page';
+import { LoginPage } from 'src/app/features/auth/pages/login.page';
 import { UsuariosService } from 'src/app/features/users/services/usuarios';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { SecureStorageService } from 'src/app/core/services/securestorage-service';
-import { AuthUser } from 'src/app/features/users/models/users';
+import { AuthService } from 'src/app/features/auth/services/auth-service';
+import { TasksService } from 'src/app/features/dashboard/services/tasks-service';
+import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
 
 // describe('nombre_de_prueba')
 describe('LoginPage', () => {
@@ -20,7 +21,9 @@ describe('LoginPage', () => {
     let fixture: ComponentFixture<LoginPage>;
 
     // fake service objects (mocks)
+    let authServiceMock: any;
     let userServiceMock: any;
+    let tasksServiceMock: any;
     let routerMock: any;
 
     beforeEach(async () => {
@@ -28,10 +31,14 @@ describe('LoginPage', () => {
           Fake service methods.
           We use spies so we can verify if they were called.
         */
+        authServiceMock = {
+            Login: jasmine.createSpy('Login')
+        };
         userServiceMock = {
-            Login: jasmine.createSpy('Login'),
-            setLoginData: jasmine.createSpy('setLoginData'),
-            setUser: jasmine.createSpy('setUser')
+            getUsers: jasmine.createSpy('getUsers')
+        };
+        tasksServiceMock = {
+            cargarTareasUsuario: jasmine.createSpy('cargarTareasUsuario')
         };
 
         routerMock = {
@@ -42,10 +49,11 @@ describe('LoginPage', () => {
         await TestBed.configureTestingModule({
     imports: [IonicModule.forRoot(), ReactiveFormsModule, LoginPage],
     providers: [
+        { provide: AuthService, useValue: authServiceMock },
         { provide: UsuariosService, useValue: userServiceMock },
+        { provide: TasksService, useValue: tasksServiceMock },
         { provide: Router, useValue: routerMock },
-        { provide: ModalController, useValue: {} },
-        { provide: SecureStorageService, useValue: {} }
+        { provide: ModalController, useValue: jasmine.createSpyObj('ModalController', ['create', 'dismiss']) }
     ]
 }).compileComponents();
 
@@ -97,7 +105,7 @@ describe('LoginPage', () => {
         expect(component.openModalFunc).toHaveBeenCalled();
 
         // verify login service was NOT called
-        expect(userServiceMock.Login).not.toHaveBeenCalled();
+        expect(authServiceMock.Login).not.toHaveBeenCalled();
 
     });
 
@@ -107,19 +115,14 @@ describe('LoginPage', () => {
     it('should login successfully', () => {
 
         // fake API response
-        const fakeResponse: AuthUser = {
+        const fakeResponse: loginResponseDTO = {
             idRol: 1,
             idUser: 2,
-            access_token: 'fake-jwt-token-123',
-            token_type: 'bearer',
-            userInfo: {
-                email: 'albertovaldez434@gmail.com',
-                idUser: 2,
-                idRol: 1,
-                nombre: 'Alberto',
-                apellidos: 'Valdez Lopez',
-                telefono: '6441727482'
-            },
+            accessToken: 'fake-jwt-token-123',
+            tokenType: 'bearer',
+            email: 'albertovaldez434@gmail.com',
+            nombre: 'Alberto',
+            apellidos: 'Valdez Lopez',
             avatar: '....'
         };
 
@@ -127,9 +130,11 @@ describe('LoginPage', () => {
           when Login() is called,
           return fake observable data
         */
-        userServiceMock.Login.and.returnValue(
+        authServiceMock.Login.and.returnValue(
             of(fakeResponse)
         );
+        userServiceMock.getUsers.and.returnValue(of([]));
+        tasksServiceMock.cargarTareasUsuario.and.returnValue(of([]));
 
         // fill form
         component.loginForm.setValue({
@@ -141,7 +146,12 @@ describe('LoginPage', () => {
         component.loginFunction();
 
         // verify service was called
-        expect(userServiceMock.Login).toHaveBeenCalled();
+        expect(authServiceMock.Login).toHaveBeenCalledWith({
+            Email: 'test@test.com',
+            Password: '123456'
+        });
+        expect(userServiceMock.getUsers).toHaveBeenCalled();
+        expect(tasksServiceMock.cargarTareasUsuario).toHaveBeenCalledWith(2);
 
         // verify navigation
         expect(routerMock.navigate)

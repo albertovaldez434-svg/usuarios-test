@@ -97,13 +97,13 @@ describe('TasksService Test', () => {
   it('Debe guardar las tareas en el securestorage', async () => {
     await taskServiceMock.setTasksData(tasksListMock);
 
-    expect(storageSpy).toHaveBeenCalledWith('tasks', tasksListMock);
+    expect(storageSpy.setItem).toHaveBeenCalledWith('tasks', tasksListMock);
   });
 
   it('Deberia de obtener tareas', () => {
     taskServiceMock.cargarTareasUsuario(19).subscribe();
 
-    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tareas/GetTareas/${19}`);
+    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tasks/GetTareas/${19}`);
 
     expect(request.request.method).toBe('GET');
 
@@ -111,21 +111,20 @@ describe('TasksService Test', () => {
   });
 
   it('Deberia de agregar una tarea', () => {
-    taskServiceMock.actualizarTarea(taskUpdatedMock).subscribe();
+    taskServiceMock.agregarTarea(newTaskMock).subscribe();
 
-    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tareas/AddTarea`);
+    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tasks/AddTarea`);
 
     expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual(newTaskMock);
 
-    expect(request.request.body).toEqual(taskUpdatedMock);
-
-    request.flush(taskUpdatedMock);
+    request.flush(newTaskMock);
   });
 
   it('Deberia de actualizar tareas', () => {
     taskServiceMock.actualizarTarea(taskUpdatedMock).subscribe();
 
-    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tareas/UpdateTarea`);
+    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tasks/UpdateTarea`);
 
     expect(request.request.method).toBe('PUT');
 
@@ -137,9 +136,10 @@ describe('TasksService Test', () => {
   it('Deberia de eliminar una tarea', () => {
     taskServiceMock.eliminaTarea(4).subscribe();
 
-    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tareas/DeleteTarea/${4}`);
+    const request = httpclientMock.expectOne(`${environment.URL_API}/api/Tasks/DeleteTarea/${4}`);
 
     expect(request.request.method).toBe('DELETE');
+    request.flush({});
   });
 
   it('Deberia de cargar tareas para modo test', () => {

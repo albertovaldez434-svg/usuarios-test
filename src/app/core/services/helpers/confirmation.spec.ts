@@ -8,12 +8,21 @@ describe('Confirmation', () => {
   const myMessage = 'Mensaje modal';
 
   let service: Confirmation;
-  let modalcontroller: ModalController;
+  let modalcontroller: jasmine.SpyObj<ModalController>;
+  let modalSpy: jasmine.SpyObj<HTMLIonModalElement>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    modalSpy = jasmine.createSpyObj('HTMLIonModalElement', ['present']);
+    modalcontroller = jasmine.createSpyObj('ModalController', ['create']);
+    modalcontroller.create.and.resolveTo(modalSpy);
 
-    modalcontroller = TestBed.inject(ModalController);
+    TestBed.configureTestingModule({
+      providers: [
+        Confirmation,
+        { provide: ModalController, useValue: modalcontroller }
+      ]
+    });
+
     service = TestBed.inject(Confirmation);
   });
 
@@ -37,11 +46,17 @@ describe('Confirmation', () => {
     expect(service.confirmed()).toBe(false);
   });
 
-  it('Deberia de crear un modal', () => {
-    service.openConfirmationSheet(myTitle, myMessage);
+  it('Deberia de crear y presentar un modal', async () => {
+    await service.openConfirmationSheet(myTitle, myMessage);
 
-    expect(service).toHaveBeenCalled();
-    expect(service.openConfirmationSheet).toHaveBeenCalledWith(myTitle, myMessage);
+    expect(modalcontroller.create).toHaveBeenCalledWith(jasmine.objectContaining({
+      componentProps: {
+        title: myTitle,
+        msj: myMessage,
+        msj2: undefined
+      }
+    }));
+    expect(modalSpy.present).toHaveBeenCalled();
   });
 
   it('Deberia de guardar un valor en el signal', () => {
