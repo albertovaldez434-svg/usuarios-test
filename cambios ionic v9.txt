@@ -1,0 +1,10 @@
+cambios ionic
+
+en modo standalone, el IonicModule en los imports esta deprecado. ahora vas al main.ts y cambias el provide:
+  provideIonicAngular({ mode: 'md' }),
+
+y en las paginas ahora debes de importar cada componente por su cuenta
+imports: [FormsModule, ReactiveFormsModule, IonicModule] (X mal)
+
+ahora seria:
+imports: [FormsModule, ReactiveFormsModule, IonContent, IonCard, IonCol, IonGrid] (Ahora sería asi!)

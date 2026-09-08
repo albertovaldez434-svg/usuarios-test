@@ -5,7 +5,6 @@ import { SecureStorageService } from './core/services/securestorage-service';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { loginResponseDTO } from './features/auth/models/loginDTO';
-import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { AuthService } from './features/auth/services/auth-service';
 
@@ -14,7 +13,7 @@ import { AuthService } from './features/auth/services/auth-service';
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [IonicModule, MenuComponent],
+    imports: [ MenuComponent ],
 })
 export class AppComponent implements OnInit {
   private authService = inject(AuthService);

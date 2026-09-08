@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
-import { IonicModule, IonModal, ModalController } from "@ionic/angular";
+import { IonContent, IonModal, ModalController } from "@ionic/angular";
 import { switchMap, forkJoin } from "rxjs";
 import { Users } from "src/app/features/users/models/users";
 import { UsuariosService } from "src/app/features/users/services/usuarios";
@@ -19,7 +19,7 @@ import { AuthService } from "../services/auth-service";
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent]
+  imports: [FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent, IonContent]
 })
 export class LoginPage implements OnInit {
   private authService = inject(AuthService);
