@@ -1,7 +1,7 @@
 /// <reference types="@angular/localize" />
 
 import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withPreloading } from '@angular/router';
@@ -19,7 +19,7 @@ import { ErrorsInterceptor } from './app/core/interceptors/errors-interceptor';
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideRouter(routes, withPreloading(PreloadAllModules)),
+        provideZoneChangeDetection(),provideRouter(routes, withPreloading(PreloadAllModules)),
         importProvidersFrom(
             IonicModule.forRoot({ swipeBackEnabled: false })
         ),
