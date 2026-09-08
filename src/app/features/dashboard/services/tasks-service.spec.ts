@@ -2,7 +2,7 @@
 // este suele ser problema de VS Code
 /// <reference types="jasmine" />
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { UserTasks } from 'src/app/features/dashboard/models/task';
@@ -64,7 +64,7 @@ describe('TasksService Test', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(), provideHttpClientTesting(),
+        provideHttpClient(withXhr()), provideHttpClientTesting(),
         {
           provide: SecureStorageService,
           useValue: storageSpy

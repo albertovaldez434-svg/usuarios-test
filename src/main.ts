@@ -3,7 +3,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 
-import { provideHttpClient, withInterceptors, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi, HTTP_INTERCEPTORS, withXhr } from '@angular/common/http';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
 
@@ -23,7 +23,7 @@ bootstrapApplication(AppComponent, {
         importProvidersFrom(
             IonicModule.forRoot({ swipeBackEnabled: false })
         ),
-        provideHttpClient(withInterceptors([timeoutInterceptor]), withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptors([timeoutInterceptor]), withInterceptorsFromDi()),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },

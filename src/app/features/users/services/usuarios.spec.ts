@@ -7,7 +7,7 @@ import { TestBed } from "@angular/core/testing";
 
 //se importa los http testing controllers
 import { provideHttpClientTesting, HttpTestingController } from "@angular/common/http/testing"
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient, withXhr } from "@angular/common/http";
 import { SecureStorageService } from "src/app/core/services/securestorage-service";
 import { UsuariosService } from "src/app/features/users/services/usuarios";
 import { environment } from "src/environments/environment";
@@ -76,7 +76,7 @@ describe('UsuariosService Test', () => {
         // y despues eñ servicio que tendra el spy
         TestBed.configureTestingModule({
             providers: [
-                UsuariosService, provideHttpClient(), provideHttpClientTesting(),
+                UsuariosService, provideHttpClient(withXhr()), provideHttpClientTesting(),
                 {
                     provide: SecureStorageService,
                     useValue: storageSpy

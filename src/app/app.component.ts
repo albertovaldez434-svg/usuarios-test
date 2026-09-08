@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UsuariosService } from './features/users/services/usuarios';
 import { NavigationEnd, Router } from '@angular/router';
 import { SecureStorageService } from './core/services/securestorage-service';
@@ -13,6 +13,7 @@ import { AuthService } from './features/auth/services/auth-service';
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonicModule, MenuComponent],
 })
 export class AppComponent implements OnInit {

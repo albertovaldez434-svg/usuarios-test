@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { SecureStorageService } from 'src/app/core/services/securestorage-service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { Login } from '../models/login';
 import { AuthService } from './auth-service';
 import { loginResponseDTO } from '../models/loginDTO';
@@ -38,7 +38,7 @@ describe('AuthService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         provideHttpClientTesting(),
         { provide: SecureStorageService, useValue: storageSpy }
       ]

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 
 describe('AppComponent', () => {
@@ -13,7 +13,7 @@ describe('AppComponent', () => {
         AppComponent
     ],
     providers: [
-        provideHttpClient()
+        provideHttpClient(withXhr())
     ],
 }).compileComponents();
   });
