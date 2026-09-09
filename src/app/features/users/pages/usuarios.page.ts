@@ -1,23 +1,27 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
-import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
+import {
+  IonModal, ModalController, RefresherCustomEvent, IonHeader, IonToolbar, IonTitle, IonContent,
+  IonRefresher, IonRefresherContent, IonGrid, IonRippleEffect, IonButton, IonIcon, IonSearchbar
+} from '@ionic/angular';
 import { of } from 'rxjs';
-import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
-import { RestorePswComponent } from 'src/app/shared/components/restore-psw/restore-psw.component';
-import { Users } from 'src/app/features/users/models/users';
-import { Confirmation } from 'src/app/core/services/helpers/confirmation';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
-import { SearchPipe } from '../../../shared/pipes/search-pipe';
-import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
-import { AuthService } from '../../auth/services/auth-service';
-import { CustomButtonComponent } from "src/app/shared/components/custom-button/custom-button.component";
+import { IonModalComponent } from '@shared/components/ion-modal/ion-modal.component';
+import { RestorePswComponent } from '@shared/components/restore-psw/restore-psw.component';
+import { Users } from '@features/users/models/users';
+import { Confirmation } from '@core/services/helpers/confirmation';
+import { UsuariosService } from '@features/users/services/usuarios';
+import { SearchPipe } from '@shared/pipes/search-pipe';
+import { RegisterFormComponent } from '@shared/components/register-form/register-form.component';
+import { AuthService } from '@features/auth/services/auth-service';
+import { CustomButtonComponent } from "@shared/components/custom-button/custom-button.component";
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.page.html',
   styleUrls: ['./usuarios.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, SearchPipe, CustomButtonComponent]
+  imports: [FormsModule, SearchPipe, CustomButtonComponent, IonHeader, IonToolbar, IonTitle, IonContent, 
+    IonRefresher, IonRefresherContent, IonGrid, IonRippleEffect, IonButton, IonIcon, IonSearchbar]
 })
 export class UsuariosPage implements OnInit {
   private authService = inject(AuthService);
@@ -37,10 +41,11 @@ export class UsuariosPage implements OnInit {
     this.usuarios().find(usr => usr.idUser == this.idUserSignal())
   );
 
+  private confirmationService = inject(Confirmation)
+
   constructor(
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
-    private confirmationService: Confirmation
   ) {
     this.signupForm = this.formBuilder.group({
       Nombre: [''],

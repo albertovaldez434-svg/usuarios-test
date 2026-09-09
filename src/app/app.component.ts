@@ -7,13 +7,14 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { loginResponseDTO } from './features/auth/models/loginDTO';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { AuthService } from './features/auth/services/auth-service';
+import { IonApp, IonRouterOutlet } from "@ionic/angular";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [ MenuComponent ],
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [IonRouterOutlet, IonApp, MenuComponent],
 })
 export class AppComponent implements OnInit {
   private authService = inject(AuthService);
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService;
 
   constructor(
-    
+
     private route: Router,
     private secureStorage: SecureStorageService
   ) {

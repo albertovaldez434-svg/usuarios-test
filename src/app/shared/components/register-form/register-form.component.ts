@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
-import { Users } from 'src/app/features/users/models/users';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  ModalController, IonHeader, IonToolbar, IonTitle, IonButtons,
+  IonButton, IonIcon, IonGrid, IonCol, IonRow
+} from '@ionic/angular';
+import { Users } from '@features/users/models/users';
 import { CustomInputComponent } from "../custom-input/custom-input.component";
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
 
@@ -11,7 +14,9 @@ import { CustomButtonComponent } from "../custom-button/custom-button.component"
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, IonicModule, CustomInputComponent, CustomButtonComponent]
+  imports: [ReactiveFormsModule, CustomInputComponent, CustomButtonComponent,
+    IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonGrid,
+    IonCol, IonRow ]
 })
 export class RegisterFormComponent implements OnInit {
   @Input() Title?: string;

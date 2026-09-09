@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, ControlValueAccessor } from "@angular/forms";
+import { IonIcon, IonInput, IonItem } from "@ionic/angular";
 
 @Component({
   selector: 'app-custom-input',
   templateUrl: './custom-input.component.html',
   styleUrls: ['./custom-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, ReactiveFormsModule],
+  imports: [ FormsModule, ReactiveFormsModule, IonItem, IonInput, IonIcon],
   // primero se hace el providers de lo que sera el CVA (controlvalueaccessor), para que este componente pueda ser usado como
   // form control en otros componentes/paginas
   providers: [
@@ -26,7 +26,7 @@ export class CustomInputComponent implements ControlValueAccessor {
   @Input() iconName: string = '';
   @Input() placeholderText: string = '';
   @Input() inputType: 'text' | 'email' | 'tel' | 'password' = 'text';
-  
+
   // como el template ahora se usa el ControlValueAccessor, ya no hay que poner directamente el formcontrolname
   // @Input() formCtrlName: string = '';
 
@@ -73,7 +73,7 @@ export class CustomInputComponent implements ControlValueAccessor {
     this.valueChange.emit(value);
   }
 
-  iconClicked(): void{ 
+  iconClicked(): void {
     this.Clicked.emit();
   }
 

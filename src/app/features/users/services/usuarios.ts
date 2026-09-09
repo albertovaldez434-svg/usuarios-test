@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { Users, UsuariosResponse } from '../models/users';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 import { SecureStorageService } from '../../../core/services/securestorage-service';
 import { ImagenesUsuarios } from '../../../core/models/imagenesusuario';
 

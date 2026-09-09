@@ -1,14 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import {
+  IonHeader, IonToolbar, IonTitle, IonButton, IonIcon,
+  IonContent, IonButtons, ModalController
+} from '@ionic/angular';
 import { CustomButtonComponent } from "../custom-button/custom-button.component";
-import { Confirmation } from 'src/app/core/services/helpers/confirmation';
+import { Confirmation } from '@core/services/helpers/confirmation';
 
 @Component({
   selector: 'app-action-modal',
   templateUrl: './action-modal.component.html',
   styleUrls: ['./action-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, CustomButtonComponent]
+  imports: [IonHeader, IonToolbar, IonTitle, IonButton,
+    IonIcon, IonContent, IonButtons, CustomButtonComponent]
 })
 export class ActionModalComponent {
   @Input() title: string = '';

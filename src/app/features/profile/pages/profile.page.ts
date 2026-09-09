@@ -1,22 +1,27 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit, ViewChild } from '@angular/core';
-import { Users } from 'src/app/features/users/models/users';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
+import { Users } from '@features/users/models/users';
+import { UsuariosService } from '@features/users/services/usuarios';
 import { Camera } from '@capacitor/camera';
-import { ActionSheetController, IonModal, ModalController, IonicModule } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
+import { 
+  ActionSheetController, IonModal, ModalController, IonGrid, IonRow, IonCol, IonCard, IonHeader, IonCardTitle, 
+  IonCardHeader, IonCardContent, IonIcon, IonButton, IonItem, IonLabel, IonToolbar, IonTitle, IonContent 
+} from '@ionic/angular';
+import { IonModalComponent } from '@shared/components/ion-modal/ion-modal.component';
 
 import imageCompression from 'browser-image-compression';
-import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
-import { CustomButtonComponent } from 'src/app/shared/components/custom-button/custom-button.component';
-import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
-import { AuthService } from '../../auth/services/auth-service';
+import { loginResponseDTO } from '@features/auth/models/loginDTO';
+import { CustomButtonComponent } from '@shared/components/custom-button/custom-button.component';
+import { RegisterFormComponent } from '@shared/components/register-form/register-form.component';
+import { AuthService } from '@features/auth/services/auth-service';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.page.html',
-    styleUrls: ['./profile.page.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonicModule, CustomButtonComponent, RegisterFormComponent]
+  selector: 'app-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CustomButtonComponent, RegisterFormComponent, IonHeader, IonToolbar, IonTitle, IonContent,
+     IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonButton,
+     IonItem, IonLabel, IonModal]
 })
 export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
@@ -203,7 +208,7 @@ export class ProfilePage implements OnInit {
 
   editProfile() {
     // this.ModalEditInfo.present();
-   
+
     this.modalCtrl.create({
       component: RegisterFormComponent,
       breakpoints: [0, 0.25, 0.5, 0.75, 0.90],
@@ -212,7 +217,7 @@ export class ProfilePage implements OnInit {
         userData: this.currentUser,
         Title: 'Editar Perfil',
       },
-      
+
     });
   }
 

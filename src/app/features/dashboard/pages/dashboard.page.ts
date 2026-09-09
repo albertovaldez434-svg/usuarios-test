@@ -1,25 +1,33 @@
 import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
+import {
+  IonContent, IonIcon, IonItem, IonLabel, IonModal, IonSelectOption, IonTitle, IonToolbar, ModalController,
+  RefresherCustomEvent, IonHeader, IonButtons, IonButton, IonSelect, IonRippleEffect, IonRefresher,
+  IonRefresherContent, IonSearchbar, IonCardTitle, IonCardHeader, IonCard, IonCardSubtitle
+} from '@ionic/angular';
 
-import { UserTasks } from 'src/app/features/dashboard/models/task';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
-import { IonModal, ModalController, RefresherCustomEvent, IonicModule } from '@ionic/angular';
-import { IonModalComponent } from 'src/app/shared/components/ion-modal/ion-modal.component';
-import { Users } from 'src/app/features/users/models/users';
-import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
-import { TasksService } from 'src/app/features/dashboard/services/tasks-service';
-import { FormsModule } from '@angular/forms';
-import { CustomButtonComponent } from 'src/app/shared/components/custom-button/custom-button.component';
-import { SearchPipe } from 'src/app/shared/pipes/search-pipe';
-import { AuthService } from '../../auth/services/auth-service';
-import { CustomInputComponent } from "src/app/shared/components/custom-input/custom-input.component";
+import { UserTasks } from '@features/dashboard/models/task';
+import { UsuariosService } from '@features/users/services/usuarios';
+
+import { IonModalComponent } from '@shared/components/ion-modal/ion-modal.component';
+import { Users } from '@features/users/models/users';
+import { loginResponseDTO } from '@features/auth/models/loginDTO';
+import { TasksService } from '@features/dashboard/services/tasks-service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomButtonComponent } from '@shared/components/custom-button/custom-button.component';
+import { SearchPipe } from '@shared/pipes/search-pipe';
+import { AuthService } from '@features/auth/services/auth-service';
+import { CustomInputComponent } from "@shared/components/custom-input/custom-input.component";
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, CustomButtonComponent, SearchPipe, CustomInputComponent]
+  imports: [FormsModule, ReactiveFormsModule, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview, CustomButtonComponent, SearchPipe, CustomInputComponent,
+    IonIcon, IonItem, IonSelect, IonSelectOption, IonLabel, IonContent, IonModal, IonToolbar, IonTitle, IonHeader, IonButtons, IonButton, IonRippleEffect, IonRefresher,
+    IonRefresherContent, IonSearchbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle]
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
