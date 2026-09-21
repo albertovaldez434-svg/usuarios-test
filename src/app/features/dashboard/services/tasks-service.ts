@@ -30,6 +30,19 @@ export class TasksService {
     );
   }
 
+  cargarTareasUsuarioV2(nPage: number, pageSize: number, termino?: string) {
+
+    let url = `${environment.URL_API}/api/Tasks/getTareasListv2?page=${nPage}&pageSize=${pageSize}`;
+
+    if (termino && termino.length > 0) {
+      url += `&filtro=${termino}`
+    }
+
+    return this.http.get<any>(url).pipe(
+      tap(tasks => this.tasks.set(tasks))
+    );
+  }
+
   actualizarTarea(tareaActualizada: UserTasks) {
 
     const url = `${environment.URL_API}/api/Tasks/UpdateTarea`;

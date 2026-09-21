@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { UsuariosPage } from './usuarios.page';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { Confirmation } from 'src/app/core/services/helpers/confirmation';
+import { UsuariosService } from '@features/users/services/usuarios';
+import { AuthService } from '@features/auth/services/auth-service';
+import { Confirmation } from '@core/services/helpers/confirmation';
 
 describe('UsuariosPage', () => {
   let component: UsuariosPage;
@@ -12,7 +12,7 @@ describe('UsuariosPage', () => {
   beforeEach(async () => {
     usersSpy = { users$: () => null };
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), UsuariosPage],
+      imports: [UsuariosPage],
       providers: [
         { provide: UsuariosService, useValue: usersSpy },
         { provide: AuthService, useValue: { loggedData$: () => null } },

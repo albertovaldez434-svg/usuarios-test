@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { IonicModule, ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { ProfilePage } from './profile.page';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
+import { AuthService } from '@features/auth/services/auth-service';
+import { UsuariosService } from '@features/users/services/usuarios';
 
 describe('ProfilePage', () => {
   let component: ProfilePage;
@@ -11,7 +11,7 @@ describe('ProfilePage', () => {
   beforeEach(async () => {
     usersSpy = { users$: () => null };
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), ProfilePage],
+      imports: [ProfilePage],
       providers: [
         { provide: AuthService, useValue: { loggedData$: () => null } },
         { provide: UsuariosService, useValue: usersSpy },

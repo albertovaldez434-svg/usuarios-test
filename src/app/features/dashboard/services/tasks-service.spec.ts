@@ -5,10 +5,10 @@
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { UserTasks } from 'src/app/features/dashboard/models/task';
-import { SecureStorageService } from 'src/app/core/services/securestorage-service';
-import { TasksService } from 'src/app/features/dashboard/services/tasks-service';
-import { environment } from 'src/environments/environment';
+import { UserTasks } from '@features/dashboard/models/task';
+import { SecureStorageService } from '@core/services/securestorage-service';
+import { TasksService } from '@features/dashboard/services/tasks-service';
+import { environment } from '@environments/environment';
 
 
 describe('TasksService Test', () => {

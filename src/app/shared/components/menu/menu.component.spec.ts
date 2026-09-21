@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 import { Router, provideRouter } from '@angular/router';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { Confirmation } from 'src/app/core/services/helpers/confirmation';
+import { AuthService } from '@features/auth/services/auth-service';
+import { Confirmation } from '@core/services/helpers/confirmation';
 import { MenuComponent } from './menu.component';
 
 describe('MenuComponent', () => {
@@ -20,7 +19,7 @@ describe('MenuComponent', () => {
     confirmationSpy = jasmine.createSpyObj('Confirmation', ['confirmed', 'openConfirmationSheet', 'setConfirmed']);
     (confirmationSpy.confirmed as jasmine.Spy).and.returnValue(null);
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), MenuComponent],
+      imports: [MenuComponent],
       providers: [
         { provide: AuthService, useValue: authSpy },
         { provide: Confirmation, useValue: confirmationSpy },

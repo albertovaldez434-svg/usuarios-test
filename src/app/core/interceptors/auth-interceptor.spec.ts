@@ -1,7 +1,7 @@
 import { HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
+import { AuthService } from '@features/auth/services/auth-service';
+import { loginResponseDTO } from '@features/auth/models/loginDTO';
 import { AuthInterceptor } from './auth-interceptor';
 
 describe('AuthInterceptor', () => {

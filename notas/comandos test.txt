@@ -1,0 +1,3 @@
+ng t
+ng test
+--watche=false

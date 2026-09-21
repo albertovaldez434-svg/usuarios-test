@@ -1,15 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular'
 import { of } from 'rxjs';
 
-import { LoginPage } from 'src/app/features/auth/pages/login.page';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
+import { LoginPage } from '@features/auth/pages/login.page';
+import { UsuariosService } from '@features/users/services/usuarios';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { TasksService } from 'src/app/features/dashboard/services/tasks-service';
-import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
+import { AuthService } from '@features/auth/services/auth-service';
+import { TasksService } from '@features/dashboard/services/tasks-service';
+import { loginResponseDTO } from '@features/auth/models/loginDTO';
 
 // describe('nombre_de_prueba')
 describe('LoginPage', () => {
@@ -47,7 +46,7 @@ describe('LoginPage', () => {
 
         // configure testing module
         await TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), ReactiveFormsModule, LoginPage],
+    imports: [ReactiveFormsModule, LoginPage],
     providers: [
         { provide: AuthService, useValue: authServiceMock },
         { provide: UsuariosService, useValue: userServiceMock },

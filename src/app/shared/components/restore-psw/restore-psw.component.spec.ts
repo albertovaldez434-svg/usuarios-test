@@ -1,16 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
-import { RestorePswComponent } from 'src/app/shared/components/restore-psw/restore-psw.component';
+import { RestorePswComponent } from '@shared/components/restore-psw/restore-psw.component';
 
 describe('RestorePswComponent', () => {
   let component: RestorePswComponent;
   let fixture: ComponentFixture<RestorePswComponent>;
+  let modalControllerMock = { ModalCtrl: jasmine.createSpy('modal')};
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), RestorePswComponent]
-}).compileComponents();
+      imports: [RestorePswComponent],
+      providers: [ 
+        { provide: ModalController, useValue: modalControllerMock }
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RestorePswComponent);
     component = fixture.componentInstance;

@@ -2,14 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { provideHttpClient, withXhr } from '@angular/common/http';
-import { IonicModule } from '@ionic/angular';
 
 describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
     imports: [
-        IonicModule.forRoot(),
         AppComponent
     ],
     providers: [

@@ -8,9 +8,9 @@ import { TestBed } from "@angular/core/testing";
 //se importa los http testing controllers
 import { provideHttpClientTesting, HttpTestingController } from "@angular/common/http/testing"
 import { provideHttpClient, withXhr } from "@angular/common/http";
-import { SecureStorageService } from "src/app/core/services/securestorage-service";
-import { UsuariosService } from "src/app/features/users/services/usuarios";
-import { environment } from "src/environments/environment";
+import { SecureStorageService } from "@core/services/securestorage-service";
+import { UsuariosService } from "@features/users/services/usuarios";
+import { environment } from "@environments/environment";
 
 
 //describimos el test

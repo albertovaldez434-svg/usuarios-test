@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { IonicModule, ModalController } from '@ionic/angular';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
-import { TasksService } from 'src/app/features/dashboard/services/tasks-service';
+import { ModalController } from '@ionic/angular';
+import { AuthService } from '@features/auth/services/auth-service';
+import { UsuariosService } from '@features/users/services/usuarios';
+import { TasksService } from '@features/dashboard/services/tasks-service';
 import { DashboardPage } from './dashboard.page';
 
 describe('DashboardPage', () => {
@@ -17,7 +17,7 @@ describe('DashboardPage', () => {
     tasksSpy = { tasks$: () => null };
 
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), DashboardPage],
+      imports: [DashboardPage],
       providers: [
         { provide: AuthService, useValue: authSpy },
         { provide: UsuariosService, useValue: usersSpy },

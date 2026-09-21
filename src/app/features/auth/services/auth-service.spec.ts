@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { SecureStorageService } from 'src/app/core/services/securestorage-service';
+import { SecureStorageService } from '@core/services/securestorage-service';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { Login } from '../models/login';
 import { AuthService } from './auth-service';
 import { loginResponseDTO } from '../models/loginDTO';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;

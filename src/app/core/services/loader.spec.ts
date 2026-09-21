@@ -1,9 +1,8 @@
 /// <reference types="jasmine" />
 
 import { fakeAsync, flushMicrotasks, TestBed, tick } from "@angular/core/testing";
-import { LoaderService } from "src/app/core/services/loader"
+import { LoaderService } from "@core/services/loader"
 import { LoadingController } from "@ionic/angular";
-import { inject } from "@angular/core";
 
 describe('Loader Test', () => {
     let loadingElementSpy = jasmine.createSpyObj<HTMLIonLoadingElement>(

@@ -18,6 +18,7 @@ import { CustomButtonComponent } from '@shared/components/custom-button/custom-b
 import { SearchPipe } from '@shared/pipes/search-pipe';
 import { AuthService } from '@features/auth/services/auth-service';
 import { CustomInputComponent } from "@shared/components/custom-input/custom-input.component";
+import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxjs';
 
 
 @Component({
@@ -41,6 +42,9 @@ export class DashboardPage implements OnInit {
 
   toggleSearch = false;
   playSAnimation = false;
+  private searchSub = new Subject<string>();
+  currentPage = signal(1);
+  totalPages = signal(0);
   searchValue = '';
 
   loggedUser!: loginResponseDTO | null;
@@ -111,21 +115,40 @@ export class DashboardPage implements OnInit {
       this.allTasks.set(tareas);
     }
 
-    effect(() => {
-      const users = this.usuariosService.users$();
-      const tareas = this.tareasService.tasks$();
+    // effect(() => {
+    //   const users = this.usuariosService.users$();
+    //   const tareas = this.tareasService.tasks$();
 
-      if (users) {
-        this.usuarios.set(users);
-      }
+    //   if (users) {
+    //     this.usuarios.set(users);
+    //   }
 
-      if (tareas) {
-        this.allTasks.set(tareas);
-      }
-    });
+    //   if (tareas) {
+    //     this.allTasks.set(tareas);
+    //   }
+    // });
   }
 
   ngOnInit() {
+    this.searchSub.pipe(
+      distinctUntilChanged(),
+      debounceTime(500),
+
+      tap(() => {
+        this.currentPage.set(1);
+      }),
+
+      switchMap(filtro => 
+        this.tareasService.cargarTareasUsuarioV2(1, 10, filtro)
+      )
+    ).subscribe(response => {
+      console.log(response),
+      console.log(this.allTasks()),
+      this.allTasks.set(response.items),
+      console.log(this.allTasks()),
+      this.totalPages.set(response.totalPages),
+      this.currentPage.set(response.page)
+    });
   }
 
   setSearchToggle() {
@@ -138,6 +161,11 @@ export class DashboardPage implements OnInit {
         this.toggleSearch = false;
       }, 300);
     }
+  }
+
+  onSearch(event: CustomEvent) {
+    const value = event.detail.value ?? ''; // ?? = operador de fusion nula, si el valor izquiero es null/undefined emtonces..
+    this.searchSub.next(value);
   }
 
   handleRefresh(event: RefresherCustomEvent) {

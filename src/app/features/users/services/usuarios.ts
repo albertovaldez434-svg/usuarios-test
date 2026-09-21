@@ -47,6 +47,18 @@ export class UsuariosService {
     );
   }
 
+  getUsersV2(nPage: number, pageSize: number, termino?: string) {
+    let url = `${environment.URL_API}/api/Usuarios/getUsuariosListv2?page=${nPage}&pageSize=${pageSize}`;
+
+    if (termino && termino.length > 0) {
+      url += `&filtro=${termino}`;
+    }
+
+    return this.http.get<any>(url).pipe(
+      tap(users => this.setUsers(users))
+    );
+  }
+
   signUpNewUser(newUser: Users) {
     const url = `${environment.URL_API}/api/Usuarios`;
 

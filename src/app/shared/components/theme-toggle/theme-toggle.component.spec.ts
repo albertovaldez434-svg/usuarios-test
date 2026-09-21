@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
-import { ThemeToggleComponent } from 'src/app/shared/components/theme-toggle/theme-toggle.component';
+import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-toggle.component';
 
 describe('ThemeToggleComponent', () => {
   let component: ThemeToggleComponent;
@@ -9,7 +8,7 @@ describe('ThemeToggleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [IonicModule.forRoot(), ThemeToggleComponent]
+    imports: [ThemeToggleComponent]
 }).compileComponents();
 
     fixture = TestBed.createComponent(ThemeToggleComponent);

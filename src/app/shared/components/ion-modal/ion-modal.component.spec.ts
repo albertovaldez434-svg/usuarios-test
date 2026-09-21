@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController} from '@ionic/angular';
 import { IonModalComponent } from './ion-modal.component';
 
 describe('IonModalComponent', () => {
@@ -10,7 +10,7 @@ describe('IonModalComponent', () => {
   beforeEach(async () => {
     modalSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), IonModalComponent],
+      imports: [ IonModalComponent],
       providers: [{ provide: ModalController, useValue: modalSpy }]
     }).compileComponents();
     fixture = TestBed.createComponent(IonModalComponent);

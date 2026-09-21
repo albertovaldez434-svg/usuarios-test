@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { RegisterFormComponent } from './register-form.component';
 
 describe('RegisterFormComponent', () => {
@@ -10,7 +10,7 @@ describe('RegisterFormComponent', () => {
   beforeEach(async () => {
     modalSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), RegisterFormComponent],
+      imports: [RegisterFormComponent],
       providers: [{ provide: ModalController, useValue: modalSpy }]
     }).compileComponents();
     fixture = TestBed.createComponent(RegisterFormComponent);
