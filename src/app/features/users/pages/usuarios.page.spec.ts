@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { of } from 'rxjs';
 import { AuthService } from '@features/auth/services/auth-service';
@@ -20,10 +21,10 @@ describe('UsuariosPage', () => {
   ];
 
   beforeEach(async () => {
-    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], { loggedData$: () => ({ accessToken: 'token', tokenType: 'bearer', idUser: 1, idRol: 1, nombre: 'Ana', apellidos: 'García', email: 'ana@test.com', avatar: '' }) });
-    usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', ['getUsers', 'clearUsers', 'setUsers', 'signUpNewUser', 'editUser', 'obtenerUsuariosTest'], { users$: () => usersList });
+    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], { loggedData$: signal({ accessToken: 'token', tokenType: 'bearer', idUser: 1, idRol: 1, nombre: 'Ana', apellidos: 'García', email: 'ana@test.com', avatar: '' }) });
+    usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', ['getUsers', 'clearUsers', 'setUsers', 'signUpNewUser', 'editUser', 'obtenerUsuariosTest'], { users$: signal(usersList) });
     usersSpy.getUsers.and.returnValue(of(usersList));
-    confirmationSpy = jasmine.createSpyObj<Confirmation>('Confirmation', ['setConfirmed'], { confirmed: () => null });
+    confirmationSpy = jasmine.createSpyObj<Confirmation>('Confirmation', ['setConfirmed'], { confirmed: signal(null) });
     modalSpy = jasmine.createSpyObj<ModalController>('ModalController', ['create']);
     modalSpy.create.and.resolveTo(jasmine.createSpyObj('HTMLIonModalElement', ['present']));
 
@@ -79,6 +80,7 @@ describe('UsuariosPage', () => {
 
     usersSpy.signUpNewUser.and.returnValue(of(newUser));
     component.usuarios.set(usersList);
+    component.modalSignUp = jasmine.createSpyObj('IonModal', ['dismiss']);
 
     component.beginSignup(newUser);
 

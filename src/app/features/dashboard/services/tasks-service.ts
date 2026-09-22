@@ -38,8 +38,8 @@ export class TasksService {
       url += `&filtro=${termino}`
     }
 
-    return this.http.get<any>(url).pipe(
-      tap(tasks => this.tasks.set(tasks))
+    return this.http.get<{ items: UserTasks[]; totalPages: number; page: number }>(url).pipe(
+      tap(response => this.tasks.set(response.items))
     );
   }
 

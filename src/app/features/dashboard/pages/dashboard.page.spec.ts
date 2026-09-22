@@ -1,8 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { signal, WritableSignal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { of } from 'rxjs';
 import { AuthService } from '@features/auth/services/auth-service';
 import { TasksService } from '@features/dashboard/services/tasks-service';
 import { UsuariosService } from '@features/users/services/usuarios';
+import { loginResponseDTO } from '@features/auth/models/loginDTO';
 import { DashboardPage } from './dashboard.page';
 
 describe('DashboardPage', () => {
@@ -12,11 +15,13 @@ describe('DashboardPage', () => {
   let tasksSpy: jasmine.SpyObj<TasksService>;
   let usersSpy: jasmine.SpyObj<UsuariosService>;
   let modalSpy: jasmine.SpyObj<ModalController>;
+  let loggedData: WritableSignal<loginResponseDTO>;
 
   beforeEach(async () => {
-    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], { loggedData$: () => ({ idUser: 2, idRol: 1, nombre: 'Alberto', apellidos: 'Valdez', email: 'alberto@test.com', accessToken: 'token', tokenType: 'bearer', avatar: '' }) });
-    tasksSpy = jasmine.createSpyObj<TasksService>('TasksService', ['cargarTareasUsuario', 'cargarTareasUsuarioV2', 'cargarTareasTest'], { tasks$: () => null });
-    usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', [], { users$: () => null });
+    loggedData = signal({ idUser: 2, idRol: 1, nombre: 'Alberto', apellidos: 'Valdez', email: 'alberto@test.com', accessToken: 'token', tokenType: 'bearer', avatar: '' });
+    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], { loggedData$ : loggedData });
+    tasksSpy = jasmine.createSpyObj<TasksService>('TasksService', ['cargarTareasUsuario', 'cargarTareasUsuarioV2', 'cargarTareasTest'], { tasks$: signal(null) });
+    usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', [], { users$: signal(null) });
     modalSpy = jasmine.createSpyObj<ModalController>('ModalController', ['create']);
 
     await TestBed.configureTestingModule({
@@ -62,15 +67,16 @@ describe('DashboardPage', () => {
     expect(component.editableTaskPrevValue()).toBeNull();
   });
 
-  it('debe alternar el estado del buscador', () => {
+  it('debe alternar el estado del buscador', fakeAsync(() => {
     expect(component.toggleSearch).toBeFalse();
 
     component.setSearchToggle();
     expect(component.toggleSearch).toBeTrue();
 
     component.setSearchToggle();
+    tick(300);
     expect(component.toggleSearch).toBeFalse();
-  });
+  }));
 
   it('debe cargar tareas de un usuario autenticado', () => {
     tasksSpy.cargarTareasUsuario.and.returnValue(of([{ id: 1, title: 'Tarea', description: 'desc', status: 1, idUser: 2 }]));
@@ -82,7 +88,7 @@ describe('DashboardPage', () => {
   });
 
   it('debe cargar tareas demo cuando el usuario es invitado', () => {
-    authSpy.loggedData$.and.returnValue({ idUser: 999, idRol: 999, nombre: 'Invitado', apellidos: 'User', email: 'guest@test.com', accessToken: 'token', tokenType: 'bearer', avatar: '' });
+    loggedData.set({ idUser: 999, idRol: 999, nombre: 'Invitado', apellidos: 'User', email: 'guest@test.com', accessToken: 'token', tokenType: 'bearer', avatar: '' });
     tasksSpy.cargarTareasTest.and.callFake(() => component.allTasks.set([
       { id: 1, title: 'T1', description: 'desc', status: 1, idUser: 999 }
     ]));

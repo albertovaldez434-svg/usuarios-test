@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { of } from 'rxjs';
 import { AuthService } from '@features/auth/services/auth-service';
@@ -20,7 +21,7 @@ describe('ProfilePage', () => {
 
   beforeEach(async () => {
     authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], {
-      loggedData$: () => ({
+      loggedData$: signal({
         accessToken: 'token',
         tokenType: 'bearer',
         idUser: 2,
@@ -32,7 +33,7 @@ describe('ProfilePage', () => {
       })
     });
     usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', ['cargarImagen', 'setUsers'], {
-      users$: () => userList
+      users$: signal(userList)
     });
     usersSpy.cargarImagen.and.returnValue(of({ URLPublica: 'https://cdn.test/image.png' } as any));
     actionSheetSpy = jasmine.createSpyObj<ActionSheetController>('ActionSheetController', ['create']);

@@ -1,3 +1,55 @@
 ng t
-ng test
---watche=false
+ng test --watch=false
+ng test --watch=false --browsers=ChromeHeadless
+
+Errores detectados
+==================
+1. Varios specs simulaban Signals de Angular como funciones normales. El compilador
+   reporto errores TS2345 en auth-interceptor, dashboard, profile, usuarios y menu.
+2. timeout-interceptor.spec.ts devolvia un objeto comun en lugar de HttpEvent y
+   tambien ejecutaba inject() fuera de un contexto de inyeccion.
+3. dashboard.page.spec.ts no importaba of de RxJS.
+4. loading-interceptor.spec.ts construia HttpRequest con headers como objeto plano,
+   por lo que req.headers.get no existia.
+5. tasks-service.spec.ts esperaba un arreglo, aunque la respuesta paginada contiene
+   items, totalPages y page. El servicio guardaba el objeto completo en el signal.
+6. dashboard.page.spec.ts esperaba que toggleSearch cambiara inmediatamente a false,
+   aunque la implementacion espera 300 ms para terminar la animacion.
+7. usuarios.page.spec.ts no configuraba modalSignUp antes de probar el registro,
+   provocando un error al llamar dismiss().
+8. auth-service.spec.ts verificaba la respuesta antes de que terminara la promesa
+   asincrona de setLoginData.
+
+Cambios realizados
+==================
+1. Se reemplazaron los mocks de Signals por signal() y WritableSignal donde se
+   requiere modificar el valor.
+2. Se corrigieron los observables de los interceptores para devolver HttpResponse,
+   y timeoutInterceptor se ejecuta dentro de TestBed.runInInjectionContext.
+3. Se agrego el import de of en dashboard.page.spec.ts.
+4. Se corrigio la construccion de HttpRequest usando HttpHeaders.
+5. TasksService.cargarTareasUsuarioV2 ahora guarda response.items en el signal,
+   conservando la respuesta paginada para el consumidor.
+6. La prueba del buscador usa fakeAsync y tick(300) para respetar la animacion.
+7. Se agrego un mock de IonModal con dismiss en la prueba de usuarios.
+8. La prueba de AuthService espera el resultado con firstValueFrom antes de validar.
+
+Motivo de los cambios
+=====================
+Los cambios alinean los tests con los tipos de Angular 22, los contratos reales de
+HttpClient y las respuestas paginadas consumidas por el dashboard. No se modifico
+la politica de seguridad del sistema ni se altero la logica funcional salvo corregir
+la actualizacion del signal de tareas paginadas para guardar la lista esperada.
+
+Resultado esperado
+==================
+El comando equivalente en Windows:
+ng.cmd test --watch=false
+
+debe compilar el proyecto y ejecutar toda la suite sin fallos:
+122 pruebas exitosas, 0 fallos.
+
+Resultado final verificado
+==========================
+Chrome 153.0.0.0 (Windows 10)
+TOTAL: 122 SUCCESS

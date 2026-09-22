@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { Router, provideRouter } from '@angular/router';
 import { AuthService } from '@features/auth/services/auth-service';
 import { Confirmation } from '@core/services/helpers/confirmation';
@@ -13,7 +14,7 @@ describe('MenuComponent', () => {
 
   beforeEach(async () => {
     authSpy = jasmine.createSpyObj<AuthService>('AuthService', ['closeSesion'], {
-      loggedData$: () => ({
+      loggedData$: signal({
         idUser: 1,
         idRol: 1,
         nombre: 'Test',
@@ -25,7 +26,7 @@ describe('MenuComponent', () => {
       })
     });
     confirmationSpy = jasmine.createSpyObj<Confirmation>('Confirmation', ['openConfirmationSheet', 'setConfirmed'], {
-      confirmed: () => null
+      confirmed: signal(null)
     });
 
     await TestBed.configureTestingModule({

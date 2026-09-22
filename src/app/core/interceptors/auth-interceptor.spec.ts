@@ -1,4 +1,5 @@
-import { HttpRequest } from '@angular/common/http';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { signal, WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AuthInterceptor } from './auth-interceptor';
@@ -9,6 +10,7 @@ describe('AuthInterceptor', () => {
   let interceptor: AuthInterceptor;
   let authSpy: jasmine.SpyObj<AuthService>;
   let next: jasmine.Spy;
+  let loggedData: WritableSignal<loginResponseDTO | null>;
 
   const user: loginResponseDTO = {
     accessToken: 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjQ2MzQwMDAwMDB9.signature',
@@ -22,9 +24,8 @@ describe('AuthInterceptor', () => {
   };
 
   beforeEach(() => {
-    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], {
-      loggedData$: () => null
-    });
+    loggedData = signal<loginResponseDTO | null>(null);
+    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], { loggedData$: loggedData });
 
     TestBed.configureTestingModule({
       providers: [
@@ -34,7 +35,9 @@ describe('AuthInterceptor', () => {
     });
 
     interceptor = TestBed.inject(AuthInterceptor);
-    next = jasmine.createSpy('next').and.callFake((request: HttpRequest<unknown>) => of({ request }));
+    next = jasmine.createSpy('next').and.callFake((request: HttpRequest<unknown>) => of(
+      new HttpResponse({ body: { request } })
+    ));
   });
 
   it('debe crearse correctamente', () => {
@@ -50,7 +53,7 @@ describe('AuthInterceptor', () => {
   });
 
   it('debe eliminar la sesión y continuar si el token ha expirado', () => {
-    authSpy.loggedData$.and.returnValue(user);
+    loggedData.set(user);
     spyOn(interceptor, 'checkTokenExpired').and.returnValue(true);
     const removeItemSpy = spyOn(localStorage, 'removeItem');
     const request = new HttpRequest('GET', '/api/data');
@@ -62,7 +65,7 @@ describe('AuthInterceptor', () => {
   });
 
   it('debe adjuntar el header Authorization para solicitudes autenticadas', () => {
-    authSpy.loggedData$.and.returnValue(user);
+    loggedData.set(user);
     spyOn(interceptor, 'checkTokenExpired').and.returnValue(false);
     const request = new HttpRequest('GET', '/api/data');
 
@@ -73,4 +76,3 @@ describe('AuthInterceptor', () => {
     expect(cloned.headers.get('Content-Type')).toBe('application/json');
   });
 });
-

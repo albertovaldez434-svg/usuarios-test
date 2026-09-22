@@ -1,4 +1,4 @@
-import { HttpRequest } from '@angular/common/http';
+import { HttpHeaders, HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { LoaderService } from '@core/services/loader';
@@ -36,7 +36,11 @@ describe('LoadingInterceptor', () => {
   });
 
   it('debe omitir el loader cuando la petición envía la cabecera skip-loader', () => {
-    const request = new HttpRequest('GET', '/api/data', { headers: { 'skip-loader': 'true' } });
+    const request = new HttpRequest(
+      'GET',
+      '/api/data',
+      { headers: new HttpHeaders({ 'skip-loader': 'true' }) }
+    );
     const next = jasmine.createSpy('next').and.returnValue(of({ ok: true }));
 
     interceptor.intercept(request, { handle: next }).subscribe();

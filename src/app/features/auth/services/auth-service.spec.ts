@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { SecureStorageService } from '@core/services/securestorage-service';
@@ -53,17 +54,14 @@ describe('AuthService', () => {
       Password: 'myP4ssw0rd123$'
     };
 
-    let response: loginResponseDTO | undefined;
-    service.Login(loginRequest).subscribe(result => {
-      response = result;
-    });
-
+    const responsePromise = firstValueFrom(service.Login(loginRequest));
     const request = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/Login`);
 
     expect(request.request.method).toBe('POST');
     expect(request.request.body).toEqual(loginRequest);
 
     request.flush(loginData);
+    const response = await responsePromise;
 
     expect(response).toEqual(loginData);
     expect(service.loggedData$()).toEqual(loginData);
@@ -90,4 +88,3 @@ describe('AuthService', () => {
     expect(storageSpy.clear).toHaveBeenCalled();
   });
 });
-
