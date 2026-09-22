@@ -1,55 +1,43 @@
-import { TestBed } from "@angular/core/testing";
-import { Crypto } from "@core/services/crypto"
+import { TestBed } from '@angular/core/testing';
+import { Crypto } from '@core/services/crypto';
 
-describe('Crypto Test', () => {
-    let cryptService: Crypto;
+describe('Crypto', () => {
+  let service: Crypto;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [Crypto]
-        })
-
-        cryptService = TestBed.inject(Crypto);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [Crypto]
     });
 
-    it('Should be created', () => {
-        expect(cryptService).toBeTruthy();
-    })
+    service = TestBed.inject(Crypto);
+  });
 
-    it('Deberia de encriptar datos', async () => {
-        const text = 'Esto es un texto';
-        const password = 'MyP4ssw0rd@';
+  it('debe crearse correctamente', () => {
+    expect(service).toBeTruthy();
+  });
 
-        const info = await cryptService.encrypt(text, password);
+  it('debe encriptar un texto y devolver iv, salt y data', async () => {
+    const result = await service.encrypt('Esto es un texto', 'MyP4ssw0rd@');
 
-        expect(info.data).toBeTruthy();
-        expect(info.iv).toBeTruthy();
-        expect(info.salt).toBeTruthy();
-    });
+    expect(result.data).toBeTruthy();
+    expect(result.iv).toBeTruthy();
+    expect(result.salt).toBeTruthy();
+  });
 
-    it('Deberia desencriptar datos', async () => {
-        const text = 'Esto es un texto';
-        const password = 'MyP4ssw0rd@';
+  it('debe desencriptar un texto cifrado con la misma contraseña', async () => {
+    const password = 'MyP4ssw0rd@';
+    const encrypted = await service.encrypt('Esto es un texto', password);
 
-        const info = await cryptService.encrypt(text, password);
+    const decrypted = await service.decrypt(encrypted, password);
 
-        expect(info.data).toBeTruthy();
-        expect(info.iv).toBeTruthy();
-        expect(info.salt).toBeTruthy();
+    expect(decrypted).toBe('Esto es un texto');
+  });
 
-        const decryptInfo = await cryptService.decrypt(info, password);
+  it('debe generar una CryptoKey con algoritmo AES-GCM', async () => {
+    const key = await service.generarLlave('MyP4ssw0rd@', new Uint8Array([1, 2, 3, 4, 5]));
 
-        expect(decryptInfo).toBe(text);
-    });
-
-    it('Deberia de generar una cryptokey', async() => {
-        const password = 'MyP4ssw0rd@';
-        const saltArray = new Uint8Array([1, 2, 3, 4, 5]);
-        
-        const key = await cryptService.generarLlave(password, saltArray);
-
-        expect(key).toBeTruthy();
-        expect(key.type).toBe('secret');
-        expect(key.algorithm.name).toBe('AES-GCM');
-    });
-})
+    expect(key).toBeTruthy();
+    expect(key.type).toBe('secret');
+    expect(key.algorithm.name).toBe('AES-GCM');
+  });
+});

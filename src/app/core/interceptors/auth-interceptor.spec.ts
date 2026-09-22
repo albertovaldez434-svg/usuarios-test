@@ -1,8 +1,9 @@
 import { HttpRequest } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { AuthInterceptor } from './auth-interceptor';
 import { AuthService } from '@features/auth/services/auth-service';
 import { loginResponseDTO } from '@features/auth/models/loginDTO';
-import { AuthInterceptor } from './auth-interceptor';
 
 describe('AuthInterceptor', () => {
   let interceptor: AuthInterceptor;
@@ -10,35 +11,37 @@ describe('AuthInterceptor', () => {
   let next: jasmine.Spy;
 
   const user: loginResponseDTO = {
-    accessToken: 'invalid-token',
+    accessToken: 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjQ2MzQwMDAwMDB9.signature',
     tokenType: 'bearer',
     idUser: 1,
     idRol: 1,
-    nombre: 'Test',
-    apellidos: 'User',
-    email: 'test@example.com',
+    nombre: 'Alberto',
+    apellidos: 'Valdez',
+    email: 'alberto@test.com',
     avatar: ''
   };
 
   beforeEach(() => {
-    authSpy = jasmine.createSpyObj('AuthService', [], { loggedData$: () => null });
+    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], {
+      loggedData$: () => null
+    });
+
     TestBed.configureTestingModule({
       providers: [
         AuthInterceptor,
         { provide: AuthService, useValue: authSpy }
       ]
     });
+
     interceptor = TestBed.inject(AuthInterceptor);
-    next = jasmine.createSpy('next').and.callFake((request: HttpRequest<unknown>) => request);
+    next = jasmine.createSpy('next').and.callFake((request: HttpRequest<unknown>) => of({ request }));
   });
 
-  // Verifica que Angular pueda crear el interceptor.
-  it('crea el interceptor correctamente', () => {
+  it('debe crearse correctamente', () => {
     expect(interceptor).toBeTruthy();
   });
 
-  // Verifica que una petición sin sesión continúe sin modificaciones.
-  it('deja la solicitud sin cambios cuando no hay sesión', () => {
+  it('debe dejar la solicitud sin cambios cuando no hay usuario autenticado', () => {
     const request = new HttpRequest('GET', '/api/data');
 
     interceptor.intercept(request, { handle: next });
@@ -46,16 +49,28 @@ describe('AuthInterceptor', () => {
     expect(next).toHaveBeenCalledWith(request);
   });
 
-  // Verifica que una petición autenticada reciba las cabeceras de seguridad.
-  it('agrega las cabeceras a solicitudes autenticadas', () => {
-    Object.defineProperty(authSpy, 'loggedData$', { value: () => user });
+  it('debe eliminar la sesión y continuar si el token ha expirado', () => {
+    authSpy.loggedData$.and.returnValue(user);
+    spyOn(interceptor, 'checkTokenExpired').and.returnValue(true);
+    const removeItemSpy = spyOn(localStorage, 'removeItem');
+    const request = new HttpRequest('GET', '/api/data');
+
+    interceptor.intercept(request, { handle: next });
+
+    expect(removeItemSpy).toHaveBeenCalledWith('authUser');
+    expect(next).toHaveBeenCalled();
+  });
+
+  it('debe adjuntar el header Authorization para solicitudes autenticadas', () => {
+    authSpy.loggedData$.and.returnValue(user);
     spyOn(interceptor, 'checkTokenExpired').and.returnValue(false);
     const request = new HttpRequest('GET', '/api/data');
 
     interceptor.intercept(request, { handle: next });
 
-    const forwarded = next.calls.mostRecent().args[0] as HttpRequest<unknown>;
-    expect(forwarded.headers.has('Authorization')).toBeTrue();
-    expect(forwarded.headers.get('Content-Type')).toBe('application/json');
+    const cloned = next.calls.mostRecent().args[0] as HttpRequest<unknown>;
+    expect(cloned.headers.get('Authorization')).toContain('Bearer');
+    expect(cloned.headers.get('Content-Type')).toBe('application/json');
   });
 });
+

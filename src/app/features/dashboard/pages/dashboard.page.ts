@@ -142,10 +142,7 @@ export class DashboardPage implements OnInit {
         this.tareasService.cargarTareasUsuarioV2(1, 10, filtro)
       )
     ).subscribe(response => {
-      console.log(response),
-      console.log(this.allTasks()),
       this.allTasks.set(response.items),
-      console.log(this.allTasks()),
       this.totalPages.set(response.totalPages),
       this.currentPage.set(response.page)
     });

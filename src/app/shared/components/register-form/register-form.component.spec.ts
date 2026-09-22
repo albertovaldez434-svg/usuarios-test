@@ -9,33 +9,32 @@ describe('RegisterFormComponent', () => {
 
   beforeEach(async () => {
     modalSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
+
     await TestBed.configureTestingModule({
       imports: [RegisterFormComponent],
       providers: [{ provide: ModalController, useValue: modalSpy }]
     }).compileComponents();
+
     fixture = TestBed.createComponent(RegisterFormComponent);
     component = fixture.componentInstance;
-    (component as any).modalCtrl = modalSpy;
     fixture.detectChanges();
   });
 
-  // Verifica que el formulario tenga sus controles principales.
-  it('crea el formulario con sus controles principales', () => {
+  it('debe crear el formulario con los campos principales', () => {
     expect(component).toBeTruthy();
     expect(component.registerForm.contains('firstName')).toBeTrue();
     expect(component.registerForm.contains('email')).toBeTrue();
+    expect(component.registerForm.contains('password')).toBeTrue();
   });
 
-  // Verifica que un envío inválido marque el formulario.
-  it('marca el formulario como enviado cuando es inválido', () => {
+  it('debe marcar el formulario como enviado cuando se intenta registrar con datos inválidos', () => {
     component.onSubmit();
 
     expect(component.submitted).toBeTrue();
     expect(component.registerForm.invalid).toBeTrue();
   });
 
-  // Verifica los interruptores de visibilidad de contraseñas.
-  it('cambia la visibilidad de la contraseña', () => {
+  it('debe alternar la visibilidad de las contraseñas', () => {
     component.togglePasswordVisibility();
     component.toggleConfPswVisibility();
 
@@ -43,8 +42,7 @@ describe('RegisterFormComponent', () => {
     expect(component.confPwsVisible).toBeTrue();
   });
 
-  // Verifica que cancelar limpie y cierre el formulario.
-  it('limpia el formulario y cierra el modal', () => {
+  it('debe limpiar el formulario y cerrar el modal', () => {
     component.closeModal();
 
     expect(component.registerForm.value.firstName).toBeNull();

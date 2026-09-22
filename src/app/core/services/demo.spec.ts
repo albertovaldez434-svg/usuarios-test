@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-
 import { Demo } from './demo';
 
 describe('Demo', () => {
   let service: Demo;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [Demo]
+    });
+
     service = TestBed.inject(Demo);
   });
 
-  it('should be created', () => {
+  it('debe crearse correctamente', () => {
     expect(service).toBeTruthy();
   });
 });
+

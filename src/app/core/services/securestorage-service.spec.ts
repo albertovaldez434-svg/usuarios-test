@@ -7,58 +7,66 @@ describe('SecureStorageService', () => {
   let cryptoSpy: jasmine.SpyObj<Crypto>;
 
   beforeEach(() => {
-    cryptoSpy = jasmine.createSpyObj('Crypto', ['encrypt', 'decrypt']);
+    cryptoSpy = jasmine.createSpyObj<Crypto>('Crypto', ['encrypt', 'decrypt']);
     TestBed.configureTestingModule({
       providers: [
         SecureStorageService,
         { provide: Crypto, useValue: cryptoSpy }
       ]
     });
+
     service = TestBed.inject(SecureStorageService);
     localStorage.clear();
   });
 
   afterEach(() => localStorage.clear());
 
-  // Verifica la creación del servicio.
-  it('crea el servicio correctamente', () => {
+  it('debe crearse correctamente', () => {
     expect(service).toBeTruthy();
   });
 
-  // Verifica que los datos se cifren y se guarden.
-  it('guarda datos cifrados en localStorage', async () => {
-    const encrypted = { data: 'data', iv: 'iv', salt: 'salt' };
+  it('debe cifrar y guardar un valor en localStorage', async () => {
+    const encrypted = { data: 'cipher-data', iv: 'iv-123', salt: 'salt-123' };
     cryptoSpy.encrypt.and.resolveTo(encrypted);
 
-    await service.setItem('user', { id: 1 });
+    await service.setItem('user', { id: 1, nombre: 'Alberto' });
 
-    expect(cryptoSpy.encrypt).toHaveBeenCalled();
+    expect(cryptoSpy.encrypt).toHaveBeenCalledWith(JSON.stringify({ id: 1, nombre: 'Alberto' }), 'mypasswordtest');
     expect(localStorage.getItem('user')).toBe(JSON.stringify(encrypted));
   });
 
-  // Verifica que los datos guardados se descifren al recuperarlos.
-  it('recupera y descifra datos guardados', async () => {
-    const encrypted = { data: 'data', iv: 'iv', salt: 'salt' };
+  it('debe recuperar y descifrar un valor guardado', async () => {
+    const encrypted = { data: 'cipher-data', iv: 'iv-123', salt: 'salt-123' };
     localStorage.setItem('user', JSON.stringify(encrypted));
-    cryptoSpy.decrypt.and.resolveTo(JSON.stringify({ id: 1 }));
+    cryptoSpy.decrypt.and.resolveTo(JSON.stringify({ id: 1, nombre: 'Alberto' }));
 
-    const result = await service.getItem<{ id: number }>('user');
+    const result = await service.getItem<{ id: number; nombre: string }>('user');
 
-    expect(result).toEqual({ id: 1 });
-    expect(cryptoSpy.decrypt).toHaveBeenCalledWith(encrypted, jasmine.any(String));
+    expect(result).toEqual({ id: 1, nombre: 'Alberto' });
+    expect(cryptoSpy.decrypt).toHaveBeenCalledWith(encrypted, 'mypasswordtest');
   });
 
-  // Verifica el resultado cuando no hay datos almacenados.
-  it('devuelve null cuando no existe la clave solicitada', async () => {
+  it('debe devolver null cuando la clave no existe', async () => {
     await expectAsync(service.getItem('missing')).toBeResolvedTo(null);
   });
 
-  // Verifica que una clave se elimine correctamente.
-  it('elimina una clave específica', () => {
+  it('debe eliminar una clave específica', () => {
     localStorage.setItem('user', 'value');
 
     service.removeItem('user');
 
     expect(localStorage.getItem('user')).toBeNull();
+  });
+
+  it('debe limpiar datos clave del usuario', () => {
+    localStorage.setItem('authUser', 'value');
+    localStorage.setItem('users', 'value');
+    localStorage.setItem('lastVisitedPage', 'value');
+
+    service.clear();
+
+    expect(localStorage.getItem('authUser')).toBeNull();
+    expect(localStorage.getItem('lastVisitedPage')).toBeNull();
+    expect(localStorage.getItem('users')).toBeNull();
   });
 });
