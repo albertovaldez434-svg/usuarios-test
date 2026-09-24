@@ -16,8 +16,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-
-      - name: Install Dependencies
+      
+      - name: Install Dependencies 1
+        run: npm i
+        
+      - name: Install Dependencies 2
         run: npm ci
 
       - name: Install Ionic CLI
