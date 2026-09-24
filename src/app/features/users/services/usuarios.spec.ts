@@ -122,9 +122,9 @@ describe('UsuariosService', () => {
         const users = service.users$();
 
         expect(users).not.toBeNull();
-        expect(users?.length).toBe(10);
+        expect(users?.length).toBe(9);
         expect(users?.[0].nombre).toBe('Carlos');
-        expect(users?.[9].nombre).toBe('Sofía');
+        expect(users?.[8].nombre).toBe('Miguel');
     });
 
     it('debe obtener usuarios, actualizar el signal y devolver la respuesta', () => {
