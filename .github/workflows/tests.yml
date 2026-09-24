@@ -37,7 +37,7 @@ jobs:
             --unified=20 \
             origin/main...origin/development
             
-  run tests:
+  run-tests:
 
     runs-on: ubuntu-latest
 
