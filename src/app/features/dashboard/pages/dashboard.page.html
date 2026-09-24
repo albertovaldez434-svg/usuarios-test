@@ -5,8 +5,8 @@
       <!-- <ion-icon [name]="(toggleSearch === false) ? 'search-outline' : 'close-circle-outline'" slot="end"
         class="ion-margin-end" (click)="setSearchToggle()">
       </ion-icon> -->
-      <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true" [debounce]="1000"
-        [value]="searchValue" [(ngModel)]="searchValue"></ion-searchbar>
+      <ion-searchbar show-clear-button="focus" placeholder="Buscar" animated="true"
+        (ionInput)="onSearch($event)"></ion-searchbar>
       <app-custom-button (clicked)="modalNewTask.present(); newTaskStatus = 0" [text]="'Agregar'"
         [iconName]="'add-outline'" [size]="'default'">
         <ion-ripple-effect></ion-ripple-effect>

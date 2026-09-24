@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { UserTasks } from 'src/app/features/dashboard/models/task';
-import { environment } from 'src/environments/environment';
-import { SecureStorageService } from '../../../core/services/securestorage-service';
+import { UserTasks } from '@features/dashboard/models/task';
+import { environment } from '@environments/environment';
+import { SecureStorageService } from '@core/services/securestorage-service';
 import { tap } from 'rxjs';
 
 @Injectable({
@@ -27,6 +27,19 @@ export class TasksService {
 
     return this.http.get<UserTasks[]>(url).pipe(
       tap(tasks => this.tasks.set(tasks))
+    );
+  }
+
+  cargarTareasUsuarioV2(nPage: number, pageSize: number, termino?: string) {
+
+    let url = `${environment.URL_API}/api/Tasks/getTareasListv2?page=${nPage}&pageSize=${pageSize}`;
+
+    if (termino && termino.length > 0) {
+      url += `&filtro=${termino}`
+    }
+
+    return this.http.get<{ items: UserTasks[]; totalPages: number; page: number }>(url).pipe(
+      tap(response => this.tasks.set(response.items))
     );
   }
 

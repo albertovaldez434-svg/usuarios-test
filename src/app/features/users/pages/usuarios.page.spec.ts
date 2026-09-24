@@ -1,47 +1,102 @@
 import { TestBed } from '@angular/core/testing';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { signal } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { of } from 'rxjs';
+import { AuthService } from '@features/auth/services/auth-service';
+import { Users } from '@features/users/models/users';
+import { UsuariosService } from '@features/users/services/usuarios';
+import { Confirmation } from '@core/services/helpers/confirmation';
 import { UsuariosPage } from './usuarios.page';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { Confirmation } from 'src/app/core/services/helpers/confirmation';
 
 describe('UsuariosPage', () => {
   let component: UsuariosPage;
-  let usersSpy: any;
+  let authSpy: jasmine.SpyObj<AuthService>;
+  let usersSpy: jasmine.SpyObj<UsuariosService>;
+  let confirmationSpy: jasmine.SpyObj<Confirmation>;
+  let modalSpy: jasmine.SpyObj<ModalController>;
+
+  const usersList: Users[] = [
+    { idUser: 1, idRol: 1, nombre: 'Ana', apellidos: 'García', email: 'ana@test.com', telefono: '1111111111' },
+    { idUser: 2, idRol: 2, nombre: 'Luis', apellidos: 'Pérez', email: 'luis@test.com', telefono: '2222222222' }
+  ];
 
   beforeEach(async () => {
-    usersSpy = { users$: () => null };
+    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], { loggedData$: signal({ accessToken: 'token', tokenType: 'bearer', idUser: 1, idRol: 1, nombre: 'Ana', apellidos: 'García', email: 'ana@test.com', avatar: '' }) });
+    usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', ['getUsers', 'clearUsers', 'setUsers', 'signUpNewUser', 'editUser', 'obtenerUsuariosTest'], { users$: signal(usersList) });
+    usersSpy.getUsers.and.returnValue(of(usersList));
+    confirmationSpy = jasmine.createSpyObj<Confirmation>('Confirmation', ['setConfirmed'], { confirmed: signal(null) });
+    modalSpy = jasmine.createSpyObj<ModalController>('ModalController', ['create']);
+    modalSpy.create.and.resolveTo(jasmine.createSpyObj('HTMLIonModalElement', ['present']));
+
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), UsuariosPage],
+      imports: [UsuariosPage],
       providers: [
         { provide: UsuariosService, useValue: usersSpy },
-        { provide: AuthService, useValue: { loggedData$: () => null } },
-        { provide: Confirmation, useValue: { confirmed: () => null } },
-        { provide: ModalController, useValue: jasmine.createSpyObj('ModalController', ['create']) }
+        { provide: AuthService, useValue: authSpy },
+        { provide: Confirmation, useValue: confirmationSpy },
+        { provide: ModalController, useValue: modalSpy }
       ]
     }).compileComponents();
+
     component = TestBed.createComponent(UsuariosPage).componentInstance;
   });
 
-  // Verifica la creación de la página y su formulario.
-  it('crea la página y el formulario de registro', () => {
+  it('debe crearse correctamente y crear el formulario', () => {
     expect(component).toBeTruthy();
     expect(component.signupForm).toBeTruthy();
   });
 
-  // Verifica el indicador de usuarios disponibles.
-  it('indica si existen usuarios cargados', () => {
+  it('debe indicar si existen usuarios cargados', () => {
     expect(component.hasUsers()).toBeFalse();
-    component.usuarios.set([{ idUser: 1, nombre: 'A', apellidos: 'B', email: 'a@b.com', telefono: '1234567890' }]);
+
+    component.usuarios.set(usersList);
+
     expect(component.hasUsers()).toBeTrue();
   });
 
-  // Verifica la selección reactiva de un usuario.
-  it('selecciona un usuario por su identificador', () => {
-    const user = { idUser: 7, nombre: 'A', apellidos: 'B', email: 'a@b.com', telefono: '1234567890' };
-    component.usuarios.set([user]);
-    component.idUserSignal.set(7);
+  it('debe seleccionar un usuario por id', () => {
+    component.usuarios.set(usersList);
+    component.idUserSignal.set(2);
 
-    expect(component.selectedUser()).toEqual(user);
+    expect(component.selectedUser()).toEqual(usersList[1]);
+  });
+
+  it('debe cargar usuarios desde el servicio', () => {
+    component.obtenerUsuarios();
+
+    expect(usersSpy.getUsers).toHaveBeenCalled();
+    expect(component.usuarios()).toEqual(usersList);
+  });
+
+  it('debe añadir un usuario nuevo a la lista', () => {
+    const newUser: Users = {
+      idUser: 99,
+      nombre: 'Pedro',
+      apellidos: 'Soto',
+      email: 'pedro@test.com',
+      telefono: '3333333333',
+      idRol: 1
+    };
+
+    usersSpy.signUpNewUser.and.returnValue(of(newUser));
+    component.usuarios.set(usersList);
+    component.modalSignUp = jasmine.createSpyObj('IonModal', ['dismiss']);
+
+    component.beginSignup(newUser);
+
+    expect(usersSpy.signUpNewUser).toHaveBeenCalledWith({
+      idUser: 0,
+      nombre: 'Pedro',
+      apellidos: 'Soto',
+      email: 'pedro@test.com',
+      telefono: '3333333333',
+      idRol: 1
+    });
+  });
+
+  it('debe ignorar la creación si no llega data desde el formulario', () => {
+    component.beginSignup(null);
+
+    expect(usersSpy.signUpNewUser).not.toHaveBeenCalled();
   });
 });

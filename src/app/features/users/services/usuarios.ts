@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { Users, UsuariosResponse } from '../models/users';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 import { SecureStorageService } from '../../../core/services/securestorage-service';
 import { ImagenesUsuarios } from '../../../core/models/imagenesusuario';
 
@@ -43,6 +43,18 @@ export class UsuariosService {
     const url = `${environment.URL_API}/api/Usuarios`;
 
     return this.http.get<UsuariosResponse[]>(url).pipe(
+      tap(users => this.setUsers(users))
+    );
+  }
+
+  getUsersV2(nPage: number, pageSize: number, termino?: string) {
+    let url = `${environment.URL_API}/api/Usuarios/getUsuariosListv2?page=${nPage}&pageSize=${pageSize}`;
+
+    if (termino && termino.length > 0) {
+      url += `&filtro=${termino}`;
+    }
+
+    return this.http.get<any>(url).pipe(
       tap(users => this.setUsers(users))
     );
   }
@@ -160,15 +172,6 @@ export class UsuariosService {
         telefono: "6441747474",
         idRol: 2,
         password: "Miguel123!"
-      },
-      {
-        idUser: 12,
-        nombre: "Sofía",
-        apellidos: "Cruz Mendoza",
-        email: "sofia.cruz@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Sofia123!"
       }
     ];
 

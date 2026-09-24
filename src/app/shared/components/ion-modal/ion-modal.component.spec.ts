@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { IonModalComponent } from './ion-modal.component';
 
 describe('IonModalComponent', () => {
@@ -9,34 +9,32 @@ describe('IonModalComponent', () => {
 
   beforeEach(async () => {
     modalSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
+
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), IonModalComponent],
+      imports: [IonModalComponent],
       providers: [{ provide: ModalController, useValue: modalSpy }]
     }).compileComponents();
+
     fixture = TestBed.createComponent(IonModalComponent);
     component = fixture.componentInstance;
-    (component as any).modalCtrl = modalSpy;
     fixture.detectChanges();
   });
 
-  // Verifica la creación y los textos iniciales del modal.
-  it('crea el componente con sus valores por defecto', () => {
+  it('debe crearse con los valores por defecto del modal', () => {
     expect(component).toBeTruthy();
     expect(component.titulo).toBe('Titulo Modal');
     expect(component.mensaje).toBe('Hola, soy un modal de Ionic');
   });
 
-  // Verifica que el componente emita el evento de apertura.
-  it('emite el evento al activar el modal', () => {
-    const emitSpy = spyOn(component.openModal, 'emit');
+  it('debe emitir el evento openModal al disparar triggerModal', () => {
+    spyOn(component.openModal, 'emit');
 
     component.triggerModal();
 
-    expect(emitSpy).toHaveBeenCalled();
+    expect(component.openModal.emit).toHaveBeenCalled();
   });
 
-  // Verifica que el modal se cierre mediante Ionic.
-  it('cierra el modal mediante ModalController', () => {
+  it('debe cerrar el modal con ModalController', () => {
     component.close();
 
     expect(modalSpy.dismiss).toHaveBeenCalled();

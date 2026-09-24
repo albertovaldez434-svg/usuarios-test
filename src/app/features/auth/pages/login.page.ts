@@ -1,14 +1,14 @@
 import { Component, OnInit, inject, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
-import { IonicModule, IonModal, ModalController } from "@ionic/angular";
+import { IonContent, IonModal, ModalController } from "@ionic/angular";
 import { switchMap, forkJoin } from "rxjs";
-import { Users } from "src/app/features/users/models/users";
-import { UsuariosService } from "src/app/features/users/services/usuarios";
-import { CustomButtonComponent } from "src/app/shared/components/custom-button/custom-button.component";
-import { CustomInputComponent } from "src/app/shared/components/custom-input/custom-input.component";
-import { IonModalComponent } from "src/app/shared/components/ion-modal/ion-modal.component";
-import { RegisterFormComponent } from "src/app/shared/components/register-form/register-form.component";
+import { Users } from "@features/users/models/users";
+import { UsuariosService } from "@features/users/services/usuarios";
+import { CustomButtonComponent } from "@shared/components/custom-button/custom-button.component";
+import { CustomInputComponent } from "@shared/components/custom-input/custom-input.component";
+import { IonModalComponent } from "@shared/components/ion-modal/ion-modal.component";
+import { RegisterFormComponent } from "@shared/components/register-form/register-form.component";
 import { TasksService } from "../../dashboard/services/tasks-service";
 import { Login } from "../models/login";
 import { loginResponseDTO } from "../models/loginDTO";
@@ -19,7 +19,7 @@ import { AuthService } from "../services/auth-service";
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent]
+  imports: [FormsModule, ReactiveFormsModule, CustomButtonComponent, CustomInputComponent, IonContent]
 })
 export class LoginPage implements OnInit {
   private authService = inject(AuthService);

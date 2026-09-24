@@ -1,15 +1,19 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
-import { IonicModule, ModalController } from "@ionic/angular";
-import { IonItem } from "@ionic/angular/standalone";
+import {
+  ModalController, IonHeader, IonToolbar, IonTitle, IonButton, IonButtons,
+  IonIcon, IonContent, IonItem, IonLabel, IonInput
+} from "@ionic/angular";
 import { FormsModule } from "@angular/forms";
-import { CustomButtonComponent } from "../custom-button/custom-button.component";
+import { CustomButtonComponent } from "@shared/components/custom-button/custom-button.component";
 
 @Component({
   selector: 'app-restore-psw',
   templateUrl: './restore-psw.component.html',
   styleUrls: ['./restore-psw.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonicModule, FormsModule, CustomButtonComponent]
+  imports: [IonHeader, IonHeader, FormsModule, IonHeader,
+    IonToolbar, IonTitle, IonButton, IonButtons, IonIcon, IonContent, IonItem,
+    IonLabel, IonInput, CustomButtonComponent ]
 })
 export class RestorePswComponent implements OnInit {
   @Input() title: string = '';

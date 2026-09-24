@@ -1,53 +1,90 @@
 import { TestBed } from '@angular/core/testing';
-import { IonicModule, ActionSheetController, ModalController } from '@ionic/angular';
+import { signal } from '@angular/core';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+import { of } from 'rxjs';
+import { AuthService } from '@features/auth/services/auth-service';
+import { UsuariosService } from '@features/users/services/usuarios';
+import { Users } from '@features/users/models/users';
 import { ProfilePage } from './profile.page';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
-import { UsuariosService } from 'src/app/features/users/services/usuarios';
 
 describe('ProfilePage', () => {
   let component: ProfilePage;
-  let usersSpy: any;
+  let authSpy: jasmine.SpyObj<AuthService>;
+  let usersSpy: jasmine.SpyObj<UsuariosService>;
+  let actionSheetSpy: jasmine.SpyObj<ActionSheetController>;
+  let modalSpy: jasmine.SpyObj<ModalController>;
+
+  const userList: Users[] = [
+    { idUser: 1, nombre: 'Ana', apellidos: 'García', email: 'ana@test.com', telefono: '1111111111', idRol: 1 },
+    { idUser: 2, nombre: 'Bruno', apellidos: 'López', email: 'bruno@test.com', telefono: '2222222222', idRol: 1 }
+  ];
 
   beforeEach(async () => {
-    usersSpy = { users$: () => null };
+    authSpy = jasmine.createSpyObj<AuthService>('AuthService', [], {
+      loggedData$: signal({
+        accessToken: 'token',
+        tokenType: 'bearer',
+        idUser: 2,
+        idRol: 1,
+        nombre: 'Bruno',
+        apellidos: 'López',
+        email: 'bruno@test.com',
+        avatar: ''
+      })
+    });
+    usersSpy = jasmine.createSpyObj<UsuariosService>('UsuariosService', ['cargarImagen', 'setUsers'], {
+      users$: signal(userList)
+    });
+    usersSpy.cargarImagen.and.returnValue(of({ URLPublica: 'https://cdn.test/image.png' } as any));
+    actionSheetSpy = jasmine.createSpyObj<ActionSheetController>('ActionSheetController', ['create']);
+    actionSheetSpy.create.and.resolveTo(jasmine.createSpyObj('HTMLIonActionSheetElement', ['present']));
+    modalSpy = jasmine.createSpyObj<ModalController>('ModalController', ['create']);
+    modalSpy.create.and.resolveTo(jasmine.createSpyObj('HTMLIonModalElement', ['present']));
+
     await TestBed.configureTestingModule({
-      imports: [IonicModule.forRoot(), ProfilePage],
+      imports: [ProfilePage],
       providers: [
-        { provide: AuthService, useValue: { loggedData$: () => null } },
+        { provide: AuthService, useValue: authSpy },
         { provide: UsuariosService, useValue: usersSpy },
-        { provide: ActionSheetController, useValue: jasmine.createSpyObj('ActionSheetController', ['create']) },
-        { provide: ModalController, useValue: jasmine.createSpyObj('ModalController', ['create']) }
+        { provide: ActionSheetController, useValue: actionSheetSpy },
+        { provide: ModalController, useValue: modalSpy }
       ]
     }).compileComponents();
+
     component = TestBed.createComponent(ProfilePage).componentInstance;
   });
 
-  // Verifica la creación y el estado inicial de la imagen.
-  it('crea la página con imagen vacía por defecto', () => {
+  it('debe crearse correctamente con imagen vacía por defecto', () => {
     expect(component).toBeTruthy();
     expect(component.imgSrc).toBe('');
   });
 
-  // Verifica que se encuentre el usuario autenticado.
-  it('encuentra al usuario actualmente autenticado', () => {
-    component.loggedUser = {
-      accessToken: 'token', tokenType: 'bearer', idUser: 2, idRol: 1,
-      nombre: 'Test', apellidos: 'User', email: 'test@example.com', avatar: ''
-    };
-    component.users = [
-      { idUser: 1, nombre: 'Other', apellidos: 'User', email: 'other@example.com', telefono: '1234567890' },
-      { idUser: 2, nombre: 'Test', apellidos: 'User', email: 'test@example.com', telefono: '1234567890' }
-    ];
+  it('debe encontrar el usuario autenticado dentro de la lista', () => {
+    component.users = userList;
+    component.loggedUser = authSpy.loggedData$();
 
     component.findLoggedUser();
 
-    expect(component.currentUser?.idUser).toBe(2);
+    expect(component.currentUser).toEqual(userList[1]);
   });
 
-  // Verifica que datos vacíos no modifiquen el perfil.
-  it('ignora los datos vacíos emitidos por el formulario', () => {
+  it('debe ignorar la emisión nula del formulario', () => {
     component.getDataEmitted(null);
 
     expect(component.currentUser).toBeUndefined();
+  });
+
+  it('debe abrir el selector de origen de imagen', async () => {
+    await component.showPictureSourceOptions();
+
+    expect(actionSheetSpy.create).toHaveBeenCalled();
+  });
+
+  it('debe subir una imagen para el usuario autenticado', () => {
+    component.loggedUser = authSpy.loggedData$();
+
+    component.uploadImage(new File(['hello'], 'img.png', { type: 'image/png' }));
+
+    expect(usersSpy.cargarImagen).toHaveBeenCalled();
   });
 });

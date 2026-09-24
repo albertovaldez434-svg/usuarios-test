@@ -1,17 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-
+import { firstValueFrom } from 'rxjs';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { SecureStorageService } from 'src/app/core/services/securestorage-service';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
+import { SecureStorageService } from '@core/services/securestorage-service';
+import { environment } from '@environments/environment';
+import { loginResponseDTO } from '../models/loginDTO';
 import { Login } from '../models/login';
 import { AuthService } from './auth-service';
-import { loginResponseDTO } from '../models/loginDTO';
-import { environment } from 'src/environments/environment';
 
 describe('AuthService', () => {
   let service: AuthService;
+  let httpMock: HttpTestingController;
+  let storageSpy: jasmine.SpyObj<SecureStorageService>;
 
-  //mockup objeto login
   const loginData: loginResponseDTO = {
     idUser: 19,
     idRol: 1,
@@ -23,89 +24,66 @@ describe('AuthService', () => {
     avatar: ''
   };
 
-  // mock de los servicios
-  let httpMock: HttpTestingController;
-
-  // spy/mockup del servicio del localstorage para no usar el real
-  // ya que tendra su propio testing
-  let storageSpy: jasmine.SpyObj<SecureStorageService>;
-
   beforeEach(() => {
-    // se crea el objeto spy
-    storageSpy = jasmine.createSpyObj('SecureStorageService', [
-      'setItem', 'getItem', 'clear'
-    ]);
+    storageSpy = jasmine.createSpyObj<SecureStorageService>('SecureStorageService', ['setItem', 'getItem', 'clear']);
+    storageSpy.setItem.and.resolveTo();
 
     TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(),
+        provideHttpClient(withXhr()),
         provideHttpClientTesting(),
         { provide: SecureStorageService, useValue: storageSpy }
       ]
     });
+
     service = TestBed.inject(AuthService);
-    httpMock = TestBed.inject(HttpTestingController)
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
     httpMock.verify();
   });
 
-  it('should be created', () => {
+  it('debe crearse correctamente', () => {
     expect(service).toBeTruthy();
   });
 
-  it('Deberia de Inciar Sesión', async () => {
-    const loginRequest = {
+  it('debe iniciar sesión y guardar los datos en el signal y almacenamiento', async () => {
+    const loginRequest: Login = {
       Email: 'albertovaldez434@gmail.com',
       Password: 'myP4ssw0rd123$'
-    } as Login
+    };
 
-    const responsePromise = new Promise<void>((resolve, reject) => {
-      service.Login(loginRequest).subscribe({
-        next: resp => {
-          expect(resp).toEqual(loginData);
-          resolve();
-        },
-        error: reject
-      });
-    });
+    const responsePromise = firstValueFrom(service.Login(loginRequest));
+    const request = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/Login`);
 
-    const req = httpMock.expectOne(`${environment.URL_API}/api/Usuarios/Login`);
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual(loginRequest);
 
-    expect(req.request.method).toBe('POST');
+    request.flush(loginData);
+    const response = await responsePromise;
 
-    expect(req.request.body).toEqual(loginRequest);
-
-    req.flush(loginData);
-    await responsePromise;
+    expect(response).toEqual(loginData);
+    expect(service.loggedData$()).toEqual(loginData);
     expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
   });
 
-  it('Primera Prueba: Deberia de guardar la informacion del login y actualizar el signal', async () => {
-    // llamamos el service
-    await service.setLoginData(loginData);
-
-    // esperamos que los datos en el signal sean equivalentes al mockup
-    expect(service.loggedData$()).toEqual(loginData);
-  });
-
-  it('Segunda Prueba: Deberia de poder guardar la informacion en el storage', async () => {
+  it('debe guardar los datos del usuario autenticado en el signal', async () => {
     await service.setLoginData(loginData);
 
     expect(service.loggedData$()).toEqual(loginData);
-
-    expect(storageSpy.setItem).toHaveBeenCalledWith('authUser', loginData);
   });
 
-  it('Tercera Prueba: Deberia de eliminar el loginData del signal', async () => {
-    //primero guardamos los datos
-    await service.setLoginData(loginData);
-
-    // luego removemos los datos
+  it('debe limpiar la sesión y delegar la limpieza del almacenamiento', () => {
     service.clearLoginData();
 
-    //se espera que el signal ya este limpio
+    expect(service.loggedData$()).toBeNull();
+    expect(storageSpy.clear).toHaveBeenCalled();
+  });
+
+  it('debe cerrar sesión llamando a clearLoginData', () => {
+    service.closeSesion();
+
     expect(service.loggedData$()).toBeNull();
     expect(storageSpy.clear).toHaveBeenCalled();
   });

@@ -1,17 +1,36 @@
+import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { fakeAsync, tick } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { HttpInterceptorFn } from '@angular/common/http';
-
-import { timeoutInterceptor } from 'src/app/core/interceptors/timeout-interceptor';
+import { of, timer } from 'rxjs';
+import { NotificationService } from '@core/services/notifications/notification-service';
+import { timeoutInterceptor } from '@core/interceptors/timeout-interceptor';
 
 describe('timeoutInterceptor', () => {
-  const interceptor: HttpInterceptorFn = (req, next) => 
-    TestBed.runInInjectionContext(() => timeoutInterceptor(req, next));
+  let notificationSpy: jasmine.SpyObj<NotificationService>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    notificationSpy = jasmine.createSpyObj('NotificationService', ['showNotificationToast']);
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: NotificationService, useValue: notificationSpy }]
+    });
   });
 
-  it('should be created', () => {
-    expect(interceptor).toBeTruthy();
+  it('debe existir como interceptor', () => {
+    expect(timeoutInterceptor).toEqual(jasmine.any(Function));
   });
+
+  it('debe aplicar timeout a una petición lenta', fakeAsync(() => {
+    const request = new HttpRequest('GET', '/api/slow');
+    const slowResponse = timer(30000).pipe(() => of(new HttpResponse({ body: { ok: true } })));
+
+    TestBed.runInInjectionContext(() => {
+      timeoutInterceptor(request, () => slowResponse).subscribe({
+        error: () => {
+          expect(notificationSpy.showNotificationToast).toHaveBeenCalledWith('La solicitud esta tardando demasiado.');
+        }
+      });
+    });
+    tick(20001);
+  }));
 });

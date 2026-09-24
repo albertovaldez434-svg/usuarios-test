@@ -1,110 +1,73 @@
 /// <reference types="jasmine" />
 
-import { fakeAsync, flushMicrotasks, TestBed, tick } from "@angular/core/testing";
-import { LoaderService } from "src/app/core/services/loader"
-import { LoadingController } from "@ionic/angular";
-import { inject } from "@angular/core";
+import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
+import { LoaderService } from '@core/services/loader';
+import { LoadingController } from '@ionic/angular';
 
-describe('Loader Test', () => {
-    let loadingElementSpy = jasmine.createSpyObj<HTMLIonLoadingElement>(
-        'HTMLIonLoadingElement',
-        [
-            'present',
-            'dismiss'
-        ]
-    );
+describe('LoaderService', () => {
+  let loadingElementSpy: jasmine.SpyObj<HTMLIonLoadingElement>;
+  let loaderControllerSpy: jasmine.SpyObj<LoadingController>;
+  let service: LoaderService;
 
-    let loaderControllerSpy = jasmine.createSpyObj<LoadingController>(
-        'LoadingController',
-        [
-            'create'
-        ]
-    );
-
-    let loaderService: LoaderService;
-
+  beforeEach(() => {
+    loadingElementSpy = jasmine.createSpyObj<HTMLIonLoadingElement>('HTMLIonLoadingElement', ['present', 'dismiss']);
+    loaderControllerSpy = jasmine.createSpyObj<LoadingController>('LoadingController', ['create']);
     loaderControllerSpy.create.and.resolveTo(loadingElementSpy);
 
-    beforeEach(() => {
-        loaderControllerSpy.create.calls.reset();
-        loadingElementSpy.present.calls.reset();
-        loadingElementSpy.dismiss.calls.reset();
-
-        TestBed.configureTestingModule({
-            providers: [
-                LoaderService,
-                {
-                    provide: LoadingController,
-                    useValue: loaderControllerSpy
-                }
-            ]
-        })
-
-        loaderService = TestBed.inject(LoaderService);
+    TestBed.configureTestingModule({
+      providers: [
+        LoaderService,
+        { provide: LoadingController, useValue: loaderControllerSpy }
+      ]
     });
 
-    it('Should be created', () => {
-        expect(loaderService).toBeTruthy();
+    service = TestBed.inject(LoaderService);
+  });
+
+  it('debe crearse correctamente', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('debe crear y presentar el loader tras el delay', fakeAsync(() => {
+    service.show();
+    tick(300);
+    flushMicrotasks();
+
+    expect(loaderControllerSpy.create).toHaveBeenCalledWith({
+      message: 'Cargando...',
+      spinner: 'crescent'
     });
+    expect(loadingElementSpy.present).toHaveBeenCalled();
+  }));
 
-    it('Debe crear el loader', fakeAsync(() => {
-        loaderService.show();
+  it('debe ocultar el loader cuando ya no hay solicitudes', fakeAsync(() => {
+    service.show();
+    tick(300);
+    flushMicrotasks();
 
-        tick(300);
+    service.hide();
+    tick(100);
+    flushMicrotasks();
 
-        expect(loaderControllerSpy.create).toHaveBeenCalled();
-    }));
+    expect(loadingElementSpy.dismiss).toHaveBeenCalled();
+  }));
 
-    it('Debe presentar el loader', fakeAsync(() => {
-        loaderService.show();
+  it('debe evitar crear varios loaders para múltiples llamadas seguidas', fakeAsync(() => {
+    service.show();
+    service.show();
+    service.show();
+    tick(300);
+    flushMicrotasks();
 
-        tick(300);
+    expect(loaderControllerSpy.create).toHaveBeenCalledTimes(1);
+  }));
 
-        flushMicrotasks();
+  it('debe cancelar la presentación si se oculta antes del timeout', fakeAsync(() => {
+    service.show();
+    tick(100);
+    service.hide();
+    tick(300);
 
-        expect(loadingElementSpy.present).toHaveBeenCalled();
-    }));
-
-    it('Debe ocultar el loader', fakeAsync(() => {
-        loaderService.show();
-
-        tick(300);
-
-        flushMicrotasks();
-
-        expect(loadingElementSpy.present).toHaveBeenCalled();
-
-        loaderService.hide();
-
-        tick(100);
-
-        flushMicrotasks();
-
-        expect(loadingElementSpy.dismiss).toHaveBeenCalled();
-    }));
-
-    it('Multiples show crean solo 1 loader', fakeAsync(() => {
-        loaderService.show();
-
-        loaderService.show();
-
-        loaderService.show();
-
-        tick(300);
-        flushMicrotasks();
-
-        expect(loaderControllerSpy.create).toHaveBeenCalledTimes(1);
-    }));
-
-    it('Se cancelo la carga del loader', fakeAsync(() => {
-        loaderService.show();
-
-        tick(100);
-
-        loaderService.hide();
-
-        tick(300);
-
-        expect(loaderControllerSpy.create).not.toHaveBeenCalled();
-    }));
+    expect(loaderControllerSpy.create).not.toHaveBeenCalled();
+  }));
 });

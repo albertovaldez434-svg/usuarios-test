@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { SecureStorageService } from 'src/app/core/services/securestorage-service';
+import { SecureStorageService } from '@core/services/securestorage-service';
 import { loginResponseDTO } from '../models/loginDTO';
 import { Login } from '../models/login';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { from } from 'rxjs';

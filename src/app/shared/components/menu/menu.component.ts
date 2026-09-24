@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
-import { PermisoPagina } from 'src/app/core/models/pages';
-import { loginResponseDTO } from 'src/app/features/auth/models/loginDTO';
-import { Confirmation } from 'src/app/core/services/helpers/confirmation';
-import { IonicModule } from '@ionic/angular';
-import { AuthService } from 'src/app/features/auth/services/auth-service';
+import { PermisoPagina } from '@core/models/pages';
+import { loginResponseDTO } from '@features/auth/models/loginDTO';
+import { Confirmation } from '@core/services/helpers/confirmation';
+import { IonTabs, IonTabBar, IonTabButton, IonIcon } from '@ionic/angular';
+import { AuthService } from '@features/auth/services/auth-service';
 
 @Component({
-    selector: 'app-menu',
-    templateUrl: './menu.component.html',
-    styleUrls: ['./menu.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonicModule, RouterLinkActive, RouterLink]
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, RouterLinkActive, RouterLink]
 })
 export class MenuComponent implements OnInit {
   private authService = inject(AuthService);
@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
   private ConfirmationService = inject(Confirmation);
 
   constructor(
-    
+
     private route: Router,
   ) {
     this.pages = [
@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
 
     effect(() => {
       const result = this.ConfirmationService.confirmed();
-      
+
       if (result === true) {
         this.logout();
       }

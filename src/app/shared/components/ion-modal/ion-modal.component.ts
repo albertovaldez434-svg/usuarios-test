@@ -1,21 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ModalController, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent } from '@ionic/angular';
 
 @Component({
-    selector: 'app-ion-modal',
-    templateUrl: './ion-modal.component.html',
-    styleUrls: ['./ion-modal.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [IonicModule]
+  selector: 'app-ion-modal',
+  templateUrl: './ion-modal.component.html',
+  styleUrls: ['./ion-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent]
 })
 export class IonModalComponent implements OnInit {
   @Output() openModal = new EventEmitter<void>();
   @Input() titulo: string = 'Titulo Modal';
   @Input() mensaje: string = 'Hola, soy un modal de Ionic';
 
-  constructor(
-    private modalCtrl: ModalController
-  ) { }
+  private modalCtrl = inject(ModalController)
 
   ngOnInit() { }
 

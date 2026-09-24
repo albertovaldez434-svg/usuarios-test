@@ -1,30 +1,30 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
-import { UsuariosService } from './features/users/services/usuarios';
+import { Component, effect, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { SecureStorageService } from './core/services/securestorage-service';
 import { filter } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { loginResponseDTO } from './features/auth/models/loginDTO';
-import { IonicModule } from '@ionic/angular';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { AuthService } from './features/auth/services/auth-service';
+import { IonApp, IonRouterOutlet } from "@ionic/angular";
+import "@core/icons/app-icons";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
-    imports: [IonicModule, MenuComponent],
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [IonRouterOutlet, IonApp, MenuComponent],
 })
 export class AppComponent implements OnInit {
   private authService = inject(AuthService);
-  private userService = inject(UsuariosService);
 
   isLogged: boolean = false;
 
   jwtHelper = new JwtHelperService;
 
   constructor(
-    
+
     private route: Router,
     private secureStorage: SecureStorageService
   ) {

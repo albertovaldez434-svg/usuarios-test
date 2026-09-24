@@ -1,0 +1,19 @@
+ahora con la nueva version de typescript el tsconfig.json tuvo un cambio importante:
+en el compiler options se elimino el:
+ "baseurl": "./"
+y se reemplazo por paths:
+ "paths" : {...}
+
+ como funciona? ahora tenemos que declarar de mejor las rutas en la app, si por ejemplo
+ para los imports usabamos:
+  import {component} from "./src/app/components/..."
+
+  al agregar un path de esta forma:
+  "paths" : {
+    "@app/*" : ["./src/app/*"],
+    "@shared/*": ["./src/app/shared/*"],
+    (etc...)
+  }
+
+entonces el import de algun componente reutilizablle en la carpeta shared pasaria a ser:
+import {component} from "@shared/components/..."
