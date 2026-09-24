@@ -4,6 +4,6 @@
     "@ionic/angular/standalone"
   ],
   "chat.tools.terminal.autoApprove": {
-    "ng.cmd": true
+    "npx.cmd": true
   }
 }
