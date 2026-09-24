@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -34,28 +34,29 @@ jobs:
 
       - name: Build application
         run: npm run build
-        
-ai-test-analysis:
-  name: AI Test Analysis
-  runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
-      with:
-        fetch-depth: 0
+  ai-test-analysis: 
 
-    - name: Get changed files
-      run: |
-        echo "=== Changed files ==="
+    name: AI Test Analysis
+    runs-on: ubuntu-latest
 
-        git diff --name-status \
-          origin/main...origin/development
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-    - name: Get code diff
-      run: |
-        echo "=== Code diff ==="
+      - name: Get changed files
+        run: |
+          echo "=== Changed files ==="
 
-        git diff \
-          --unified=20 \
-          origin/main...origin/development
+          git diff --name-status \
+            origin/main...origin/development
+
+      - name: Get code diff
+        run: |
+          echo "=== Code diff ==="
+
+          git diff \
+            --unified=20 \
+            origin/main...origin/development
