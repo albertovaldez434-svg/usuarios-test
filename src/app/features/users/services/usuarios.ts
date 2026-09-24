@@ -172,15 +172,6 @@ export class UsuariosService {
         telefono: "6441747474",
         idRol: 2,
         password: "Miguel123!"
-      },
-      {
-        idUser: 12,
-        nombre: "Sofía",
-        apellidos: "Cruz Mendoza",
-        email: "sofia.cruz@test.com",
-        telefono: "6441747474",
-        idRol: 2,
-        password: "Sofia123!"
       }
     ];
 
