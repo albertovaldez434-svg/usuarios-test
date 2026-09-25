@@ -36,6 +36,26 @@ jobs:
           git diff \
             --unified=20 \
             origin/main...origin/development
+        
+      - name: Find related tests
+        run: |
+          echo "=== Related test files ==="
+
+          git diff --name-only \
+            ${{ github.event.pull_request.base.sha }} \
+            ${{ github.event.pull_request.head.sha }} \
+            | grep -E '\.(ts|html|scss)$' \
+            | while read file; do
+
+                base="${file%.*}"
+
+                spec="${base}.spec.ts"
+
+                if [ -f "$spec" ]; then
+                  echo "$spec"
+                fi
+
+              done
             
   run-tests:
 
