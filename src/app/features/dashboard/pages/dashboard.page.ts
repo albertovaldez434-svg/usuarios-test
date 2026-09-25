@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, OnInit, signal, ViewChild, DestroyRef } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
 import {
   IonContent, IonIcon, IonItem, IonLabel, IonModal, IonSelectOption, IonTitle, IonToolbar, ModalController,
@@ -18,7 +18,8 @@ import { CustomButtonComponent } from '@shared/components/custom-button/custom-b
 import { SearchPipe } from '@shared/pipes/search-pipe';
 import { AuthService } from '@features/auth/services/auth-service';
 import { CustomInputComponent } from "@shared/components/custom-input/custom-input.component";
-import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 
 @Component({
@@ -32,8 +33,8 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxj
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
-  private usuariosService = inject(UsuariosService);
   private tareasService = inject(TasksService);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
@@ -114,19 +115,6 @@ export class DashboardPage implements OnInit {
     if (tareas) {
       this.allTasks.set(tareas);
     }
-
-    // effect(() => {
-    //   const users = this.usuariosService.users$();
-    //   const tareas = this.tareasService.tasks$();
-
-    //   if (users) {
-    //     this.usuarios.set(users);
-    //   }
-
-    //   if (tareas) {
-    //     this.allTasks.set(tareas);
-    //   }
-    // });
   }
 
   ngOnInit() {
@@ -140,7 +128,10 @@ export class DashboardPage implements OnInit {
 
       switchMap(filtro => 
         this.tareasService.cargarTareasUsuarioV2(1, 10, filtro)
-      )
+      ),
+
+      takeUntilDestroyed(this.destroyRef)
+      
     ).subscribe(response => {
       this.allTasks.set(response.items),
       this.totalPages.set(response.totalPages),
@@ -526,7 +517,7 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  changeTaskUser(idUser: number) {
+  changeTaskUser() {
 
     // console.log(idUser);
   }
