@@ -543,14 +543,8 @@
         <app-custom-input #inpNewDesc [(ngModel)]="newTaskDesc" [placeholderText]="'Descripcion'"
           [iconName]="'document-text-outline'" [iconSlot]="'start'" />
           
-        <ion-item>
-          <ion-select label="Status" placeholder="Seleccione" [value]="newTaskStatus">
-            <ion-select-option [value]="1">Por Hacer</ion-select-option>
-            <ion-select-option [value]="2">En Curso</ion-select-option>
-            <ion-select-option [value]="3">Terminado</ion-select-option>
-          </ion-select>
-          <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
-        </ion-item>
+        <app-custom-input controlType="select" selectLabel="Status" placeholderText="Seleccione"
+          iconName="alert-circle-outline" [selectOptions]="statusOptions" [(ngModel)]="newTaskStatus" />
 
         <div class="changes-actions">
           <app-custom-button [tipoBtn]="'secondary'" [size]="'default'" [expand]="'block'" [iconName]="'close-outline'"

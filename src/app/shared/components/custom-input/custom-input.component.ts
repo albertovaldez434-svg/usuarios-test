@@ -1,13 +1,18 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, ControlValueAccessor } from "@angular/forms";
-import { IonIcon, IonInput, IonItem } from "@ionic/angular";
+import { IonIcon, IonInput, IonItem, IonSelect, IonSelectOption } from "@ionic/angular";
+
+export interface CustomInputOption {
+  label: string;
+  value: string | number;
+}
 
 @Component({
   selector: 'app-custom-input',
   templateUrl: './custom-input.component.html',
   styleUrls: ['./custom-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ FormsModule, ReactiveFormsModule, IonItem, IonInput, IonIcon],
+  imports: [FormsModule, ReactiveFormsModule, IonItem, IonInput, IonIcon, IonSelect, IonSelectOption],
   // primero se hace el providers de lo que sera el CVA (controlvalueaccessor), para que este componente pueda ser usado como
   // form control en otros componentes/paginas
   providers: [
@@ -19,34 +24,28 @@ import { IonIcon, IonInput, IonItem } from "@ionic/angular";
   ]
 })
 export class CustomInputComponent implements ControlValueAccessor {
-  // @Input() labelText: string = '';
-  // @Input() labelSlot: 'fixed' | 'floating' | 'stacked' | 'undefined' = 'undefined';
-
   @Input() iconSlot: 'start' | 'end' = 'start';
   @Input() iconName: string = '';
   @Input() placeholderText: string = '';
   @Input() inputType: 'text' | 'email' | 'tel' | 'password' = 'text';
+  @Input() controlType: 'input' | 'select' = 'input';
+  @Input() selectLabel = '';
+  @Input() selectOptions: CustomInputOption[] = [];
 
-  // como el template ahora se usa el ControlValueAccessor, ya no hay que poner directamente el formcontrolname
-  // @Input() formCtrlName: string = '';
-
-  @Output() valueChange = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter<string | number | null>();
   @Output() Clicked = new EventEmitter<void>();
 
-  value = '';
+  value: string | number | null = '';
+  disabled = false;
 
-  private onChange = (value: string) => { };
+  private onChange = (value: string | number | null) => { };
   onTouched = () => { };
 
-  constructor() { }
-
-  // ngOnInit() { }
-
-  writeValue(value: string): void {
-    this.value = value ?? '';
+  writeValue(value: string | number | null): void {
+    this.value = value ?? (this.controlType === 'select' ? null : '');
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: string | number | null) => void): void {
     this.onChange = fn;
   }
 
@@ -54,16 +53,15 @@ export class CustomInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  // Lo veremos después
-  // setDisabledState(isDisabled: boolean): void {
-  //   
-  // }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 
-  handleBlur() {
+  handleBlur(): void {
     this.onTouched();
   }
 
-  onInput(event: any): void {
+  onInput(event: CustomEvent<{ value?: string | null }>): void {
     const value = event.detail.value ?? '';
 
     this.value = value;
@@ -73,8 +71,15 @@ export class CustomInputComponent implements ControlValueAccessor {
     this.valueChange.emit(value);
   }
 
+  onSelectChange(event: CustomEvent<{ value?: string | number | null }>): void {
+    const value = event.detail.value ?? null;
+
+    this.value = value;
+    this.onChange(value);
+    this.valueChange.emit(value);
+  }
+
   iconClicked(): void {
     this.Clicked.emit();
   }
-
 }

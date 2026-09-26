@@ -33,6 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
+  private usersService = inject(UsuariosService);
   private tareasService = inject(TasksService);
   private destroyRef = inject(DestroyRef);
 
@@ -93,6 +94,11 @@ export class DashboardPage implements OnInit {
   newTaskTitle = '';
   newTaskDesc = '';
   newTaskStatus = 0;
+  readonly statusOptions = [
+    { label: 'Por Hacer', value: 1 },
+    { label: 'En Curso', value: 2 },
+    { label: 'Terminado', value: 3 }
+  ];
 
   constructor(
     private modalCtrl: ModalController
@@ -111,10 +117,11 @@ export class DashboardPage implements OnInit {
     }
 
     const tareas = this.tareasService.tasks$();
+    const users = this.usersService.users$();
 
-    if (tareas) {
-      this.allTasks.set(tareas);
-    }
+    if (tareas) this.allTasks.set(tareas);
+    if (users) this.usuarios.set(users);
+    
   }
 
   ngOnInit() {
@@ -517,9 +524,10 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  changeTaskUser() {
+  changeTaskUser(value: any) {
 
-    // console.log(idUser);
+    console.log(value);
+    return;
   }
 
   cancelTaskEdit() {
