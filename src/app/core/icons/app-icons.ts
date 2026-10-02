@@ -4,7 +4,7 @@ import {
   closeCircleOutline, closeOutline, createOutline, documentTextOutline, eyeOffOutline, eyeOutline,
   flaskOutline,
   listCircleOutline, lockClosedOutline, logInOutline, logOutOutline, mailOutline,
-  moonOutline, personAddOutline, personOutline, playOutline, ribbonOutline, saveOutline,
+  moonOutline, pauseOutline, personAddOutline, personOutline, playOutline, ribbonOutline, saveOutline,
   sunnyOutline, trashOutline
 } from 'ionicons/icons'
 
@@ -20,6 +20,7 @@ addIcons({
   'ribbon-outline': ribbonOutline,
   'save-outline': saveOutline,
   'play-outline': playOutline,
+  'pause-outline': pauseOutline,
   'document-text-outline': documentTextOutline,
   'trash-outline': trashOutline,
   'alert-circle-outline': alertCircleOutline,
