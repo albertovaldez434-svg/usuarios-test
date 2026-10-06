@@ -1,6 +1,6 @@
 import { addIcons } from 'ionicons';
 import {
-  addOutline, alertCircleOutline, callOutline, cameraOutline, checkmarkOutline,
+  addOutline, alertCircleOutline, callOutline, cameraOutline, checkmarkCircle, checkmarkOutline,
   closeCircleOutline, closeOutline, createOutline, documentTextOutline, eyeOffOutline, eyeOutline,
   flaskOutline,
   listCircleOutline, lockClosedOutline, logInOutline, logOutOutline, mailOutline,
@@ -34,5 +34,6 @@ addIcons({
   'checkmark-outline': checkmarkOutline,
   'sunny-outline': sunnyOutline,
   'moon-outline': moonOutline,
-  'flask-outline': flaskOutline
+  'flask-outline': flaskOutline,
+  'checkmark-circle': checkmarkCircle
 });

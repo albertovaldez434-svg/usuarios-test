@@ -23,7 +23,7 @@ export class RestorePswComponent implements OnInit {
 
   @Input() title: string = '';
   @Input() warning: boolean = false;
-  @Output() validatedPsw = new EventEmitter<string>();
+  // @Output() validatedPsw = new EventEmitter<string>();
   verPsw: boolean;
   verPswConf: boolean;
   pswMatch!: boolean;
