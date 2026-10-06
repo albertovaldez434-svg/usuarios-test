@@ -8,7 +8,7 @@
   </ion-select>
   } @else {
   <ion-input [type]="inputType" class="ion-margin-end" [placeholder]="placeholderText" [value]="value"
-    [disabled]="disabled" (ionInput)="onInput($event)" (ionBlur)="handleBlur()"></ion-input>
+    [disabled]="disabled" (ionInput)="onInput($event)" (ionBlur)="handleBlur()" (click)="inpClicked()"></ion-input>
   }
-  <ion-icon name="{{iconName}}" slot="{{iconSlot}}" (click)="iconClicked()"></ion-icon>
+  <ion-icon name="{{iconName}}" slot="{{iconSlot}}" ></ion-icon>
 </ion-item>

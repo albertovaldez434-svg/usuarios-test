@@ -79,7 +79,7 @@ export class CustomInputComponent implements ControlValueAccessor {
     this.valueChange.emit(value);
   }
 
-  iconClicked(): void {
+  inpClicked(): void {
     this.Clicked.emit();
   }
 }
