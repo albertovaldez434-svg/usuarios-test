@@ -73,6 +73,13 @@ export class DashboardPage implements OnInit {
     this.allTasks().filter(task => Number(task.status) === 3)
   );
 
+  userOptions = computed(() =>
+    this.usuarios().map(user => ({
+      label: `${user.nombre} ${user.apellidos}`,
+      value: user.idUser
+    }))
+  );
+
   /*
    * Distancia desde el borde para activar el auto-scroll.
    */
@@ -93,11 +100,12 @@ export class DashboardPage implements OnInit {
 
   newTaskTitle = '';
   newTaskDesc = '';
+  newTaskUserId: number | null = null;
   newTaskStatus = 0;
   readonly statusOptions = [
-    { label: 'Por Hacer', value: 1 },
-    { label: 'En Curso', value: 2 },
-    { label: 'Terminado', value: 3 }
+    { label: 'Por hacer', value: 1 },
+    { label: 'En curso', value: 2 },
+    { label: 'Finalizado', value: 3 }
   ];
 
   constructor(
@@ -114,6 +122,7 @@ export class DashboardPage implements OnInit {
 
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
+      this.newTaskUserId = this.loggedUser.idUser;
     }
 
     const tareas = this.tareasService.tasks$();
@@ -207,6 +216,8 @@ export class DashboardPage implements OnInit {
     this.tareasService.cargarTareasUsuario(IdUser).subscribe({
       next: (data) => {
         this.allTasks.set(data);
+        const users = this.usersService.users$();
+        if (users) this.usuarios.set(users);
       }
     });
   }
@@ -546,6 +557,7 @@ export class DashboardPage implements OnInit {
     this.descKeyActive = false;
 
     this.newTaskDesc = '';
+    this.newTaskUserId = this.loggedUser?.idUser ?? null;
     this.newTaskStatus = 0;
     this.newTaskTitle = '';
 
@@ -611,7 +623,7 @@ export class DashboardPage implements OnInit {
   addTarea() {
     const loggedId = this.authService.loggedData$()?.idUser;
 
-    if (!loggedId) {
+    if (!loggedId || this.newTaskUserId == null) {
       return;
     }
 
@@ -619,7 +631,7 @@ export class DashboardPage implements OnInit {
       title: this.newTaskTitle,
       description: this.newTaskDesc,
       id: 0,
-      idUser: loggedId,
+      idUser: this.newTaskUserId,
       status: this.newTaskStatus
     };
 

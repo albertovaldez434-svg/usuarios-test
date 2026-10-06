@@ -462,21 +462,6 @@
     <ion-content>
       <div class="signUpfrm">
         <!-- <div class="task-details"> -->
-        <div class="status-container">
-          @if (editableTask()?.status === 1) {
-          <ion-label color="primary">Por Hacer</ion-label>
-          <div class="status-icon todo"> </div>
-          }
-          @if (editableTask()?.status === 2) {
-          <ion-label color="warning">En Curso</ion-label>
-          <div class="status-icon doing"> </div>
-          }
-          @if (editableTask()?.status === 3) {
-          <ion-label color="success">Terminado</ion-label>
-          <div class="status-icon done"> </div>
-          }
-        </div>
-
         <app-custom-input #inpTitle [iconSlot]="'start'" [iconName]="'ribbon-outline'" [placeholderText]="'Titulo'"
           [inputType]="'text'" (Clicked)="EditField('title')" [(ngModel)]="editableTask()!.title" />
         <app-custom-input #inpDesc [iconSlot]="'start'" [iconName]="'document-text-outline'"
@@ -491,6 +476,11 @@
           </ion-select>
           <ion-icon slot="start" name="person-add-outline"></ion-icon>
         </ion-item>
+
+        <app-custom-input controlType="select" selectLabel="Estatus" placeholderText="Seleccione"
+          iconName="alert-circle-outline" [selectOptions]="statusOptions" [ngModel]="editableTask()?.status"
+          (ngModelChange)="changeTaskStatus($event)" />
+
         <!-- </div> -->
         @if (titleKeyActive || descKeyActive) {
         <div class="changes-actions">
@@ -542,8 +532,11 @@
           [iconName]="'ribbon-outline'" [iconSlot]="'start'" />
         <app-custom-input #inpNewDesc [(ngModel)]="newTaskDesc" [placeholderText]="'Descripcion'"
           [iconName]="'document-text-outline'" [iconSlot]="'start'" />
-          
-        <app-custom-input controlType="select" selectLabel="Status" placeholderText="Seleccione"
+
+        <app-custom-input controlType="select" selectLabel="Asignado" placeholderText="Usuario asignado"
+          iconName="person-add-outline" [selectOptions]="userOptions()" [(ngModel)]="newTaskUserId" />
+
+        <app-custom-input controlType="select" selectLabel="Estatus" placeholderText="Seleccione"
           iconName="alert-circle-outline" [selectOptions]="statusOptions" [(ngModel)]="newTaskStatus" />
 
         <div class="changes-actions">
