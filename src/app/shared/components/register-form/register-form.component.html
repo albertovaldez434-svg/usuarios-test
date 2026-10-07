@@ -77,6 +77,9 @@
       }
     </ion-col>
 
+    @if (isEditingData) {
+    <br>
+    } @else {
     <!-- Password -->
     <ion-col size="12" size-md="6">
       <app-custom-input [iconName]="passwordVisible ? 'eye-off-outline' : 'eye-outline'" [iconSlot]="'end'"
@@ -107,6 +110,7 @@
       </div>
       }
     </ion-col>
+    }
 
     <!-- Buttons -->
     <ion-row>
@@ -121,8 +125,7 @@
         <app-custom-button [type]="'submit'" [iconName]="'close-circle-outline'" [expand]="'block'" [slot]="'start'"
           [text]="isEditingData ? 'Guardar Cambios' : 'Registrarse'"
           [iconName]="isEditingData ? 'save-outline' : 'checkmark-circle'"
-          [disabled]="!registerForm.invalid && submitted"
-          />
+          [disabled]="!registerForm.invalid && submitted" />
       </ion-col>
     </ion-row>
 

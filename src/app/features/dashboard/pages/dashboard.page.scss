@@ -516,14 +516,13 @@ ion-searchbar {
         gap: 24px;
 
         padding: 16px;
+
+        width: 95%;
+        margin: auto;
+
     }
 
     .myDropList {
-
-        /*
-         * Una columna completa por pantalla.
-         */
-        flex: 0 0 calc(100% - 32px);
 
         width: calc(100% - 32px);
 
@@ -532,6 +531,8 @@ ion-searchbar {
         border-radius: 15px;
 
         min-height: 80vh;
+
+        scroll-snap-align: center;
     }
 
     ion-card {

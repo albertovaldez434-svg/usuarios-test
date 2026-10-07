@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, OnInit, signal, ViewChild, DestroyRef } from '@angular/core';
 import { CdkDragDrop, CdkDragEnter, CdkDragMove, CdkDropListGroup, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview } from '@angular/cdk/drag-drop';
 import {
   IonContent, IonIcon, IonItem, IonLabel, IonModal, IonSelectOption, IonTitle, IonToolbar, ModalController,
@@ -18,7 +18,8 @@ import { CustomButtonComponent } from '@shared/components/custom-button/custom-b
 import { SearchPipe } from '@shared/pipes/search-pipe';
 import { AuthService } from '@features/auth/services/auth-service';
 import { CustomInputComponent } from "@shared/components/custom-input/custom-input.component";
-import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 
 @Component({
@@ -32,8 +33,9 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap, tap } from 'rxj
 })
 export class DashboardPage implements OnInit {
   private authService = inject(AuthService);
-  private usuariosService = inject(UsuariosService);
+  private usersService = inject(UsuariosService);
   private tareasService = inject(TasksService);
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild('modalTaskDetails') modalTaskDetail!: IonModal;
   @ViewChild('modalNewTask') modalNewTask!: IonModal;
@@ -71,6 +73,13 @@ export class DashboardPage implements OnInit {
     this.allTasks().filter(task => Number(task.status) === 3)
   );
 
+  userOptions = computed(() =>
+    this.usuarios().map(user => ({
+      label: `${user.nombre} ${user.apellidos}`,
+      value: user.idUser
+    }))
+  );
+
   /*
    * Distancia desde el borde para activar el auto-scroll.
    */
@@ -91,7 +100,13 @@ export class DashboardPage implements OnInit {
 
   newTaskTitle = '';
   newTaskDesc = '';
+  newTaskUserId: number | null = null;
   newTaskStatus = 0;
+  readonly statusOptions = [
+    { label: 'Por hacer', value: 1 },
+    { label: 'En curso', value: 2 },
+    { label: 'Finalizado', value: 3 }
+  ];
 
   constructor(
     private modalCtrl: ModalController
@@ -107,26 +122,15 @@ export class DashboardPage implements OnInit {
 
     if (this.loggedUser) {
       this.imgSrc = this.loggedUser.avatar;
+      this.newTaskUserId = this.loggedUser.idUser;
     }
 
     const tareas = this.tareasService.tasks$();
+    const users = this.usersService.users$();
 
-    if (tareas) {
-      this.allTasks.set(tareas);
-    }
-
-    // effect(() => {
-    //   const users = this.usuariosService.users$();
-    //   const tareas = this.tareasService.tasks$();
-
-    //   if (users) {
-    //     this.usuarios.set(users);
-    //   }
-
-    //   if (tareas) {
-    //     this.allTasks.set(tareas);
-    //   }
-    // });
+    if (tareas) this.allTasks.set(tareas);
+    if (users) this.usuarios.set(users);
+    
   }
 
   ngOnInit() {
@@ -140,7 +144,10 @@ export class DashboardPage implements OnInit {
 
       switchMap(filtro => 
         this.tareasService.cargarTareasUsuarioV2(1, 10, filtro)
-      )
+      ),
+
+      takeUntilDestroyed(this.destroyRef)
+      
     ).subscribe(response => {
       this.allTasks.set(response.items),
       this.totalPages.set(response.totalPages),
@@ -209,6 +216,8 @@ export class DashboardPage implements OnInit {
     this.tareasService.cargarTareasUsuario(IdUser).subscribe({
       next: (data) => {
         this.allTasks.set(data);
+        const users = this.usersService.users$();
+        if (users) this.usuarios.set(users);
       }
     });
   }
@@ -526,9 +535,10 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  changeTaskUser(idUser: number) {
+  changeTaskUser(value: any) {
 
-    // console.log(idUser);
+    console.log(value);
+    return;
   }
 
   cancelTaskEdit() {
@@ -547,6 +557,7 @@ export class DashboardPage implements OnInit {
     this.descKeyActive = false;
 
     this.newTaskDesc = '';
+    this.newTaskUserId = this.loggedUser?.idUser ?? null;
     this.newTaskStatus = 0;
     this.newTaskTitle = '';
 
@@ -612,7 +623,7 @@ export class DashboardPage implements OnInit {
   addTarea() {
     const loggedId = this.authService.loggedData$()?.idUser;
 
-    if (!loggedId) {
+    if (!loggedId || this.newTaskUserId == null) {
       return;
     }
 
@@ -620,7 +631,7 @@ export class DashboardPage implements OnInit {
       title: this.newTaskTitle,
       description: this.newTaskDesc,
       id: 0,
-      idUser: loggedId,
+      idUser: this.newTaskUserId,
       status: this.newTaskStatus
     };
 

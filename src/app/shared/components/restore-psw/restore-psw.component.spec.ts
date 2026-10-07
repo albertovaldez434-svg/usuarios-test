@@ -1,18 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
+import { of, throwError } from 'rxjs';
+import { UsuariosService } from '@app/features/users/services/usuarios';
 import { RestorePswComponent } from '@shared/components/restore-psw/restore-psw.component';
 
 describe('RestorePswComponent', () => {
   let component: RestorePswComponent;
   let fixture: ComponentFixture<RestorePswComponent>;
   let modalSpy: jasmine.SpyObj<ModalController>;
+  let userServiceSpy: jasmine.SpyObj<UsuariosService>;
 
   beforeEach(async () => {
     modalSpy = jasmine.createSpyObj('ModalController', ['dismiss']);
+    userServiceSpy = jasmine.createSpyObj('UsuariosService', ['UpdatePsw']);
 
     await TestBed.configureTestingModule({
       imports: [RestorePswComponent],
-      providers: [{ provide: ModalController, useValue: modalSpy }]
+      providers: [
+        { provide: ModalController, useValue: modalSpy },
+        { provide: UsuariosService, useValue: userServiceSpy }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RestorePswComponent);
@@ -37,13 +44,36 @@ describe('RestorePswComponent', () => {
     expect(component.pswMatch).toBeFalse();
   });
 
-  it('debe emitir la contraseña validada', () => {
-    spyOn(component.validatedPsw, 'emit');
+  it('debe actualizar la contraseña y mostrar confirmación si el servicio tiene éxito', () => {
+    userServiceSpy.UpdatePsw.and.returnValue(of({}));
+    const openModalSpy = spyOn(component, 'openModalFunc').and.stub();
     component.password2 = 'nueva123';
 
     component.sendPswData();
 
-    expect(component.validatedPsw.emit).toHaveBeenCalledWith('nueva123');
+    expect(userServiceSpy.UpdatePsw).toHaveBeenCalledWith('nueva123');
+    expect(modalSpy.dismiss).toHaveBeenCalled();
+    expect(openModalSpy).toHaveBeenCalledWith(
+      'Exito',
+      'Se actualizo la contraseña correctamente'
+    );
+  });
+
+  it('debe mostrar un error si falla la actualización de la contraseña', () => {
+    userServiceSpy.UpdatePsw.and.returnValue(
+      throwError(() => new Error('Error al actualizar la contraseña'))
+    );
+    const openModalSpy = spyOn(component, 'openModalFunc').and.stub();
+    component.password2 = 'nueva123';
+
+    component.sendPswData();
+
+    expect(userServiceSpy.UpdatePsw).toHaveBeenCalledWith('nueva123');
+    expect(modalSpy.dismiss).toHaveBeenCalled();
+    expect(openModalSpy).toHaveBeenCalledWith(
+      'Error',
+      'Hubo un problema al actualizar la contraseña'
+    );
   });
 
   it('debe limpiar el formulario y cerrar el modal', () => {

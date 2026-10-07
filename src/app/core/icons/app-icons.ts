@@ -1,15 +1,16 @@
 import { addIcons } from 'ionicons';
 import {
-  addOutline, alertCircleOutline, callOutline, cameraOutline, checkmarkOutline,
-  closeCircleOutline, closeOutline, documentTextOutline, eyeOffOutline, eyeOutline,
+  addOutline, alertCircleOutline, callOutline, cameraOutline, checkmarkCircle, checkmarkOutline,
+  closeCircleOutline, closeOutline, createOutline, documentTextOutline, eyeOffOutline, eyeOutline,
   flaskOutline,
   listCircleOutline, lockClosedOutline, logInOutline, logOutOutline, mailOutline,
-  moonOutline, personAddOutline, personOutline, ribbonOutline, saveOutline,
+  moonOutline, pauseOutline, personAddOutline, personOutline, playOutline, ribbonOutline, saveOutline,
   sunnyOutline, trashOutline
 } from 'ionicons/icons'
 
 addIcons({
   'add-outline': addOutline,
+  'create-outline' : createOutline,
   'close-outline': closeOutline,
   'person-add-outline': personAddOutline,
   'mail-outline': mailOutline,
@@ -18,6 +19,8 @@ addIcons({
   'lock-closed-outline': lockClosedOutline,
   'ribbon-outline': ribbonOutline,
   'save-outline': saveOutline,
+  'play-outline': playOutline,
+  'pause-outline': pauseOutline,
   'document-text-outline': documentTextOutline,
   'trash-outline': trashOutline,
   'alert-circle-outline': alertCircleOutline,
@@ -31,5 +34,6 @@ addIcons({
   'checkmark-outline': checkmarkOutline,
   'sunny-outline': sunnyOutline,
   'moon-outline': moonOutline,
-  'flask-outline': flaskOutline
+  'flask-outline': flaskOutline,
+  'checkmark-circle': checkmarkCircle
 });

@@ -109,11 +109,12 @@ export class UsuariosPage implements OnInit {
   async OpenRegisterModal(title: string) {
     const modal = this.modalCtrl.create({
       component: RegisterFormComponent,
-      breakpoints: [0, 0.25, 0.5, 0.75],
-      initialBreakpoint: 0.75,
+      breakpoints: [0, 0.25, 0.5, 0.75, 0.90],
+      initialBreakpoint: 0.90,
       cssClass: 'custom-modal',
       componentProps: {
         Title: title,
+        userData: this.usuarioToEdit
       }
     });
 
